@@ -1,0 +1,1824 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CN Lab – Experiments 1 to 8 (Cisco Packet Tracer)</title>
+    <style>
+        :root {
+            --bg: #0b0f17;
+            --bg-grid: rgba(255, 255, 255, 0.045);
+            --panel-bg: #121824;
+            --panel-bd: #223049;
+            --ttl-1: #1e3a8a;
+            --ttl-2: #172554;
+            --ttl-tx: #f8fafc;
+            --tx: #e2e8f0;
+            --tx-mut: #94a3b8;
+            --blue: #60a5fa;
+            --blue-sub: #38bdf8;
+            --aim-bg: rgba(30, 58, 138, 0.32);
+            --aim-bd: #1d4ed8;
+            --note-bg: rgba(14, 116, 144, 0.22);
+            --note-bd: #38bdf8;
+            --tbl-bg: #0d131f;
+            --tbl-th: #1a2538;
+            --tbl-bd: #223049;
+            --tt-bg: #1e293b;
+            --tt-tx: #38bdf8;
+            --tt-bd: #334155;
+            --cli-bg: #030712;
+            --cli-bar: #162032;
+            --cli-bd: #2e3e58;
+            --out-bg: #030712;
+            --out-tx: #4ade80;
+            --out-bd: #1e293b;
+            --fig-bg: #070a10;
+            --fig-bd: #1f2a3e;
+            --fig-cap: #101623;
+            --nav-bg: #0d131e;
+            --nav-btn: #182234;
+            --nav-bd: #24334a;
+            --nav-tx: #cbd5e1;
+        }
+
+        body.light-theme {
+            --bg: #ffffff;
+            --bg-grid: #e6edf5;
+            --panel-bg: #f6f6f6;
+            --panel-bd: #5c7fa8;
+            --ttl-1: #3b7fc4;
+            --ttl-2: #1f5fa6;
+            --ttl-tx: #ffffff;
+            --tx: #222222;
+            --tx-mut: #555555;
+            --blue: #1f5fa6;
+            --blue-sub: #3b7fc4;
+            --aim-bg: #fffbe0;
+            --aim-bd: #b5b5b5;
+            --note-bg: #e8f3ff;
+            --note-bd: #3b7fc4;
+            --tbl-bg: #ffffff;
+            --tbl-th: #dde8f5;
+            --tbl-bd: #b5b5b5;
+            --tt-bg: #e3e3e3;
+            --tt-tx: #111111;
+            --tt-bd: #b5b5b5;
+            --cli-bg: #000000;
+            --cli-bar: #3d3d3d;
+            --cli-bd: #444444;
+            --out-bg: #ffffff;
+            --out-tx: #111111;
+            --out-bd: #b5b5b5;
+            --fig-bg: #ffffff;
+            --fig-bd: #b5b5b5;
+            --fig-cap: #e4e4e4;
+            --nav-bg: #d6d6d6;
+            --nav-btn: #e4e4e4;
+            --nav-bd: #888888;
+            --nav-tx: #222222;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 88px;
+            color-scheme: dark;
+        }
+
+        body {
+            margin: 0;
+            font: 14.5px/1.6 Tahoma, "Segoe UI", Arial, sans-serif;
+            color: var(--tx);
+            background-color: var(--bg);
+            background-image: linear-gradient(var(--bg-grid) 1px, transparent 1px), linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+            background-size: 24px 24px;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 99
+        }
+
+        .menu {
+            background: linear-gradient(180deg, #131b2a, #0b111c);
+            border-bottom: 1px solid var(--nav-bd);
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            color: #94a3b8;
+            padding: 2px 4px;
+        }
+
+        body.light-theme .menu {
+            background: linear-gradient(#f6f6f6, #e2e2e2);
+            color: #333;
+        }
+
+        .menu span {
+            padding: 4px 10px;
+            cursor: default;
+        }
+
+        .menu span:hover {
+            color: #f1f5f9;
+        }
+
+        body.light-theme .menu span:hover {
+            color: #000;
+        }
+
+        .theme-btn {
+            margin-left: auto;
+            background: var(--nav-btn);
+            border: 1px solid var(--nav-bd);
+            color: var(--blue-sub);
+            font: inherit;
+            font-size: 11.5px;
+            font-weight: 600;
+            padding: 2px 9px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.15s ease;
+        }
+
+        .theme-btn:hover {
+            border-color: var(--blue);
+            background: #24334a;
+        }
+
+        body.light-theme .theme-btn:hover {
+            background: #cfe3f8;
+        }
+
+        .menu b {
+            padding: 4px 12px;
+            color: var(--blue-sub);
+            letter-spacing: .02em;
+        }
+
+        .tool {
+            background: var(--nav-bg);
+            border-bottom: 1px solid var(--nav-bd);
+            display: flex;
+            gap: 5px;
+            padding: 6px 10px;
+            overflow-x: auto;
+        }
+
+        .tool a {
+            flex: none;
+            color: var(--nav-tx);
+            text-decoration: none;
+            font-size: 12.5px;
+            font-weight: 600;
+            padding: 3px 12px;
+            background: var(--nav-btn);
+            border: 1px solid var(--nav-bd);
+            border-radius: 3px;
+            transition: all 0.15s ease;
+        }
+
+        .tool a:hover {
+            background: #20314b;
+            border-color: var(--blue);
+            color: #60a5fa;
+        }
+
+        body.light-theme .tool a:hover {
+            background: #cfe3f8;
+            color: #1f5fa6;
+        }
+
+        main {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 20px 16px 80px
+        }
+
+        .id {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-bd);
+            border-left: 4px solid var(--blue-sub);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, .4);
+            padding: 9px 14px;
+            margin-bottom: 22px;
+            font-size: 13.5px;
+            color: var(--tx);
+            border-radius: 4px;
+        }
+
+        .win {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-bd);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, .55), 0 8px 10px -6px rgba(0, 0, 0, .55);
+            margin-bottom: 34px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .ttl {
+            background: linear-gradient(90deg, var(--ttl-1), var(--ttl-2));
+            color: var(--ttl-tx);
+            padding: 7px 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--panel-bd);
+        }
+
+        .ttl i {
+            margin-left: auto;
+            font-style: normal;
+            letter-spacing: 5px;
+            font-size: 11px;
+            opacity: .85;
+        }
+
+        .bd {
+            padding: 14px 18px 18px
+        }
+
+        .aim {
+            background: var(--aim-bg);
+            border: 1px solid var(--aim-bd);
+            border-left: 4px solid var(--blue);
+            padding: 7px 12px;
+            margin: 0 0 12px;
+            border-radius: 3px;
+        }
+
+        h4 {
+            margin: 16px 0 6px;
+            color: var(--blue);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            border-bottom: 1px solid var(--panel-bd);
+            padding-bottom: 4px;
+        }
+
+        p {
+            margin: 5px 0
+        }
+
+        ol,
+        ul {
+            margin: 3px 0;
+            padding-left: 22px
+        }
+
+        li {
+            margin: 4px 0
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 8px 0;
+            font-size: 13px;
+            background: var(--tbl-bg);
+            border: 1px solid var(--tbl-bd);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            border: 1px solid var(--tbl-bd);
+            padding: 5px 9px;
+            text-align: left;
+            vertical-align: top
+        }
+
+        th {
+            background: var(--tbl-th);
+            color: var(--blue);
+            font-weight: 700;
+        }
+
+        tt {
+            font: 12.5px Consolas, monospace;
+            background: var(--tt-bg);
+            color: var(--tt-tx);
+            padding: 1px 6px;
+            border: 1px solid var(--tt-bd);
+            border-radius: 3px
+        }
+
+        .cli {
+            border: 1px solid var(--cli-bd);
+            margin: 10px 0;
+            background: var(--cli-bg);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .cb {
+            display: flex;
+            align-items: center;
+            background: var(--cli-bar);
+            color: #cbd5e1;
+            padding: 4px 10px;
+            font-size: 12px;
+            border-bottom: 1px solid var(--cli-bd);
+        }
+
+        .cb .l {
+            margin-left: 8px;
+            color: var(--blue-sub);
+            font-family: Consolas, monospace;
+        }
+
+        .cp {
+            margin-left: auto;
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            font: 12px inherit;
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            border-radius: 3px;
+            padding: 2px 10px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        body.light-theme .cp {
+            background: linear-gradient(#fafafa, #d8d8d8);
+            border-color: #777;
+            color: #222;
+        }
+
+        .cp:hover {
+            background: #2563eb;
+            color: #fff;
+            border-color: #3b82f6;
+        }
+
+        .cp.ok {
+            background: #059669;
+            color: #fff;
+            border-color: #10b981;
+        }
+
+        pre {
+            margin: 0;
+            padding: 10px 14px;
+            overflow: auto;
+            max-height: 420px;
+            color: #e2e8f0;
+            font: 13px/1.55 Consolas, "Courier New", monospace;
+            background: var(--cli-bg);
+        }
+
+        .out {
+            background: var(--out-bg);
+            color: var(--out-tx);
+            border: 1px solid var(--out-bd);
+            padding: 8px 12px;
+            font: 12.5px/1.55 Consolas, monospace;
+            white-space: pre;
+            overflow: auto;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        .note {
+            background: var(--note-bg);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-left: 4px solid var(--note-bd);
+            padding: 7px 12px;
+            margin: 10px 0;
+            border-radius: 3px;
+        }
+
+        .fig {
+            margin: 12px 0;
+            border: 1px solid var(--fig-bd);
+            background-color: var(--fig-bg);
+            background-image: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+            background-size: 20px 20px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        body.light-theme .fig {
+            background-image: linear-gradient(#eef2f7 1px, transparent 1px), linear-gradient(90deg, #eef2f7 1px, transparent 1px);
+        }
+
+        .fig svg {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 350px
+        }
+
+        .fig svg line {
+            stroke: var(--blue, #60a5fa);
+            stroke-width: 1.8;
+        }
+
+        .fig svg text.t-main {
+            fill: var(--tx, #f8fafc);
+            font-weight: 700;
+        }
+
+        .fig svg text.t-sub {
+            fill: var(--tx-mut, #94a3b8);
+        }
+
+        .fig svg text.t-port {
+            fill: var(--blue-sub, #38bdf8);
+            font-weight: 600;
+        }
+
+        .fig figcaption {
+            background: var(--fig-cap);
+            border-top: 1px solid var(--fig-bd);
+            color: var(--tx-mut);
+            font-size: 12px;
+            padding: 4px 10px;
+            text-align: center
+        }
+
+        .cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0 14px
+        }
+
+        @media(max-width:700px) {
+            .cols {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="menu">
+            <span>File</span><span>Edit</span><span>Options</span><span>View</span><span>Tools</span><span>Extensions</span><span>Help</span>
+            <button id="themeToggle" class="theme-btn" title="Switch Theme">☀️ Light</button>
+            <b>Cisco Packet Tracer</b>
+        </div>
+        <div class="tool"><a href="#e1">Exp 1</a><a href="#e2">Exp 2</a><a href="#e3">Exp 3</a><a href="#e4">Exp 4</a><a
+                href="#e5">Exp 5</a><a href="#e6">Exp 6</a><a href="#e7">Exp 7</a><a href="#e8">Exp 8</a></div>
+    </header>
+    <main>
+        <div class="id"><b>Computer Network Lab</b> · Branch/Class/Batch: AI&amp;DS/T.E/A1 · Roll no.: A27 · Name:
+            Prajwal Ashok Zolage</div>
+
+        <div class="win" id="e1">
+            <div class="ttl">Experiment 1 – Networking commands, cables &amp; connectors<i>_ □ x</i></div>
+            <div class="bd">
+                <p class="aim"><b>Aim:</b> To study different networking commands and network cables &amp; connectors.
+                </p>
+                <h4>Theory – Networking commands</h4>
+                <p>Networking commands are command-line utilities used to configure, test, troubleshoot and monitor
+                    communication between computers. They help to check IP configuration, verify communication with
+                    remote devices and analyse network performance.</p>
+                <table>
+                    <tr>
+                        <th>Command</th>
+                        <th>Purpose</th>
+                    </tr>
+                    <tr>
+                        <td><tt>ipconfig</tt> / <tt>ipconfig /all</tt></td>
+                        <td>Displays IP address, subnet mask, default gateway, MAC address, DNS and other TCP/IP details
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><tt>ping</tt></td>
+                        <td>Tests connectivity by sending ICMP Echo Request packets and showing the replies, time and
+                            loss</td>
+                    </tr>
+                    <tr>
+                        <td><tt>tracert</tt></td>
+                        <td>Displays the route (hops) taken by packets to reach the destination</td>
+                    </tr>
+                    <tr>
+                        <td><tt>pathping</tt></td>
+                        <td>Combines ping and tracert; shows packet loss at each hop</td>
+                    </tr>
+                    <tr>
+                        <td><tt>netstat</tt></td>
+                        <td>Shows active connections, listening ports and protocol statistics</td>
+                    </tr>
+                    <tr>
+                        <td><tt>nslookup</tt></td>
+                        <td>Finds the IP address of a domain name using DNS</td>
+                    </tr>
+                    <tr>
+                        <td><tt>hostname</tt></td>
+                        <td>Displays the name of the local computer</td>
+                    </tr>
+                    <tr>
+                        <td><tt>getmac</tt></td>
+                        <td>Displays the MAC address of the network adapter</td>
+                    </tr>
+                    <tr>
+                        <td><tt>arp -a</tt></td>
+                        <td>Displays the ARP cache (IP address to MAC address table)</td>
+                    </tr>
+                </table>
+                <h4>Commands to execute (Command Prompt)</h4>
+                <div class="cli" data-n="Command Prompt" data-l="C:\Users\STUDENT>">
+                    <script type="text/plain">
+ipconfig
+ipconfig /all
+ping google.com
+tracert google.com
+nslookup google.com
+netstat
+arp -a
+hostname
+getmac
+pathping google.com
+</script>
+                </div>
+                <div class="out">C:\Users\STUDENT>ping google.com
+                    Reply from 192.178.174.101: bytes=32 time=52ms TTL=113
+                    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)</div>
+                <h4>Theory – Network cables</h4>
+                <table>
+                    <tr>
+                        <th>Cable</th>
+                        <th>Description and use</th>
+                    </tr>
+                    <tr>
+                        <td>STP (Shielded Twisted Pair)</td>
+                        <td>Twisted copper pairs with a metallic shield against EMI and crosstalk; industrial and
+                            high-speed networks; costlier and harder to install</td>
+                    </tr>
+                    <tr>
+                        <td>UTP (Unshielded Twisted Pair)</td>
+                        <td>Four twisted copper pairs, no shield; most common LAN cable with RJ-45; cheap, light, easy
+                            to install</td>
+                    </tr>
+                    <tr>
+                        <td>Coaxial</td>
+                        <td>Central copper conductor, insulation, metal shield and jacket; CATV, broadband, CCTV, radio
+                            frequency</td>
+                    </tr>
+                    <tr>
+                        <td>Fiber optic</td>
+                        <td>Data as light in glass or plastic strands; very high bandwidth, long distance, immune to
+                            EMI; backbones and data centers</td>
+                    </tr>
+                </table>
+                <h4>Theory – Network connectors</h4>
+                <table>
+                    <tr>
+                        <th>Connector</th>
+                        <th>Description and use</th>
+                    </tr>
+                    <tr>
+                        <td>RJ-45</td>
+                        <td>8-pin connector for UTP/STP Ethernet; standard LAN connector for PCs, switches, routers</td>
+                    </tr>
+                    <tr>
+                        <td>RJ-11</td>
+                        <td>Small 6-pin connector for telephone and DSL lines, modems and fax</td>
+                    </tr>
+                    <tr>
+                        <td>BNC</td>
+                        <td>Bayonet-lock connector for coaxial cable; CCTV, cable TV, lab equipment</td>
+                    </tr>
+                    <tr>
+                        <td>ST</td>
+                        <td>Fiber connector with bayonet locking; campus networks and older installations</td>
+                    </tr>
+                    <tr>
+                        <td>LC</td>
+                        <td>Compact fiber connector with push-pull locking; high-density switches and data centers</td>
+                    </tr>
+                    <tr>
+                        <td>SC</td>
+                        <td>Square fiber connector with push-pull locking; FTTH and telecom networks</td>
+                    </tr>
+                </table>
+                <div class="cols">
+                    <div>
+                        <h4>Cable standards (T568)</h4>
+                        <table>
+                            <tr>
+                                <th>T568A</th>
+                                <td>white/green, green, white/orange, blue, white/blue, orange, white/brown, brown</td>
+                            </tr>
+                            <tr>
+                                <th>T568B</th>
+                                <td>white/orange, orange, white/green, blue, white/blue, green, white/brown, brown</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <h4>Which cable where</h4>
+                        <table>
+                            <tr>
+                                <th>Straight-through</th>
+                                <td>PC–Switch, Router–Switch (different devices)</td>
+                            </tr>
+                            <tr>
+                                <th>Crossover</th>
+                                <td>PC–PC, Switch–Switch, PC–Router (similar devices)</td>
+                            </tr>
+                            <tr>
+                                <th>Console</th>
+                                <td>PC to router/switch console port</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <h4>Procedure</h4>
+                <ol>
+                    <li>Open Command Prompt.</li>
+                    <li>Execute the networking commands one by one.</li>
+                    <li>Observe the output of each command.</li>
+                    <li>Identify different network cables and connectors and note their applications.</li>
+                </ol>
+                <h4>Conclusion</h4>
+                <p>The purpose and use of networking commands in diagnosing network problems were understood, and
+                    different cables and connectors with their applications were studied.</p>
+            </div>
+        </div>
+
+        <div class="win" id="e2">
+            <div class="ttl">Experiment 2 – Wired LAN and PING in Packet Tracer<i>_ □ x</i></div>
+            <div class="bd">
+                <p class="aim"><b>Aim:</b> Simulate a wired LAN using networking devices and test connectivity using the
+                    PING utility.</p>
+                <h4>Theory</h4>
+                <p>A Local Area Network (LAN) connects computers within a limited geographical area using networking
+                    devices like switches and cables. A central switch (such as Cisco Catalyst 2960) forwards data frames
+                    based on MAC addresses without collisions. The <b>PING</b> utility uses <b>ICMP Echo Request</b> (Type 8)
+                    and <b>ICMP Echo Reply</b> (Type 0) to test end-to-end reachability and measure round-trip time between hosts.
+                    When first communicating, computers use ARP (Address Resolution Protocol) to resolve IP addresses to physical MAC addresses.</p>
+
+                <h4>Procedures</h4>
+                <ol>
+                    <li>Open <b>Cisco Packet Tracer</b>.</li>
+                    <li>Drag and place <b>two PCs (PC0 and PC1)</b> and <b>one Switch (2960-24TT)</b> onto the workspace.</li>
+                    <li>Connect each PC to the switch using <b>Copper Straight-Through</b> cables:
+                        <ul>
+                            <li>PC0 (FastEthernet0) &rarr; Switch0 (FastEthernet0/1)</li>
+                            <li>PC1 (FastEthernet0) &rarr; Switch0 (FastEthernet0/2)</li>
+                        </ul>
+                    </li>
+                    <li>Configure the IP addresses on both PCs:
+                        <ul>
+                            <li><b>PC0:</b> IP Address: <tt>192.168.1.1</tt>, Subnet Mask: <tt>255.255.255.0</tt></li>
+                            <li><b>PC1:</b> IP Address: <tt>192.168.1.2</tt>, Subnet Mask: <tt>255.255.255.0</tt></li>
+                        </ul>
+                    </li>
+                    <li>Wait until the link lights on the switch turn <b>green</b>, indicating that the connections are active (Spanning Tree Protocol listening/learning completed).</li>
+                    <li>Open the Command Prompt on <b>PC0</b> (Desktop &rarr; Command Prompt).</li>
+                    <li>Execute the following command:
+                        <div class="cli" data-n="PC0 · Command Prompt" data-l="C:\&gt;">
+                            <script type="text/plain">
+ping 192.168.1.2
+</script>
+                        </div>
+                    </li>
+                    <li>Observe the reply messages to verify successful communication:
+                        <div class="out">Pinging 192.168.1.2 with 32 bytes of data:
+
+Reply from 192.168.1.2: bytes=32 time&lt;1ms TTL=128
+Reply from 192.168.1.2: bytes=32 time&lt;1ms TTL=128
+Reply from 192.168.1.2: bytes=32 time&lt;1ms TTL=128
+Reply from 192.168.1.2: bytes=32 time&lt;1ms TTL=128
+
+Ping statistics for 192.168.1.2:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms</div>
+                    </li>
+                    <li>Repeat the ping test from <b>PC1 to PC0</b> using:
+                        <div class="cli" data-n="PC1 · Command Prompt" data-l="C:\&gt;">
+                            <script type="text/plain">
+ping 192.168.1.1
+</script>
+                        </div>
+                        <div class="out">Pinging 192.168.1.1 with 32 bytes of data:
+
+Reply from 192.168.1.1: bytes=32 time&lt;1ms TTL=128
+Reply from 192.168.1.1: bytes=32 time&lt;1ms TTL=128
+Reply from 192.168.1.1: bytes=32 time&lt;1ms TTL=128
+Reply from 192.168.1.1: bytes=32 time&lt;1ms TTL=128
+
+Ping statistics for 192.168.1.1:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms</div>
+                    </li>
+                    <li>Verify that packets are transmitted and received successfully.</li>
+                </ol>
+
+                <h4>Device Addressing Table</h4>
+                <table>
+                    <tr>
+                        <th>Device</th>
+                        <th>Interface</th>
+                        <th>IP Address</th>
+                        <th>Subnet Mask</th>
+                        <th>Switch Port</th>
+                    </tr>
+                    <tr>
+                        <td><b>PC0</b></td>
+                        <td>FastEthernet0</td>
+                        <td>192.168.1.1</td>
+                        <td>255.255.255.0</td>
+                        <td>Fa0/1</td>
+                    </tr>
+                    <tr>
+                        <td><b>Switch0</b></td>
+                        <td>2960-24TT</td>
+                        <td>Layer 2 Switch</td>
+                        <td>N/A</td>
+                        <td>Fa0/1, Fa0/2</td>
+                    </tr>
+                    <tr>
+                        <td><b>PC1</b></td>
+                        <td>FastEthernet0</td>
+                        <td>192.168.1.2</td>
+                        <td>255.255.255.0</td>
+                        <td>Fa0/2</td>
+                    </tr>
+                </table>
+
+                <figure class="fig" data-f="lan"
+                    data-c="Fig 2.1: PC0 (192.168.1.1) – Switch0 (2960-24TT) – PC1 (192.168.1.2) in Cisco Packet Tracer"></figure>
+
+                <div class="note"><b>Note on ARP:</b> The very first ping may show <i>Request timed out</i> because PC0 broadcasts an ARP request to learn PC1's MAC address before sending ICMP packets. Subsequent packets receive immediate replies.</div>
+
+                <h4>Conclusion</h4>
+                <p>A wired Local Area Network was successfully simulated using two PCs and a Cisco 2960 switch in Cisco Packet Tracer. Bidirectional communication between PC0 (192.168.1.1) and PC1 (192.168.1.2) was verified using the PING utility with 0% packet loss.</p>
+            </div>
+        </div>
+
+        <div class="win" id="e3">
+            <div class="ttl">Experiment 3 – Network topologies<i>_ □ x</i></div>
+            <div class="bd">
+                <p class="aim"><b>Aim:</b> Create different network topologies using Cisco Packet Tracer; perform ping
+                    and file sharing between devices.</p>
+                <h4>Theory</h4>
+                <p>Network topology is the arrangement of devices and links in a network. <b>Star</b>: all devices
+                    connect to a central switch. <b>Bus</b>: devices share one common backbone (hubs in a chain).
+                    <b>Ring</b>: devices form a closed loop. <b>Mesh</b>: every node connects to every other node.
+                    <b>Tree</b>: hierarchy of star networks.
+                </p>
+                <h4>Steps to perform (repeat for each topology)</h4>
+                <ol>
+                    <li>Place the devices shown in the figure (2960 switches, hubs, PCs, Server-PT).</li>
+                    <li>Connect them with <b>Copper Straight-Through</b> (PC–switch/hub) and <b>Copper Cross-Over</b>
+                        (switch–switch, hub–hub).</li>
+                    <li>Assign IPs 192.168.1.10, .11, .12, .13 (mask 255.255.255.0) to PCs and 192.168.1.100 to the
+                        Server.</li>
+                    <li>Test connectivity with ping from PC0 to every other PC.</li>
+                    <li>File sharing: Server → <b>Services → FTP → On</b>; add user <tt>cisco</tt> / password
+                        <tt>cisco</tt> with all permissions. From a PC run <tt>ftp 192.168.1.100</tt>, then <tt>put</tt>
+                        and <tt>get</tt> a file.
+                    </li>
+                </ol>
+                <div class="cli" data-n="PC0 · Command Prompt" data-l="C:\&gt;">
+                    <script type="text/plain">
+ping 192.168.1.11
+ping 192.168.1.12
+ping 192.168.1.13
+ftp 192.168.1.100
+</script>
+                </div>
+                <div class="out">Username: cisco Password: cisco
+                    ftp> dir ftp> put test.txt ftp> get filename ftp> quit</div>
+                <div class="cols">
+                    <figure class="fig" data-f="star" data-c="Fig 3.1: Star topology"></figure>
+                    <figure class="fig" data-f="bus" data-c="Fig 3.2: Bus topology (hubs)"></figure>
+                    <figure class="fig" data-f="ring" data-c="Fig 3.3: Ring topology"></figure>
+                    <figure class="fig" data-f="mesh" data-c="Fig 3.4: Mesh topology"></figure>
+                </div>
+                <figure class="fig" data-f="tree" data-c="Fig 3.5: Tree topology"></figure>
+                <h4>Conclusion</h4>
+                <p>Star, bus, ring, mesh and tree topologies were created, and connectivity and file transfer were
+                    tested successfully.</p>
+            </div>
+        </div>
+
+        <div class="win" id="e4">
+            <div class="ttl">Experiment 4 – Router Configuration &amp; Subnet Connectivity<i>_ □ x</i></div>
+            <div class="bd">
+                <p class="aim"><b>Aim:</b> Connect two distinct subnets using a Router and Switches in Cisco Packet Tracer; configure router interfaces and verify connectivity using PING and Simulation Mode.</p>
+
+                <h4>Theory</h4>
+                <p>A <b>Router</b> operates at Layer 3 (Network Layer) of the OSI Model to interconnect distinct logical IP subnets (LAN 1: <tt>192.168.1.0/24</tt> and LAN 2: <tt>192.168.2.0/24</tt>). While switches forward frames within a single broadcast domain using MAC addresses, a router examines destination IP addresses and forwards packets across network boundaries. Each host PC requires a <b>Default Gateway</b> (the router's interface IP on that local subnet) to send packets destined outside its local subnet.</p>
+                <p>In <b>Simulation Mode</b>, Cisco Packet Tracer enables step-by-step observation of <b>ARP (Address Resolution Protocol)</b> resolving MAC addresses and <b>ICMP (Internet Control Message Protocol)</b> packets traversing from source PC &rarr; local switch &rarr; router gateway &rarr; remote switch &rarr; destination PC.</p>
+
+                <h4>Procedure</h4>
+                <ol>
+                    <li>Open <b>Cisco Packet Tracer</b>.</li>
+                    <li>Place the following devices in the workspace:
+                        <ul>
+                            <li><b>2 PCs</b> (PC0 and PC1)</li>
+                            <li><b>2 Switches</b> (Switch0 and Switch1 – 2960)</li>
+                            <li><b>1 Router</b> (Router0 – 1941 or 2911)</li>
+                        </ul>
+                    </li>
+                    <li>Connect the devices using <b>Copper Straight-Through</b> cables as shown below:
+                        <p style="margin:6px 0;font-weight:bold;color:#1f5fa6">PC0 ─── Switch0 ─── Router0 ─── Switch1 ─── PC1</p>
+                        <ul>
+                            <li>PC0 (FastEthernet0) &rarr; Switch0 (FastEthernet0/1)</li>
+                            <li>Switch0 (FastEthernet0/2) &rarr; Router0 (GigabitEthernet0/0)</li>
+                            <li>Router0 (GigabitEthernet0/1) &rarr; Switch1 (FastEthernet0/2)</li>
+                            <li>Switch1 (FastEthernet0/1) &rarr; PC1 (FastEthernet0)</li>
+                        </ul>
+                    </li>
+                    <li>Assign IP addresses to the PCs and router interfaces:
+                        <div class="table-responsive">
+                            <table>
+                                <tr>
+                                    <th>Device</th>
+                                    <th>Interface</th>
+                                    <th>IP Address</th>
+                                    <th>Subnet Mask</th>
+                                    <th>Default Gateway</th>
+                                </tr>
+                                <tr>
+                                    <td><b>PC0</b></td>
+                                    <td>FastEthernet0</td>
+                                    <td>192.168.1.2</td>
+                                    <td>255.255.255.0</td>
+                                    <td>192.168.1.1</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Router0</b></td>
+                                    <td>GigabitEthernet0/0<br>GigabitEthernet0/1</td>
+                                    <td>192.168.1.1<br>192.168.2.1</td>
+                                    <td>255.255.255.0<br>255.255.255.0</td>
+                                    <td>N/A (LAN 1 Gateway)<br>N/A (LAN 2 Gateway)</td>
+                                </tr>
+                                <tr>
+                                    <td><b>PC1</b></td>
+                                    <td>FastEthernet0</td>
+                                    <td>192.168.2.2</td>
+                                    <td>255.255.255.0</td>
+                                    <td>192.168.2.1</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+                    <li>Configure the router interfaces and enable them using the following commands:
+                        <div class="cli" data-n="Router0 · CLI" data-l="Router#">
+                            <script type="text/plain">
+enable
+configure terminal
+
+interface gigabitEthernet 0/0
+ip address 192.168.1.1 255.255.255.0
+no shutdown
+exit
+
+interface gigabitEthernet 0/1
+ip address 192.168.2.1 255.255.255.0
+no shutdown
+exit
+
+end
+write memory
+</script>
+                        </div>
+                    </li>
+                    <li>Verify the physical connectivity by checking that all links turn <b>green</b>.</li>
+                    <li>Test network connectivity by opening the Command Prompt on <b>PC0</b> and executing:
+                        <div class="cli" data-n="PC0 · Command Prompt" data-l="C:\&gt;">
+                            <script type="text/plain">
+ping 192.168.2.2
+</script>
+                        </div>
+                        <div class="out">Pinging 192.168.2.2 with 32 bytes of data:
+
+Reply from 192.168.2.2: bytes=32 time=14ms TTL=127
+Reply from 192.168.2.2: bytes=32 time=9ms TTL=127
+Reply from 192.168.2.2: bytes=32 time=10ms TTL=127
+Reply from 192.168.2.2: bytes=32 time=11ms TTL=127
+
+Ping statistics for 192.168.2.2:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)</div>
+                        <p>Verify that replies are received successfully.</p>
+                    </li>
+                    <li>Switch from <b>Real-Time Mode</b> to <b>Simulation Mode</b>.</li>
+                    <li>In the <b>Event List Filters</b>, select <b>ARP</b> and <b>ICMP</b> packets.</li>
+                    <li>Generate traffic by sending a <b>Simple PDU</b> or by executing the Ping command from PC0 to PC1.</li>
+                    <li>Click <b>Capture/Forward</b> repeatedly and observe the movement of each packet through:
+                        <ul>
+                            <li>PC0</li>
+                            <li>Switch0</li>
+                            <li>Router0</li>
+                            <li>Switch1</li>
+                            <li>PC1</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <figure class="fig" data-f="subnet" data-c="Fig 4.1: PC0 ─── Switch0 ─── Router0 ─── Switch1 ─── PC1 (Packet Tracer topology)"></figure>
+
+                <h4>Conclusion</h4>
+                <p>The router interfaces were successfully configured to connect two subnets (192.168.1.0/24 and 192.168.2.0/24). Full end-to-end connectivity between PC0 and PC1 was verified using the PING utility, and packet flow through the switches and router was observed in Simulation Mode.</p>
+            </div>
+        </div>
+
+        <div class="win" id="e5">
+            <div class="ttl">Experiment 5 – Network Traffic Analysis using Wireshark<i>_ □ x</i></div>
+            <div class="bd">
+                <p class="aim"><b>Aim:</b> To analyze network traffic using the Wireshark tool: packet capture, display filtering, and layer-by-layer inspection of Ethernet frames, IPv4 packets, ICMP, HTTP/TLS, TCP, and UDP headers.</p>
+
+                <h4>Theory</h4>
+                <p><b>Wireshark</b> is an industry-standard open-source packet analyzer. It intercepts network traffic passing across an active network interface card (NIC) and parses raw binary bitstreams into human-readable protocol layers. The Wireshark interface consists of three primary panes:</p>
+                <ul>
+                    <li><b>Packet List Pane (Top):</b> Displays a summary of each captured packet (Packet No., Time, Source IP, Destination IP, Protocol, Length, and Info).</li>
+                    <li><b>Packet Details Pane (Middle):</b> Shows protocol header fields in an expandable tree structure corresponding to OSI/TCP-IP layers (Frame &rarr; Ethernet II &rarr; IPv4 &rarr; TCP/UDP &rarr; Application).</li>
+                    <li><b>Packet Bytes Pane (Bottom):</b> Displays the actual hexadecimal and ASCII representation of the selected packet.</li>
+                </ul>
+                <p>Wireshark supports two filtering paradigms: <b>Capture Filters</b> (written in Berkeley Packet Filter / BPF syntax to restrict captured traffic before saving to memory) and <b>Display Filters</b> (applied in real-time on captured packets to isolate specific protocols, IP addresses, or flags without losing data).</p>
+
+                <h4>Procedures</h4>
+                <ol>
+                    <li><b>Open Wireshark and select interface:</b> Launch Wireshark and double-click the active network interface showing live traffic activity (e.g., <b>Wi-Fi</b> or <b>Ethernet</b>).</li>
+                    <li><b>Start capture and generate traffic:</b> Click <b>Start Capturing Packets</b> (blue shark fin icon). Generate real network traffic by opening a web browser or executing the following command in the terminal / command prompt:
+                        <div class="cli" data-n="Command Prompt" data-l="C:\&gt;">
+                            <script type="text/plain">
+ping google.com
+</script>
+                        </div>
+                    </li>
+                    <li><b>Stop packet capture:</b> Allow 20–30 seconds to capture sufficient packets, then click the red square button (<b>Stop Capturing Packets</b>).</li>
+                    <li><b>Apply display filters:</b> In the filter toolbar at the top, enter display filters such as <tt>ip</tt>, <tt>icmp</tt>, <tt>tcp</tt>, <tt>udp</tt>, <tt>http</tt>, or <tt>tls</tt> and press Enter to isolate target streams.</li>
+                    <li><b>Inspect Ethernet II (Data Link Layer):</b> Select any packet and expand the <b>Ethernet II</b> section in the Packet Details pane to observe:
+                        <ul>
+                            <li><b>Source MAC Address:</b> Hardware MAC address of the sending device / host NIC.</li>
+                            <li><b>Destination MAC Address:</b> Hardware MAC address of the default gateway router or destination host.</li>
+                            <li><b>Type:</b> EtherType code (e.g., <tt>0x0800</tt> for IPv4, <tt>0x0806</tt> for ARP, <tt>0x86dd</tt> for IPv6).</li>
+                        </ul>
+                    </li>
+                    <li><b>Inspect IPv4 (Network Layer):</b> Expand <b>Internet Protocol Version 4</b> to inspect essential IP header fields:
+                        <ul>
+                            <li><b>Source &amp; Destination IP:</b> Originating host IP and recipient IP.</li>
+                            <li><b>Time to Live (TTL):</b> Hop-limit counter decremented by each router (e.g., 64, 128, or 255).</li>
+                            <li><b>Protocol:</b> Higher-layer protocol identifier (<tt>1</tt> for ICMP, <tt>6</tt> for TCP, <tt>17</tt> for UDP).</li>
+                            <li><b>Total Length &amp; Header Checksum:</b> Overall IP packet byte length and integrity verification.</li>
+                        </ul>
+                    </li>
+                    <li><b>Analyze ICMP (PING) Packets:</b> Apply the <tt>icmp</tt> display filter to analyze ping packets:
+                        <ul>
+                            <li><b>Echo (ping) Request:</b> Type 8, Code 0 sent from client host to target.</li>
+                            <li><b>Echo (ping) Reply:</b> Type 0, Code 0 received from target back to client host.</li>
+                            <li><b>Identifier &amp; Sequence Number:</b> Fields used by the operating system to correlate matching requests and replies.</li>
+                        </ul>
+                    </li>
+                    <li><b>Examine HTTP and TLS Streams:</b> Apply the <tt>http</tt> or <tt>tls</tt> filter:
+                        <ul>
+                            <li><b>HTTP:</b> Inspect plain-text request method (<tt>GET / HTTP/1.1</tt>), <tt>Host</tt>, <tt>User-Agent</tt>, and status code (<tt>HTTP/1.1 200 OK</tt>).</li>
+                            <li><b>TLS (HTTPS):</b> Observe encrypted transport handshakes: <b>Client Hello</b> (cipher suites offered), <b>Server Hello</b> (cipher suite selected), Certificate exchange, and Encrypted Application Data.</li>
+                        </ul>
+                    </li>
+                    <li><b>Analyze TCP Header Fields:</b> Apply the <tt>tcp</tt> filter to analyze reliable transport layer mechanisms:
+                        <ul>
+                            <li><b>Source &amp; Destination Ports:</b> Ephemeral client port (e.g. 52410) and well-known server port (e.g. 80 or 443).</li>
+                            <li><b>Sequence &amp; Acknowledgment Numbers:</b> Byte-stream tracking for in-order delivery.</li>
+                            <li><b>Control Flags:</b> Observe the 3-Way Handshake: <tt>[SYN]</tt> &rarr; <tt>[SYN, ACK]</tt> &rarr; <tt>[ACK]</tt>, and connection teardown <tt>[FIN, ACK]</tt>.</li>
+                            <li><b>Window Size:</b> Flow control buffer advertised by the receiver.</li>
+                        </ul>
+                    </li>
+                    <li><b>Analyze UDP Header Fields:</b> Apply the <tt>udp</tt> filter to analyze connectionless transport mechanisms (e.g., DNS queries):
+                        <ul>
+                            <li><b>Source &amp; Destination Ports:</b> Client random port and standard service port (e.g. Port 53 for DNS).</li>
+                            <li><b>Length:</b> 8-byte UDP header + payload size.</li>
+                            <li><b>Checksum:</b> Optional error-detection checksum value.</li>
+                        </ul>
+                    </li>
+                    <li><b>Record Observations &amp; Conclude:</b> Document all captured protocol header values in the observation table and summarize network protocol behaviors.</li>
+                </ol>
+
+                <h4>Display Filters Reference</h4>
+                <div class="cli" data-n="Wireshark · Useful Display Filters" data-l="Apply a display filter...">
+                    <script type="text/plain">
+! Filter by protocol:
+icmp
+http
+tls
+tcp
+udp
+dns
+arp
+
+! Filter by IP address:
+ip.addr == 192.168.1.1
+ip.src == 192.168.1.2 && ip.dst == 8.8.8.8
+
+! Filter TCP 3-Way Handshake SYN packets:
+tcp.flags.syn == 1 && tcp.flags.ack == 0
+
+! Filter DNS Queries / Responses:
+dns.qry.name contains "google"
+
+! Filter HTTP Requests only:
+http.request.method == "GET"
+</script>
+                </div>
+
+                <h4>Detailed Layer-by-Layer Observation Table</h4>
+                <div class="table-responsive">
+                    <table>
+                        <tr>
+                            <th>OSI / TCP-IP Layer</th>
+                            <th>Protocol Dissected</th>
+                            <th>Key Header Fields Observed</th>
+                            <th>Sample Captured Value</th>
+                        </tr>
+                        <tr>
+                            <td><b>Data Link Layer</b></td>
+                            <td>Ethernet II</td>
+                            <td>Destination MAC, Source MAC, EtherType</td>
+                            <td>Dst: <tt>e0:28:6d:31:42:01</tt><br>Src: <tt>48:2a:e3:5a:12:ef</tt><br>Type: <tt>IPv4 (0x0800)</tt></td>
+                        </tr>
+                        <tr>
+                            <td><b>Network Layer</b></td>
+                            <td>IPv4</td>
+                            <td>Version, Header Length, Total Length, TTL, Protocol, Src/Dst IP</td>
+                            <td>Version: 4, IHL: 20 bytes<br>TTL: 128<br>Protocol: <tt>ICMP (1)</tt> / <tt>TCP (6)</tt><br>Src: <tt>192.168.1.2</tt>, Dst: <tt>142.250.190.46</tt></td>
+                        </tr>
+                        <tr>
+                            <td><b>Network Layer</b></td>
+                            <td>ICMP</td>
+                            <td>Type, Code, Identifier, Sequence Number</td>
+                            <td>Echo Request: <tt>Type 8, Code 0</tt><br>Echo Reply: <tt>Type 0, Code 0</tt><br>Seq: 1, ID: 0x0001</td>
+                        </tr>
+                        <tr>
+                            <td><b>Transport Layer</b></td>
+                            <td>TCP</td>
+                            <td>Source Port, Destination Port, Seq/Ack No., Flags, Window Size</td>
+                            <td>Src Port: 54210, Dst Port: 443<br>Flags: <tt>0x002 [SYN]</tt> / <tt>0x012 [SYN, ACK]</tt><br>Window: 64240 bytes</td>
+                        </tr>
+                        <tr>
+                            <td><b>Transport Layer</b></td>
+                            <td>UDP</td>
+                            <td>Source Port, Destination Port, Length, Checksum</td>
+                            <td>Src Port: 61245, Dst Port: 53 (DNS)<br>Length: 42 bytes<br>Checksum: 0x7c4f [verified]</td>
+                        </tr>
+                        <tr>
+                            <td><b>Application Layer</b></td>
+                            <td>HTTP / TLS</td>
+                            <td>Request Method, URI, Response Code, TLS Handshake Type</td>
+                            <td>HTTP: <tt>GET /index.html HTTP/1.1</tt> (200 OK)<br>TLS: <tt>Client Hello (Type 1)</tt>, Cipher: TLS_AES_256_GCM</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h4>Sample Wireshark Dissection Trees</h4>
+                <div class="cols">
+                    <div class="out"><b>[Layer 2 - Ethernet II Frame]</b>
+Ethernet II, Src: Intel_5a:12:ef (48:2a:e3:5a:12:ef), Dst: Cisco_31:42:01 (e0:28:6d:31:42:01)
+    Destination: Cisco_31:42:01 (e0:28:6d:31:42:01)
+    Source: Intel_5a:12:ef (48:2a:e3:5a:12:ef)
+    Type: IPv4 (0x0800)</div>
+                    <div class="out"><b>[Layer 3 - IPv4 Header]</b>
+Internet Protocol Version 4, Src: 192.168.1.2, Dst: 142.250.190.46
+    0100 .... = Version: 4
+    .... 0101 = Header Length: 20 bytes (5)
+    Total Length: 60
+    Time to Live: 128
+    Protocol: ICMP (1)
+    Source Address: 192.168.1.2
+    Destination Address: 142.250.190.46</div>
+                </div>
+
+                <div class="cols">
+                    <div class="out"><b>[Layer 4 - TCP 3-Way Handshake (SYN)]</b>
+Transmission Control Protocol, Src Port: 54210, Dst Port: 443
+    Source Port: 54210
+    Destination Port: 443
+    Sequence Number: 0 (relative sequence number)
+    Acknowledgment Number: 0
+    Flags: 0x002 (SYN)
+        0... .... = Urgent: Not set
+        .0.. .... = Acknowledgment: Not set
+        ...0 .... = Push: Not set
+        .... .0.. = Reset: Not set
+        .... ..1. = Syn: Set
+        .... ...0 = Fin: Not set
+    Window: 64240</div>
+                    <div class="out"><b>[Layer 4 - UDP Header (DNS Query)]</b>
+User Datagram Protocol, Src Port: 61245, Dst Port: 53
+    Source Port: 61245
+    Destination Port: 53
+    Length: 42
+    Checksum: 0x7c4f [unverified]
+Domain Name System (query)
+    Queries
+        google.com: type A, class IN</div>
+                </div>
+
+                <h4>Result</h4>
+                <p>Network traffic was successfully captured from the live interface using Wireshark. The packets were isolated using display filters, and header fields across Data Link (Ethernet II), Network (IPv4/ICMP), Transport (TCP/UDP), and Application (HTTP/TLS) layers were comprehensively analyzed.</p>
+
+                <h4>Conclusion</h4>
+                <p>Wireshark provides deep visibility into network communications by parsing protocols layer by layer according to the TCP/IP and OSI stack. Inspecting packet fields such as MAC addresses, IP addresses, TTL, TCP flags, sequence numbers, and port numbers validates how encapsulation, addressing, reliable transmission, and error reporting operate in real networks.</p>
+            </div>
+        </div>
+
+        <div class="win" id="e6">
+            <div class="ttl">Experiment 6 – Static and dynamic routing (RIP, OSPF)<i>_ □ x</i></div>
+            <div class="bd">
+                <p class="aim"><b>Aim:</b> To configure and verify static routing and dynamic routing protocols (RIP and
+                    OSPF) in Cisco Packet Tracer.</p>
+                <h4>Theory</h4>
+                <p>Routers forward packets between networks using a routing table. <b>Static routing</b>: routes entered
+                    manually (simple, no overhead, not adaptive). <b>RIP</b>: distance-vector protocol using hop count
+                    (maximum 15), administrative distance 120. <b>OSPF</b>: link-state protocol using cost with areas,
+                    administrative distance 110, fast convergence.</p>
+                <h4>Steps to perform</h4>
+                <ol>
+                    <li>Build the topology in the figure with 2 routers and 2 PCs using <b>Copper Cross-Over</b> cables.
+                    </li>
+                    <li>Set PC0 = 192.168.1.10/24 (gateway 192.168.1.1) and PC1 = 192.168.2.10/24 (gateway 192.168.2.1).
+                    </li>
+                    <li>Configure interfaces on R1 and R2 (<b>Base configuration</b>) and check <tt>show ip interface
+                            brief</tt>.</li>
+                    <li>Configure <b>Static routes</b> and test ping from PC0 to PC1. Then remove them using the <tt>no
+                            ip route</tt> commands.</li>
+                    <li>Configure <b>RIP</b>, verify, then remove it with <tt>no router rip</tt>. Configure <b>OSPF</b>
+                        and verify.</li>
+                    <li>Use the verification commands and take screenshots of the routing tables.</li>
+                </ol>
+                <figure class="fig" data-f="route1" data-c="Fig 6.1: PC0 – R1 – R2 – PC1 (Packet Tracer topology)">
+                </figure>
+                <table>
+                    <tr>
+                        <th>Device</th>
+                        <th>Interface</th>
+                        <th>IP address</th>
+                    </tr>
+                    <tr>
+                        <td>R1</td>
+                        <td>g0/0 · g0/1</td>
+                        <td>192.168.1.1/24 · 10.0.0.1/30</td>
+                    </tr>
+                    <tr>
+                        <td>R2</td>
+                        <td>g0/0 · g0/1</td>
+                        <td>192.168.2.1/24 · 10.0.0.2/30</td>
+                    </tr>
+                </table>
+                <h4>Base configuration</h4>
+                <div class="cols">
+                    <div class="cli" id="r1base" data-n="R1 · CLI" data-l="Router>">
+                        <script type="text/plain">
+enable
+configure terminal
+hostname R1
+interface g0/0
+ ip address 192.168.1.1 255.255.255.0
+ no shutdown
+interface g0/1
+ ip address 10.0.0.1 255.255.255.252
+ no shutdown
+end
+write memory
+</script>
+                    </div>
+                    <div class="cli" id="r2base" data-n="R2 · CLI" data-l="Router>">
+                        <script type="text/plain">
+enable
+configure terminal
+hostname R2
+interface g0/0
+ ip address 192.168.2.1 255.255.255.0
+ no shutdown
+interface g0/1
+ ip address 10.0.0.2 255.255.255.252
+ no shutdown
+end
+write memory
+</script>
+                    </div>
+                </div>
+                <h4>Static routing</h4>
+                <div class="cols">
+                    <div class="cli" id="r1st" data-n="R1 · static" data-l="R1#">
+                        <script type="text/plain">
+configure terminal
+ip route 192.168.2.0 255.255.255.0 10.0.0.2
+end
+write memory
+</script>
+                    </div>
+                    <div class="cli" id="r2st" data-n="R2 · static" data-l="R2#">
+                        <script type="text/plain">
+configure terminal
+ip route 192.168.1.0 255.255.255.0 10.0.0.1
+end
+write memory
+</script>
+                    </div>
+                </div>
+                <div class="cli" data-n="Remove static routes (R1, then R2 with its own route)" data-l="#">
+                    <script type="text/plain">
+configure terminal
+no ip route 192.168.2.0 255.255.255.0 10.0.0.2
+no ip route 192.168.1.0 255.255.255.0 10.0.0.1
+end
+</script>
+                </div>
+                <div class="note">On each router only the route that exists will be removed; the other command gives a
+                    harmless message.</div>
+                <h4>RIP version 2</h4>
+                <div class="cols">
+                    <div class="cli" data-n="R1 · RIP" data-l="R1#">
+                        <script type="text/plain">
+configure terminal
+router rip
+ version 2
+ no auto-summary
+ network 192.168.1.0
+ network 10.0.0.0
+end
+write memory
+</script>
+                    </div>
+                    <div class="cli" data-n="R2 · RIP" data-l="R2#">
+                        <script type="text/plain">
+configure terminal
+router rip
+ version 2
+ no auto-summary
+ network 192.168.2.0
+ network 10.0.0.0
+end
+write memory
+</script>
+                    </div>
+                </div>
+                <h4>OSPF</h4>
+                <div class="cols">
+                    <div class="cli" data-n="R1 · OSPF" data-l="R1#">
+                        <script type="text/plain">
+configure terminal
+no router rip
+router ospf 1
+ router-id 1.1.1.1
+ network 192.168.1.0 0.0.0.255 area 0
+ network 10.0.0.0 0.0.0.3 area 0
+end
+write memory
+</script>
+                    </div>
+                    <div class="cli" data-n="R2 · OSPF" data-l="R2#">
+                        <script type="text/plain">
+configure terminal
+no router rip
+router ospf 1
+ router-id 2.2.2.2
+ network 192.168.2.0 0.0.0.255 area 0
+ network 10.0.0.0 0.0.0.3 area 0
+end
+write memory
+</script>
+                    </div>
+                </div>
+                <h4>Verification</h4>
+                <div class="cli" data-n="R1 · CLI" data-l="R1#">
+                    <script type="text/plain">
+show ip interface brief
+show ip route
+show ip protocols
+show ip ospf neighbor
+ping 192.168.2.10
+</script>
+                </div>
+                <div class="out">S 192.168.2.0/24 [1/0] via 10.0.0.2 (static)
+                    R 192.168.2.0/24 [120/1] via 10.0.0.2 (RIP)
+                    O 192.168.2.0/24 [110/2] via 10.0.0.2 (OSPF)</div>
+                <h4>Conclusion</h4>
+                <p>Static routing, RIP and OSPF were configured and verified; PC0 could ping PC1 through both routers.
+                </p>
+            </div>
+        </div>
+
+        <div class="win" id="e7">
+            <div class="ttl">Experiment 7 – FTP Server Configuration &amp; File Transfer<i>_ □ x</i></div>
+            <div class="bd">
+                <p class="aim"><b>Aim:</b> To configure FTP server and transfer files to demonstrate the working of the same in Cisco Packet Tracer.</p>
+                <h4>Theory</h4>
+                <p><b>File Transfer Protocol (FTP)</b> enables file transfer between a client and a server over a network using TCP. It operates using two separate connections: <b>TCP Port 21</b> for control (commands such as <code>USER</code>, <code>PASS</code>, <code>dir</code>, <code>get</code>, <code>put</code>) and <b>TCP Port 20</b> for data transfer. While multi-router enterprise topologies can route FTP across subnets, the simplest and most robust setup connects one client PC and one Server through a central switch on the same local subnet (<tt>192.168.1.0/24</tt>), requiring no default gateway.</p>
+
+                <h4>Step 1: Create the Topology</h4>
+                <p><b>PC0 ─── Switch0 ─── Server0</b></p>
+                <ol>
+                    <li>In Cisco Packet Tracer, add a <b>PC-PT (PC0)</b>, a <b>2960 switch (Switch0)</b>, and a <b>Server-PT (Server0)</b>.</li>
+                    <li>Select <b>Copper Straight-Through</b> cables.</li>
+                    <li>Connect:
+                        <ul>
+                            <li>PC0 <tt>FastEthernet0</tt> &rarr; Switch0 <tt>FastEthernet0/1</tt></li>
+                            <li>Server0 <tt>FastEthernet0</tt> &rarr; Switch0 <tt>FastEthernet0/2</tt></li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <figure class="fig" data-f="ftp" data-c="Fig 7.1: PC0 (192.168.1.2) ─── Switch0 (2960) ─── Server0 (192.168.1.10)"></figure>
+
+                <h4>Step 2: Configure IP Addresses</h4>
+                <p>On <b>PC0</b>, open <b>Desktop &rarr; IP Configuration</b>:</p>
+                <div class="table-responsive">
+                    <table>
+                        <tr>
+                            <th>Setting</th>
+                            <th>Value</th>
+                        </tr>
+                        <tr>
+                            <td>IPv4 Address</td>
+                            <td><tt>192.168.1.2</tt></td>
+                        </tr>
+                        <tr>
+                            <td>Subnet Mask</td>
+                            <td><tt>255.255.255.0</tt></td>
+                        </tr>
+                        <tr>
+                            <td>Default Gateway</td>
+                            <td><i>Leave blank</i></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <p>On <b>Server0</b>, open <b>Desktop &rarr; IP Configuration</b>:</p>
+                <div class="table-responsive">
+                    <table>
+                        <tr>
+                            <th>Setting</th>
+                            <th>Value</th>
+                        </tr>
+                        <tr>
+                            <td>IPv4 Address</td>
+                            <td><tt>192.168.1.10</tt></td>
+                        </tr>
+                        <tr>
+                            <td>Subnet Mask</td>
+                            <td><tt>255.255.255.0</tt></td>
+                        </tr>
+                        <tr>
+                            <td>Default Gateway</td>
+                            <td><i>Leave blank</i></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="note">Both devices are on the same local network (<tt>192.168.1.0/24</tt>), so a router and default gateway are not required.</div>
+
+                <h4>Step 3: Enable the FTP Service</h4>
+                <ol>
+                    <li>Click <b>Server0</b>.</li>
+                    <li>Open the <b>Services</b> tab.</li>
+                    <li>Select <b>FTP</b> from the left menu.</li>
+                    <li>Switch the FTP service to <b>On</b>.</li>
+                    <li>Under the user configuration section, add a user account:
+                        <ul>
+                            <li>Username: <mark>student</mark></li>
+                            <li>Password: <mark>1234</mark></li>
+                            <li>Permissions: Enable <b>Read</b>, <b>Write</b>, <b>Delete</b>, <b>Rename</b>, and <b>List</b>.</li>
+                            <li>Click <b>Add</b>.</li>
+                        </ul>
+                    </li>
+                </ol>
+                <p>The FTP server is now configured with an active user account.</p>
+
+                <h4>Step 4: Test Connectivity</h4>
+                <p>On <b>PC0</b>, open <b>Desktop &rarr; Command Prompt</b> and enter:</p>
+                <div class="cli" data-n="PC0 · Command Prompt" data-l="C:\&gt;">
+                    <script type="text/plain">
+ping 192.168.1.10
+</script>
+                </div>
+                <div class="out">Pinging 192.168.1.10 with 32 bytes of data:
+
+Reply from 192.168.1.10: bytes=32 time&lt;1ms TTL=128
+Reply from 192.168.1.10: bytes=32 time&lt;1ms TTL=128
+Reply from 192.168.1.10: bytes=32 time&lt;1ms TTL=128
+Reply from 192.168.1.10: bytes=32 time&lt;1ms TTL=128
+
+Ping statistics for 192.168.1.10:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)</div>
+
+                <h4>Step 5: Connect to the FTP Server</h4>
+                <p>In PC0's Command Prompt, enter:</p>
+                <div class="cli" data-n="PC0 · Command Prompt" data-l="C:\&gt;">
+                    <script type="text/plain">
+ftp 192.168.1.10
+</script>
+                </div>
+                <p>When prompted, enter:</p>
+                <div class="out">Username: student
+Password: 1234</div>
+                <div class="note">The password will not appear as you type. That is normal in secure CLI environments.</div>
+
+                <h4>Step 6: Transfer a File</h4>
+                <p>First, ensure that a sample file is available on Server0 (or create <tt>test.txt</tt> on PC0 via <i>Desktop &rarr; Text Editor</i>). Once connected to the FTP server, execute the following commands:</p>
+
+                <div class="cli" data-n="FTP Client" data-l="ftp&gt;">
+                    <script type="text/plain">
+dir
+get test.txt
+put test.txt
+help
+quit
+</script>
+                </div>
+
+                <div class="out">PC0> ftp 192.168.1.10
+Connected to 192.168.1.10.
+220 Welcome to Cisco Packet Tracer FTP Server
+User (192.168.1.10:(none)): student
+331 Username ok, need password
+Password: 
+230 User logged in, proceed.
+
+ftp> dir
+200 PORT command successful.
+150 Opening ASCII mode data connection for file list.
+-rw-rw-rw-   1 ftp      ftp           512 test.txt
+226 Transfer complete.
+
+ftp> get test.txt
+200 PORT command successful.
+150 Opening BINARY mode data connection for test.txt.
+226 Transfer complete.
+
+ftp> put test.txt
+200 PORT command successful.
+150 Opening BINARY mode data connection for test.txt.
+226 Transfer complete.
+
+ftp> quit
+221 Goodbye.</div>
+
+                <ul>
+                    <li><tt>dir</tt> &mdash; lists files on the FTP server.</li>
+                    <li><tt>get test.txt</tt> &mdash; downloads the file to PC0.</li>
+                    <li><tt>put test.txt</tt> &mdash; uploads the file from PC0 to the server.</li>
+                    <li><tt>help</tt> &mdash; lists all supported FTP commands.</li>
+                </ul>
+
+                <h4>Step 7: Verify the Experiment</h4>
+                <p>The experiment is demonstrated when PC0 successfully logs in to Server0 and lists or transfers a file. You can also switch to <b>Simulation Mode</b> and inspect FTP packets on TCP port 21 (control connection) and port 20 (data connection).</p>
+
+                <h4>Result</h4>
+                <p>The FTP server was configured successfully in Cisco Packet Tracer. The client connected to the server using valid credentials, and file listing and transfer operations were tested.</p>
+
+                <h4>Conclusion</h4>
+                <p>FTP enables file transfer between a client and a server over a network. The experiment demonstrated FTP service configuration, user authentication, and file transfer using Packet Tracer.</p>
+            </div>
+        </div>
+
+        <div class="win" id="e8">
+            <div class="ttl">Experiment 8 – Design and Simulate VLANs<i>_ □ x</i></div>
+            <div class="bd">
+                <p class="aim"><b>Aim:</b> To design and simulate VLANs on a switch/router using Cisco Packet Tracer.</p>
+                <h4>Theory</h4>
+                <p>A <b>Virtual LAN (VLAN)</b> logically divides one physical switch network into separate broadcast domains. This enhances network performance by confining broadcast frames and provides security by isolating distinct functional groups (e.g., Sales vs HR). Switch ports are configured as:
+                <ul>
+                    <li><b>Access Ports:</b> Assigned to a single VLAN to connect end devices (PCs) without 802.1Q tags.</li>
+                    <li><b>Trunk Ports (IEEE 802.1Q):</b> Carry traffic for multiple VLANs across a single physical cable by appending a VLAN ID tag to each Ethernet frame header.</li>
+                    <li><b>Router-on-a-Stick:</b> A single physical router interface is configured with logical <b>subinterfaces</b> (e.g. <tt>g0/0.10</tt> and <tt>g0/0.20</tt>) using 802.1Q encapsulation to enable inter-VLAN routing.</li>
+                </ul>
+                </p>
+
+                <h4>Step 1: Create the Topology</h4>
+                <p>We will use <b>1 Switch (2960)</b>, <b>1 Router (1941)</b>, and <b>4 PCs</b>.</p>
+                <ul>
+                    <li><b>VLAN 10 (SALES):</b> PC0 and PC1 &mdash; Subnet <tt>192.168.10.0/24</tt></li>
+                    <li><b>VLAN 20 (HR):</b> PC2 and PC3 &mdash; Subnet <tt>192.168.20.0/24</tt></li>
+                    <li><b>Router-on-a-stick:</b> Router0 connected to Switch0 via trunk port</li>
+                </ul>
+
+                <p>Connect the devices using <b>Copper Straight-Through</b> cables:</p>
+                <div class="table-responsive">
+                    <table>
+                        <tr>
+                            <th>Device</th>
+                            <th>Device Interface</th>
+                            <th>Switch Port</th>
+                            <th>VLAN Assignment</th>
+                        </tr>
+                        <tr>
+                            <td><b>PC0</b></td>
+                            <td>FastEthernet0</td>
+                            <td>Fa0/1</td>
+                            <td>VLAN 10 (SALES)</td>
+                        </tr>
+                        <tr>
+                            <td><b>PC1</b></td>
+                            <td>FastEthernet0</td>
+                            <td>Fa0/2</td>
+                            <td>VLAN 10 (SALES)</td>
+                        </tr>
+                        <tr>
+                            <td><b>PC2</b></td>
+                            <td>FastEthernet0</td>
+                            <td>Fa0/3</td>
+                            <td>VLAN 20 (HR)</td>
+                        </tr>
+                        <tr>
+                            <td><b>PC3</b></td>
+                            <td>FastEthernet0</td>
+                            <td>Fa0/4</td>
+                            <td>VLAN 20 (HR)</td>
+                        </tr>
+                        <tr>
+                            <td><b>Router0</b></td>
+                            <td>GigabitEthernet0/0</td>
+                            <td>Fa0/24</td>
+                            <td>Trunk (802.1Q)</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <figure class="fig" data-f="vlan" data-c="Fig 8.1: VLAN 10 (SALES) &amp; VLAN 20 (HR) on Switch0 with Router0 Router-on-a-stick"></figure>
+
+                <h4>Step 2: Configure PC IP Addresses</h4>
+                <p>Open each <b>PC &rarr; Desktop &rarr; IP Configuration</b>:</p>
+                <div class="table-responsive">
+                    <table>
+                        <tr>
+                            <th>PC</th>
+                            <th>IPv4 Address</th>
+                            <th>Subnet Mask</th>
+                            <th>Default Gateway</th>
+                        </tr>
+                        <tr>
+                            <td><b>PC0</b></td>
+                            <td><tt>192.168.10.2</tt></td>
+                            <td><tt>255.255.255.0</tt></td>
+                            <td><i>Leave blank initially</i></td>
+                        </tr>
+                        <tr>
+                            <td><b>PC1</b></td>
+                            <td><tt>192.168.10.3</tt></td>
+                            <td><tt>255.255.255.0</tt></td>
+                            <td><i>Leave blank initially</i></td>
+                        </tr>
+                        <tr>
+                            <td><b>PC2</b></td>
+                            <td><tt>192.168.20.2</tt></td>
+                            <td><tt>255.255.255.0</tt></td>
+                            <td><i>Leave blank initially</i></td>
+                        </tr>
+                        <tr>
+                            <td><b>PC3</b></td>
+                            <td><tt>192.168.20.3</tt></td>
+                            <td><tt>255.255.255.0</tt></td>
+                            <td><i>Leave blank initially</i></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="note">Leave the default gateways blank for the initial VLAN-only test.</div>
+
+                <h4>Step 3: Create VLANs on the Switch</h4>
+                <p>Click <b>Switch0 &rarr; CLI</b> and execute:</p>
+                <div class="cli" data-n="Switch0 · CLI" data-l="Switch#">
+                    <script type="text/plain">
+enable
+configure terminal
+
+vlan 10
+ name SALES
+exit
+
+vlan 20
+ name HR
+exit
+</script>
+                </div>
+                <p>VLAN 10 and VLAN 20 are now created.</p>
+
+                <h4>Step 4: Assign Switch Ports to VLANs</h4>
+                <p>Assign PC0 and PC1 to VLAN 10, PC2 and PC3 to VLAN 20, and configure port Fa0/24 as trunk:</p>
+                <div class="cli" data-n="Switch0 · CLI" data-l="Switch(config)#">
+                    <script type="text/plain">
+! Assign PC0 and PC1 to VLAN 10:
+interface range fastEthernet 0/1-2
+ switchport mode access
+ switchport access vlan 10
+exit
+
+! Assign PC2 and PC3 to VLAN 20:
+interface range fastEthernet 0/3-4
+ switchport mode access
+ switchport access vlan 20
+exit
+
+! Configure router-facing switch port as trunk:
+interface fastEthernet 0/24
+ switchport mode trunk
+exit
+
+end
+write memory
+</script>
+                </div>
+
+                <h4>Step 5: Verify the VLAN Configuration</h4>
+                <p>On <b>Switch0</b>, verify with:</p>
+                <div class="cli" data-n="Switch0 · CLI" data-l="Switch#">
+                    <script type="text/plain">
+show vlan brief
+</script>
+                </div>
+                <div class="out">VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa0/5, Fa0/6, Fa0/7, Fa0/8...
+10   SALES                            active    Fa0/1, Fa0/2
+20   HR                               active    Fa0/3, Fa0/4</div>
+                <p>You should see VLAN 10 containing Fa0/1 &amp; Fa0/2, and VLAN 20 containing Fa0/3 &amp; Fa0/4.</p>
+
+                <h4>Step 6: Test Communication (VLAN Separation)</h4>
+                <p>On <b>PC0 &rarr; Desktop &rarr; Command Prompt</b>, test within the same VLAN:</p>
+                <div class="cli" data-n="PC0 · Command Prompt" data-l="C:\&gt;">
+                    <script type="text/plain">
+ping 192.168.10.3
+</script>
+                </div>
+                <div class="out">Pinging 192.168.10.3 with 32 bytes of data:
+Reply from 192.168.10.3: bytes=32 time&lt;1ms TTL=128
+Reply from 192.168.10.3: bytes=32 time&lt;1ms TTL=128
+Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)</div>
+                <p>PC0 communicates successfully with PC1 because both belong to <b>VLAN 10</b>.</p>
+
+                <p>Next, attempt to ping a device in a different VLAN:</p>
+                <div class="cli" data-n="PC0 · Command Prompt" data-l="C:\&gt;">
+                    <script type="text/plain">
+ping 192.168.20.2
+</script>
+                </div>
+                <div class="out">Pinging 192.168.20.2 with 32 bytes of data:
+Request timed out.
+Request timed out.
+Request timed out.
+Request timed out.
+Packets: Sent = 4, Received = 0, Lost = 4 (100% loss)</div>
+                <p>PC0 cannot communicate with PC2 because they belong to different VLANs and no inter-VLAN routing is active yet. <b>This demonstrates complete VLAN isolation.</b></p>
+
+                <h4>Step 7: Configure Inter-VLAN Routing (Router-on-a-Stick)</h4>
+                <p>To enable communication between VLANs, configure <b>Router0</b> using 802.1Q subinterfaces:</p>
+                <div class="cli" data-n="Router0 · CLI" data-l="Router#">
+                    <script type="text/plain">
+enable
+configure terminal
+
+interface gigabitEthernet 0/0
+ no shutdown
+exit
+
+interface gigabitEthernet 0/0.10
+ encapsulation dot1Q 10
+ ip address 192.168.10.1 255.255.255.0
+exit
+
+interface gigabitEthernet 0/0.20
+ encapsulation dot1Q 20
+ ip address 192.168.20.1 255.255.255.0
+exit
+
+end
+write memory
+</script>
+                </div>
+
+                <p>Now configure the <b>Default Gateway</b> on each PC:</p>
+                <div class="table-responsive">
+                    <table>
+                        <tr>
+                            <th>PCs</th>
+                            <th>Default Gateway</th>
+                        </tr>
+                        <tr>
+                            <td>PC0 and PC1 (VLAN 10)</td>
+                            <td><tt>192.168.10.1</tt></td>
+                        </tr>
+                        <tr>
+                            <td>PC2 and PC3 (VLAN 20)</td>
+                            <td><tt>192.168.20.1</tt></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <p>Test again from <b>PC0</b>:</p>
+                <div class="cli" data-n="PC0 · Command Prompt" data-l="C:\&gt;">
+                    <script type="text/plain">
+ping 192.168.20.2
+</script>
+                </div>
+                <div class="out">Pinging 192.168.20.2 with 32 bytes of data:
+Reply from 192.168.20.2: bytes=32 time=14ms TTL=127
+Reply from 192.168.20.2: bytes=32 time=9ms TTL=127
+Reply from 192.168.20.2: bytes=32 time=10ms TTL=127
+Reply from 192.168.20.2: bytes=32 time=11ms TTL=127
+Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)</div>
+                <p>Inter-VLAN ping now succeeds through the router subinterfaces!</p>
+
+                <h4>Result</h4>
+                <p>VLANs were created and configured successfully on the Cisco switch. Devices in the same VLAN communicated with each other, while communication between different VLANs required inter-VLAN routing.</p>
+
+                <h4>Conclusion</h4>
+                <p>VLANs logically divide a physical switch network into separate broadcast domains. They improve network organization, security, and traffic management. Router-on-a-stick enables communication between VLANs through a trunk link and router subinterfaces.</p>
+            </div>
+        </div>
+    </main>
+    <script>
+        /* ---------- topology drawing (Packet Tracer style) ---------- */
+        function ic(t, x, y) {
+            if (t == 'pc') return '<rect x="' + (x - 17) + '" y="' + (y - 18) + '" width="34" height="24" rx="2" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5"/><rect x="' + (x - 14) + '" y="' + (y - 15) + '" width="28" height="18" fill="#0b1120"/><rect x="' + (x - 9) + '" y="' + (y + 8) + '" width="18" height="5" fill="#475569"/>';
+            if (t == 'sw') return '<rect x="' + (x - 24) + '" y="' + (y - 9) + '" width="48" height="18" rx="3" fill="#0369a1" stroke="#38bdf8" stroke-width="1.5"/><path d="M' + (x - 14) + ',' + (y - 3) + 'H' + (x + 14) + 'm-4,-3l4,3l-4,3M' + (x + 14) + ',' + (y + 3) + 'H' + (x - 14) + 'm4,-3l-4,3l4,3" stroke="#f0f9ff" stroke-width="1.5" fill="none"/>';
+            if (t == 'rt') return '<circle cx="' + x + '" cy="' + y + '" r="16" fill="#0369a1" stroke="#38bdf8" stroke-width="1.5"/><path d="M' + (x - 10) + ',' + y + 'H' + (x + 10) + 'M' + x + ',' + (y - 10) + 'V' + (y + 10) + '" stroke="#f0f9ff" stroke-width="2"/>';
+            if (t == 'hub') return '<rect x="' + (x - 22) + '" y="' + (y - 7) + '" width="44" height="14" rx="2" fill="#334155" stroke="#64748b"/><circle cx="' + (x - 12) + '" cy="' + y + '" r="2" fill="#4ade80"/><circle cx="' + x + '" cy="' + y + '" r="2" fill="#4ade80"/><circle cx="' + (x + 12) + '" cy="' + y + '" r="2" fill="#4ade80"/>';
+            return '<rect x="' + (x - 12) + '" y="' + (y - 19) + '" width="24" height="38" rx="2" fill="#334155" stroke="#64748b"/><path d="M' + (x - 8) + ',' + (y - 10) + 'h16M' + (x - 8) + ',' + (y - 3) + 'h16M' + (x - 8) + ',' + (y + 4) + 'h16" stroke="#94a3b8" stroke-width="2"/><circle cx="' + (x + 7) + '" cy="' + (y + 13) + '" r="2" fill="#4ade80"/>';
+        }
+        function topo(w, h, N, L) {
+            const m = {}; N.forEach(n => m[n[0]] = n); let s = '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma,Arial,sans-serif">';
+            L.forEach(l => {
+                const a = m[l[0]], b = m[l[1]], dx = b[2] - a[2], dy = b[3] - a[3], d = Math.hypot(dx, dy), ux = dx / d, uy = dy / d;
+                s += '<line x1="' + a[2] + '" y1="' + a[3] + '" x2="' + b[2] + '" y2="' + b[3] + '" stroke="#60a5fa" stroke-width="1.8"' + (l[2] ? ' stroke-dasharray="6 3"' : '') + '/>';
+                [[a, 1, l[3]], [b, -1, l[4]]].forEach(e => {
+                    const n = e[0], k = e[1], px = n[2] + k * ux * 28, py = n[3] + k * uy * 28;
+                    s += '<circle cx="' + px + '" cy="' + py + '" r="3.2" fill="#22c55e" stroke="#15803d"/>';
+                    if (e[2] && d > 110) s += '<text class="t-port" x="' + (n[2] + k * ux * 50) + '" y="' + (n[3] + k * uy * 50 - 4) + '" font-size="9.5" text-anchor="middle">' + e[2] + '</text>';
+                });
+            });
+            N.forEach(n => {
+                s += ic(n[1], n[2], n[3]); const off = (n[1] == 'sv' ? 32 : n[1] == 'rt' ? 30 : 26);
+                s += '<text class="t-main" x="' + n[2] + '" y="' + (n[3] + off) + '" font-size="11" text-anchor="middle">' + n[4] + '</text>';
+                if (n[5]) s += '<text class="t-sub" x="' + n[2] + '" y="' + (n[3] + off + 12) + '" font-size="9.5" text-anchor="middle">' + n[5] + '</text>';
+            });
+            return s + '</svg>';
+        }
+        const P = (i, x, y, ip, sub) => [i, 'pc', x, y, i.toUpperCase().replace('PC', 'PC'), ip];
+        const FIG = {
+            lan: [640, 200, [['sw0', 'sw', 320, 100, 'Switch0', '2960-24TT'], ['pc0', 'pc', 130, 100, 'PC0', '192.168.1.1'], ['pc1', 'pc', 510, 100, 'PC1', '192.168.1.2']], [['pc0', 'sw0', 0, 'Fa0', 'Fa0/1'], ['sw0', 'pc1', 0, 'Fa0/2', 'Fa0']]],
+            subnet: [640, 200, [['pc0', 'pc', 60, 100, 'PC0', '192.168.1.2'], ['sw0', 'sw', 185, 100, 'Switch0', '2960'], ['rt0', 'rt', 320, 100, 'Router0', 'g0/0 .1.1 | g0/1 .2.1'], ['sw1', 'sw', 455, 100, 'Switch1', '2960'], ['pc1', 'pc', 580, 100, 'PC1', '192.168.2.2']], [['pc0', 'sw0', 0, 'Fa0', 'Fa0/1'], ['sw0', 'rt0', 0, 'Fa0/2', 'g0/0'], ['rt0', 'sw1', 0, 'g0/1', 'Fa0/2'], ['sw1', 'pc1', 0, 'Fa0/1', 'Fa0']]],
+            star: [440, 280, [['sw', 'sw', 220, 140, 'Switch0'], ['a', 'pc', 70, 50, 'PC0', '192.168.1.10'], ['b', 'pc', 70, 230, 'PC1', '192.168.1.11'], ['c', 'pc', 370, 50, 'PC2', '192.168.1.12'], ['d', 'sv', 370, 230, 'Server0', '192.168.1.100']], [['a', 'sw', 0, '', 'Fa0/1'], ['b', 'sw', 0, '', 'Fa0/2'], ['c', 'sw', 0, '', 'Fa0/3'], ['d', 'sw', 0, '', 'Fa0/4']]],
+            bus: [440, 280, [['h0', 'hub', 60, 140, 'Hub0'], ['h1', 'hub', 150, 140, 'Hub1'], ['h2', 'hub', 240, 140, 'Hub2'], ['h3', 'hub', 330, 140, 'Hub3'], ['a', 'pc', 60, 50, 'PC0', '.10'], ['b', 'pc', 150, 230, 'PC1', '.11'], ['c', 'pc', 240, 50, 'PC2', '.12'], ['d', 'pc', 330, 230, 'PC3', '.13']], [['h0', 'h1', 1], ['h1', 'h2', 1], ['h2', 'h3', 1], ['a', 'h0'], ['b', 'h1'], ['c', 'h2'], ['d', 'h3']]],
+            ring: [440, 280, [['s0', 'sw', 220, 60, 'Switch0'], ['s1', 'sw', 90, 200, 'Switch1'], ['s2', 'sw', 350, 200, 'Switch2'], ['a', 'pc', 340, 50, 'PC0', '.10'], ['b', 'pc', 40, 250, 'PC1', '.11'], ['c', 'pc', 410, 250, 'PC2', '.12']], [['s0', 's1', 1], ['s1', 's2', 1], ['s2', 's0', 1], ['a', 's0'], ['b', 's1'], ['c', 's2']]],
+            mesh: [440, 280, [['s0', 'sw', 120, 60, 'Switch0'], ['s1', 'sw', 320, 60, 'Switch1'], ['s2', 'sw', 120, 220, 'Switch2'], ['s3', 'sw', 320, 220, 'Switch3'], ['a', 'pc', 35, 60, 'PC0'], ['b', 'pc', 405, 60, 'PC1'], ['c', 'pc', 35, 220, 'PC2'], ['d', 'pc', 405, 220, 'PC3']], [['s0', 's1', 1], ['s0', 's2', 1], ['s0', 's3', 1], ['s1', 's2', 1], ['s1', 's3', 1], ['s2', 's3', 1], ['a', 's0'], ['b', 's1'], ['c', 's2'], ['d', 's3']]],
+            tree: [640, 280, [['r', 'sw', 320, 50, 'Root Switch'], ['s1', 'sw', 170, 140, 'Switch1'], ['s2', 'sw', 470, 140, 'Switch2'], ['a', 'pc', 90, 230, 'PC0', '.10'], ['b', 'pc', 250, 230, 'PC1', '.11'], ['c', 'pc', 390, 230, 'PC2', '.12'], ['d', 'pc', 550, 230, 'PC3', '.13']], [['r', 's1', 1], ['r', 's2', 1], ['s1', 'a'], ['s1', 'b'], ['s2', 'c'], ['s2', 'd']]],
+            route1: [640, 220, [['p0', 'pc', 70, 100, 'PC0', '192.168.1.10'], ['r1', 'rt', 240, 100, 'R1', 'g0/0 192.168.1.1 · g0/1 10.0.0.1'], ['r2', 'rt', 420, 100, 'R2', 'g0/1 10.0.0.2 · g0/0 192.168.2.1'], ['p1', 'pc', 580, 100, 'PC1', '192.168.2.10']], [['p0', 'r1', 1, 'Fa0', 'g0/0'], ['r1', 'r2', 1, 'g0/1', 'g0/1'], ['r2', 'p1', 1, 'g0/0', 'Fa0']]],
+            route2: [640, 220, [['p0', 'pc', 70, 100, 'PC0', '192.168.1.10'], ['r1', 'rt', 240, 100, 'R1', 'g0/0 192.168.1.1 · g0/1 10.0.0.1'], ['r2', 'rt', 420, 100, 'R2', 'g0/1 10.0.0.2 · g0/0 192.168.2.1'], ['p1', 'sv', 580, 100, 'Server0', '192.168.2.10']], [['p0', 'r1', 1, 'Fa0', 'g0/0'], ['r1', 'r2', 1, 'g0/1', 'g0/1'], ['r2', 'p1', 1, 'g0/0', 'Fa0']]],
+            ftp: [640, 180, [['p', 'pc', 120, 90, 'PC0', '192.168.1.2'], ['s', 'sw', 320, 90, 'Switch0', '2960'], ['v', 'sv', 520, 90, 'Server0', '192.168.1.10']], [['p', 's', 0, 'Fa0', 'Fa0/1'], ['s', 'v', 0, 'Fa0/2', 'Fa0']]],
+            vlan: [640, 260, [['r', 'rt', 320, 45, 'Router0', 'G0/0 (trunk)'], ['s', 'sw', 320, 130, 'Switch0', '2960'], ['p0', 'pc', 80, 205, 'PC0', 'VLAN 10 .10.2'], ['p1', 'pc', 220, 205, 'PC1', 'VLAN 10 .10.3'], ['p2', 'pc', 420, 205, 'PC2', 'VLAN 20 .20.2'], ['p3', 'pc', 560, 205, 'PC3', 'VLAN 20 .20.3']], [['r', 's', 0, 'G0/0', 'Fa0/24'], ['p0', 's', 0, 'Fa0', 'Fa0/1'], ['p1', 's', 0, 'Fa0', 'Fa0/2'], ['p2', 's', 0, 'Fa0', 'Fa0/3'], ['p3', 's', 0, 'Fa0', 'Fa0/4']]]
+        };
+        document.querySelectorAll('.fig').forEach(f => { const d = FIG[f.dataset.f]; f.innerHTML = topo(d[0], d[1], d[2], d[3]) + '<figcaption>' + f.dataset.c + '</figcaption>' });
+
+        /* ---------- theme toggle logic (Black theme is default) ---------- */
+        const themeBtn = document.getElementById('themeToggle');
+        if (themeBtn) {
+            function updateThemeBtn(isLight) {
+                themeBtn.innerHTML = isLight ? '🌙 Dark' : '☀️ Light';
+            }
+            if (localStorage.getItem('cn_theme') === 'light') {
+                document.body.classList.add('light-theme');
+                updateThemeBtn(true);
+            } else {
+                updateThemeBtn(false);
+            }
+            themeBtn.onclick = () => {
+                document.body.classList.toggle('light-theme');
+                const isLight = document.body.classList.contains('light-theme');
+                localStorage.setItem('cn_theme', isLight ? 'light' : 'dark');
+                updateThemeBtn(isLight);
+            };
+        }
+
+        /* ---------- copy-able command blocks ---------- */
+        const ICON = '<svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6z"/><path d="M2 4a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1v-1H9v1H2V5h1V4H2z"/></svg>';
+        function fb(t) { const a = document.createElement('textarea'); a.value = t; a.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(a); a.select(); try { document.execCommand('copy') } catch (e) { } document.body.removeChild(a) }
+        const codes = {}, cl = [...document.querySelectorAll('.cli')];
+        const clean = s => s.textContent.replace(/^\n/, '').replace(/\s+$/, '') + '\n';
+        cl.forEach(d => { const s = d.querySelector('script'); if (s && d.id) codes[d.id] = clean(s) });
+        cl.forEach(d => {
+            const s = d.querySelector('script'), code = d.dataset.ref ? codes[d.dataset.ref] : clean(s);
+            d.innerHTML = '<div class="cb"><span>' + d.dataset.n + '</span><span class="l">' + d.dataset.l + '</span><button class="cp" title="Copy"><span style="display:flex">' + ICON + '</span><span>Copy</span></button></div><pre></pre>';
+            d.querySelector('pre').textContent = code;
+            const b = d.querySelector('.cp'), l = b.lastChild;
+            b.onclick = () => {
+                const ok = () => { b.classList.add('ok'); l.textContent = 'Copied!'; setTimeout(() => { b.classList.remove('ok'); l.textContent = 'Copy' }, 1400) };
+                if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(code).then(ok).catch(() => { fb(code); ok() }) } else { fb(code); ok() }
+            };
+        });
+    </script>
+</body>
+
+</html>
