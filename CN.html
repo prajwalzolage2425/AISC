@@ -656,7 +656,7 @@
                 <span>File</span><span>Edit</span><span>Options</span><span>View</span><span>Tools</span><span>Extensions</span><span>Help</span>
             </div>
             <b>Cisco Packet Tracer</b>
-            <button id="themeToggle" class="theme-btn" title="Switch Theme">☀️ Light</button>
+            <button id="themeToggle" class="theme-btn" title="Switch Theme">Light</button>
         </div>
         <div class="tool"><a href="#e1">Exp 1</a><a href="#e2">Exp 2</a><a href="#e3">Exp 3</a><a href="#e4">Exp 4</a><a
                 href="#e5">Exp 5</a><a href="#e6">Exp 6</a><a href="#e7">Exp 7</a><a href="#e8">Exp 8</a></div>
@@ -2075,7 +2075,7 @@ ping 192.168.20.2
         const themeBtn = document.getElementById('themeToggle');
         if (themeBtn) {
             function updateThemeBtn(isLight) {
-                themeBtn.innerHTML = isLight ? '🌙 Dark' : '☀️ Light';
+                themeBtn.innerHTML = isLight ? 'Dark' : 'Light';
             }
             if (localStorage.getItem('cn_theme') === 'light') {
                 document.body.classList.add('light-theme');
