@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  webserver:
+    image: nginx:alpine
+    container_name: nginx_compose_web
+    ports:
+      - "8085:80"
+    volumes:
+      - ./html:/usr/share/nginx/html:ro
+    restart: always
+

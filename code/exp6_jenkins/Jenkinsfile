@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Welcome Stage') {
+            steps {
+                echo '======================================'
+                echo 'Welcome to DevOps Practical'
+                echo '======================================'
+            }
+        }
+
+        stage('Build Stage') {
+            steps {
+                echo 'Simulating application compilation & verification...'
+                echo 'Build Successful'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline execution finished successfully: SUCCESS'
+        }
+    }
+}
+
