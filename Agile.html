@@ -1,0 +1,3083 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DevOps Lab – Practical Examination Manual (Exp 1 to 12)</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #1e1e1e;
+            --side: #252526;
+            --tab: #2d2d2d;
+            --tab-active: #1e1e1e;
+            --bd: #3c3c3c;
+            --tx: #d4d4d4;
+            --mut: #8e8e8e;
+            --ac: #007acc;
+            --ac-hover: #1f8ad2;
+            --gr: #6a9955;
+            --bl: #569cd6;
+            --or: #ce9178;
+            --yl: #dcdcaa;
+            --pu: #c586c0;
+            --term-bg: #141414;
+            --term-tx: #b5cea8;
+        }
+
+        body.light-theme {
+            color-scheme: light;
+            --bg: #ffffff;
+            --side: #f3f3f3;
+            --tab: #ececec;
+            --tab-active: #ffffff;
+            --bd: #d4d4d4;
+            --tx: #1e1e1e;
+            --mut: #6e6e6e;
+            --ac: #007acc;
+            --ac-hover: #0062a3;
+            --gr: #008000;
+            --bl: #0000ff;
+            --or: #a31515;
+            --yl: #795e26;
+            --pu: #af00db;
+            --term-bg: #f8f8f8;
+            --term-tx: #1e1e1e;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            text-align: left;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 88px;
+            text-align: left;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--tx);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: 14.5px;
+            line-height: 1.65;
+            text-align: left !important;
+            transition: background 0.15s ease, color 0.15s ease;
+        }
+
+        /* Strict Left Alignment */
+        main, section, article, div, p, h1, h2, h3, h4, ul, ol, li, pre, code,
+        .aim-box, .result-box, .viva-panel, .terminal-panel, .code-panel, .workspace-banner,
+        .cmd-step, .cmd-desc, .cmd-box, .file-preview {
+            text-align: left !important;
+        }
+
+        /* VS Code Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--side);
+            border-bottom: 1px solid var(--bd);
+            text-align: left;
+        }
+
+        .title-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 14px;
+            font-size: 12px;
+            color: var(--mut);
+            border-bottom: 1px solid var(--bd);
+            background: #181818;
+            user-select: none;
+        }
+
+        body.light-theme .title-bar {
+            background: #e7e7e7;
+        }
+
+        .title-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .vscode-logo {
+            width: 15px;
+            height: 15px;
+            fill: #007acc;
+        }
+
+        .win-title {
+            color: var(--tx);
+            font-weight: 500;
+        }
+
+        .search-container {
+            flex: 0 1 360px;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            background: var(--bg);
+            border: 1px solid var(--bd);
+            color: var(--tx);
+            padding: 3px 8px 3px 26px;
+            border-radius: 4px;
+            font: inherit;
+            font-size: 11.5px;
+            outline: none;
+        }
+
+        .search-container input:focus {
+            border-color: var(--ac);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            fill: var(--mut);
+            pointer-events: none;
+        }
+
+        .title-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-tool {
+            background: transparent;
+            border: 1px solid var(--bd);
+            color: var(--tx);
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-tool:hover {
+            background: var(--tab);
+            border-color: var(--ac);
+            color: #fff;
+        }
+
+        /* Editor Tabs */
+        nav.tabs-bar {
+            display: flex;
+            gap: 1px;
+            overflow-x: auto;
+            background: var(--tab);
+            scrollbar-width: thin;
+            text-align: left;
+        }
+
+        nav.tabs-bar::-webkit-scrollbar {
+            height: 3px;
+        }
+
+        nav.tabs-bar::-webkit-scrollbar-thumb {
+            background: var(--bd);
+        }
+
+        nav.tabs-bar a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--mut);
+            text-decoration: none;
+            padding: 7px 14px;
+            white-space: nowrap;
+            font-size: 12px;
+            background: var(--tab);
+            border-right: 1px solid var(--bd);
+            border-top: 2px solid transparent;
+            transition: all 0.1s ease;
+        }
+
+        nav.tabs-bar a:hover {
+            color: var(--tx);
+            background: #222222;
+        }
+
+        body.light-theme nav.tabs-bar a:hover {
+            background: #fdfdfd;
+        }
+
+        nav.tabs-bar a.active {
+            color: #ffffff;
+            background: var(--tab-active);
+            border-top-color: var(--ac);
+        }
+
+        body.light-theme nav.tabs-bar a.active {
+            color: #000000;
+        }
+
+        /* Main Content Container */
+        main {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 24px 20px 80px;
+            text-align: left !important;
+        }
+
+        /* Workspace Banner */
+        .workspace-banner {
+            background: var(--side);
+            border: 1px solid var(--bd);
+            border-radius: 4px;
+            padding: 14px 18px;
+            margin-bottom: 28px;
+            text-align: left;
+        }
+
+        .workspace-banner h1 {
+            margin: 0 0 6px;
+            font-size: 17px;
+            font-weight: 600;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-align: left;
+        }
+
+        body.light-theme .workspace-banner h1 {
+            color: #1e1e1e;
+        }
+
+        .workspace-banner p {
+            margin: 0;
+            color: var(--mut);
+            font-size: 13px;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .badge-win {
+            background: #007acc22;
+            color: #007acc;
+            border: 1px solid #007acc66;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 1px 6px;
+            border-radius: 3px;
+        }
+
+        /* Experiment Sections */
+        section.exp-section {
+            margin-bottom: 44px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--bd);
+            scroll-margin-top: 88px;
+            text-align: left;
+        }
+
+        .exp-heading {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+            text-align: left;
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-align: left !important;
+        }
+
+        body.light-theme h2 {
+            color: #1e1e1e;
+        }
+
+        h2 span.num {
+            color: var(--bl);
+            font-family: Consolas, monospace;
+            font-size: 16px;
+        }
+
+        .tag-pill {
+            font-size: 11.5px;
+            color: var(--mut);
+            background: var(--side);
+            border: 1px solid var(--bd);
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-family: Consolas, monospace;
+        }
+
+        /* Aim Box */
+        .aim-box {
+            background: var(--side);
+            border: 1px solid var(--bd);
+            border-left: 3px solid var(--ac);
+            border-radius: 3px;
+            padding: 12px 16px;
+            margin: 0 0 18px;
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: var(--tx);
+            text-align: left !important;
+        }
+
+        .aim-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--bl);
+            margin-bottom: 4px;
+            text-align: left !important;
+        }
+
+        /* Headings & Text */
+        h3 {
+            font-size: 12px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--bl);
+            margin: 22px 0 8px;
+            font-weight: 700;
+            text-align: left !important;
+        }
+
+        p {
+            margin: 0 0 10px;
+            line-height: 1.65;
+            color: var(--tx);
+            text-align: left !important;
+        }
+
+        ul {
+            margin: 6px 0 14px;
+            padding-left: 24px;
+            text-align: left !important;
+        }
+
+        ol {
+            margin: 8px 0 16px;
+            padding-left: 24px;
+            text-align: left !important;
+        }
+
+        li {
+            margin: 6px 0;
+            line-height: 1.6;
+            color: var(--tx);
+            text-align: left !important;
+        }
+
+        li strong {
+            color: #ffffff;
+        }
+
+        body.light-theme li strong {
+            color: #000000;
+        }
+
+        ul ul, ol ul {
+            margin: 4px 0 8px;
+            padding-left: 20px;
+        }
+
+        /* Step-by-Step Command Box (1-Click Copy per Command) */
+        .cmd-step {
+            margin: 14px 0 18px;
+            text-align: left !important;
+        }
+
+        .cmd-desc {
+            font-size: 13.5px;
+            margin-bottom: 6px;
+            color: var(--tx);
+            line-height: 1.55;
+            text-align: left !important;
+        }
+
+        .cmd-desc strong {
+            color: var(--bl);
+        }
+
+        .cmd-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            background: var(--term-bg);
+            border: 1px solid var(--bd);
+            border-left: 3px solid var(--ac);
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-family: Consolas, "Cascadia Code", monospace;
+            font-size: 13px;
+            text-align: left !important;
+        }
+
+        .cmd-box code {
+            color: var(--tx);
+            font: inherit;
+            background: transparent;
+            border: none;
+            padding: 0;
+            white-space: nowrap;
+            overflow-x: auto;
+            text-align: left !important;
+        }
+
+        .cmd-box .btn-copy {
+            flex-shrink: 0;
+        }
+
+        /* File Preview Box for VS Code editing */
+        .file-preview {
+            background: var(--side);
+            border: 1px dashed var(--bd);
+            border-radius: 4px;
+            padding: 10px 14px;
+            margin: 8px 0 12px;
+            text-align: left !important;
+        }
+
+        .file-preview-title {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--yl);
+            font-family: Consolas, monospace;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .file-preview pre {
+            margin: 0;
+            padding: 2px 0 0;
+            background: transparent;
+            color: var(--tx);
+            font-size: 12.5px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        /* Standard Code Panels (for Jenkins, Dockerfile, etc.) */
+        .code-panel {
+            border: 1px solid var(--bd);
+            border-radius: 4px;
+            background: var(--bg);
+            margin: 10px 0 16px;
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .code-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--tab);
+            border-bottom: 1px solid var(--bd);
+            padding: 5px 12px;
+            font-size: 12px;
+        }
+
+        .code-file {
+            font-family: Consolas, "Cascadia Code", monospace;
+            color: var(--tx);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .btn-copy {
+            background: var(--side);
+            border: 1px solid var(--bd);
+            color: var(--tx);
+            border-radius: 3px;
+            padding: 2px 8px;
+            font: inherit;
+            font-size: 11px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.1s ease;
+        }
+
+        .btn-copy:hover {
+            background: var(--ac);
+            border-color: var(--ac);
+            color: #fff;
+        }
+
+        .btn-copy.copied {
+            background: var(--gr) !important;
+            border-color: var(--gr) !important;
+            color: #fff !important;
+        }
+
+        pre {
+            margin: 0;
+            padding: 12px 14px;
+            overflow-x: auto;
+            color: var(--tx);
+            font: 12.5px/1.55 Consolas, "Cascadia Code", "Courier New", monospace;
+            background: var(--bg);
+            tab-size: 4;
+            text-align: left !important;
+        }
+
+        code {
+            text-align: left !important;
+        }
+
+        /* Syntax Colors */
+        .c-cm { color: var(--gr); font-style: italic; }
+        .c-kw { color: var(--pu); font-weight: 600; }
+        .c-bl { color: var(--bl); }
+        .c-st { color: var(--or); }
+        .c-fn { color: var(--yl); }
+
+        /* Integrated Terminal Output */
+        .terminal-panel {
+            border: 1px solid var(--bd);
+            border-left: 3px solid var(--gr);
+            background: var(--term-bg);
+            border-radius: 0 4px 4px 0;
+            margin: 12px 0 18px;
+            padding: 12px 16px;
+            font: 12.5px/1.55 Consolas, "Cascadia Code", "Courier New", monospace;
+            color: var(--term-tx);
+            white-space: pre;
+            overflow-x: auto;
+            text-align: left !important;
+        }
+
+        .term-header {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .06em;
+            color: var(--mut);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            text-align: left !important;
+        }
+
+        /* Result Verification Note */
+        .result-box {
+            background: var(--side);
+            border: 1px solid var(--bd);
+            border-left: 3px solid var(--gr);
+            border-radius: 3px;
+            padding: 12px 16px;
+            margin: 14px 0 18px;
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: var(--tx);
+            text-align: left !important;
+        }
+
+        .result-box strong {
+            color: var(--gr);
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: .06em;
+            display: block;
+            margin-bottom: 3px;
+            text-align: left !important;
+        }
+
+        /* Viva-Voce Box */
+        .viva-panel {
+            background: var(--side);
+            border: 1px solid var(--bd);
+            border-radius: 3px;
+            padding: 14px 18px;
+            margin: 20px 0 10px;
+            text-align: left !important;
+        }
+
+        .viva-header {
+            font-size: 11.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--yl);
+            margin-bottom: 12px;
+            text-align: left !important;
+        }
+
+        .viva-row {
+            margin: 10px 0;
+            line-height: 1.6;
+            text-align: left !important;
+        }
+
+        .viva-q {
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 13px;
+            text-align: left !important;
+        }
+
+        body.light-theme .viva-q {
+            color: #1e1e1e;
+        }
+
+        .viva-a {
+            color: var(--mut);
+            font-size: 13px;
+            margin-top: 3px;
+            padding-left: 12px;
+            border-left: 2px solid var(--bd);
+            text-align: left !important;
+        }
+
+        kbd, code.inline {
+            font: 12px Consolas, monospace;
+            background: var(--tab);
+            color: var(--or);
+            padding: 1px 5px;
+            border-radius: 3px;
+            border: 1px solid var(--bd);
+        }
+
+        /* PDF Download Button */
+        .pdf-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #0e639c, #007acc);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.12);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            margin: 12px 0;
+        }
+
+        .pdf-download:hover {
+            background: linear-gradient(135deg, #1f8ad2, #3ca0e0);
+            box-shadow: 0 4px 14px rgba(0,122,204,0.4);
+            transform: translateY(-1px);
+        }
+
+        .pdf-download:active {
+            transform: translateY(0);
+        }
+
+        .pdf-download svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        .pdf-download .dl-meta {
+            font-size: 11px;
+            font-weight: 400;
+            opacity: 0.8;
+            margin-left: 4px;
+        }
+
+        .pdf-download-wrap {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 14px 0;
+            padding: 14px 18px;
+            background: var(--side);
+            border: 1px solid var(--bd);
+            border-radius: 6px;
+            border-left: 3px solid var(--ac);
+        }
+
+        .pdf-download-wrap .dl-label {
+            flex: 1;
+            font-size: 13px;
+            color: var(--tx);
+            line-height: 1.5;
+        }
+
+        .pdf-download-wrap .dl-label strong {
+            color: var(--bl);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--ac);
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.2s ease;
+            z-index: 99;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .back-to-top:hover {
+            background: var(--ac-hover);
+        }
+
+        footer {
+            border-top: 1px solid var(--bd);
+            background: var(--side);
+            padding: 16px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--mut);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- VS Code Top Window Header -->
+    <header>
+        <div class="title-bar">
+            <div class="title-left">
+                <svg class="vscode-logo" viewBox="0 0 100 100">
+                    <path d="M72 96l24-12V16L72 4 33 39 12 23 4 28l17 22L4 72l8 5 21-16zM76 22l12 6v44l-12 6V22z"/>
+                </svg>
+                <span class="win-title">DevOps_Practical_Manual [Windows] – Visual Studio Code</span>
+            </div>
+
+            <div class="search-container">
+                <svg class="search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 14z"/></svg>
+                <input type="text" id="searchInput" placeholder="Search practicals, tools, commands... (Ctrl+P)" oninput="filterSections()">
+            </div>
+
+            <div class="title-right">
+                <button class="btn-tool" id="themeToggle" title="Toggle Theme">Theme</button>
+                <button class="btn-tool" onclick="window.print()" title="Print Manual">Print</button>
+            </div>
+        </div>
+
+        <!-- Open Editor Tabs -->
+        <nav class="tabs-bar" id="tabsBar">
+            <a href="#exp1" class="active">exp01_jira_task</a>
+            <a href="#exp2">exp02_jira_progress</a>
+            <a href="#exp3">exp03_git_merge</a>
+            <a href="#exp4">exp04_git_conflict</a>
+            <a href="#exp5">exp05_github_repo</a>
+            <a href="#exp6">exp06_jenkinsfile</a>
+            <a href="#exp7">exp07_dockerfile</a>
+            <a href="#exp8">exp08_compose.yml</a>
+            <a href="#exp9">exp09_k8s.yaml</a>
+            <a href="#exp10">exp10_postman</a>
+            <a href="#exp11">exp11_selenium.py</a>
+            <a href="#exp12">exp12_grafana</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Workspace Banner -->
+        <div class="workspace-banner">
+            <h1>
+                DevOps Practical Examination Manual
+                <span class="badge-win">VS Code &amp; Windows</span>
+            </h1>
+            <p>Clean, exam-ready step-by-step procedures, commands, configurations, and expected terminal outputs tailored for Windows and VS Code execution.</p>
+        </div>
+
+        <!-- ==========================================
+             EXPERIMENT 1: Create a Jira Task & Agile Lifecycle
+        =========================================== -->
+        <section class="exp-section" id="exp1" data-search="jira task studentproject documentation issue create agile scrum epic user story sprint backlog jql">
+            <div class="exp-heading">
+                <h2><span class="num">Exp 01:</span>Create a Jira Task &amp; Agile Lifecycle</h2>
+                <span class="tag-pill">Atlassian Jira Software (Web UI) &bull; Agile Scrum Framework</span>
+            </div>
+
+            <div class="aim-box">
+                <div class="aim-label">Aim / Problem Statement</div>
+                <strong>Primary Exam Problem:</strong> Create a Jira project named <code>StudentProject</code>. Add one task titled <code>Complete Project Documentation</code> and assign it to yourself.<br>
+                <span style="color:var(--bl);font-size:12.5px;display:inline-block;margin-top:4px;">
+                    <strong>Lab Manual Mapping (A27 Exp 1):</strong> Setting up an Agile Project Lifecycle in Jira &mdash; Epics, User Stories, and Sprint Planning.
+                </span>
+            </div>
+
+            <h3>Theory: Agile Lifecycle &amp; Jira Management</h3>
+            <p>
+                <strong>Jira Software</strong> by Atlassian is an enterprise Agile project management platform that empowers DevOps teams to plan, track, release, and monitor software iteratively. Setting up an Agile project lifecycle establishes transparent workflows, backlog prioritization, and traceable sprint execution.
+            </p>
+
+            <h4 style="color:var(--tx);font-size:13.5px;margin:12px 0 6px;">Key Agile Artifacts in Jira:</h4>
+            <ul>
+                <li><strong>Project &amp; Project Key:</strong> A central workspace grouping issues, boards, and workflows. Each project generates an uppercase identifier prefix (e.g. <code>SP</code> for <code>StudentProject</code>, <code>SCRUM</code> for Scrum projects).</li>
+                <li><strong>Epic:</strong> A high-level initiative or large body of work that can be decomposed into smaller user stories (e.g. <em>"Transport Management System"</em>).</li>
+                <li><strong>User Story:</strong> A functional requirement written from an end-user persona perspective (e.g. <em>"As a user, I want to register and login so that I can book vehicles"</em>).</li>
+                <li><strong>Task:</strong> An independent technical unit of work to be performed (e.g. <code>Complete Project Documentation</code>).</li>
+                <li><strong>Subtask:</strong> Granular technical work breakdown items nested beneath a user story or task (e.g. <em>"Design Registration Page"</em>, <em>"Implement User Authentication"</em>).</li>
+                <li><strong>Product Backlog:</strong> Prioritized master repository of all pending stories, enhancements, and tasks.</li>
+                <li><strong>Sprint:</strong> A fixed time-box (typically 1 to 2 weeks) during which the team commits to delivering a shippable increment.</li>
+            </ul>
+
+            <h4 style="color:var(--tx);font-size:13.5px;margin:12px 0 6px;">Standard Agile Development Workflow:</h4>
+            <div class="aim-box" style="background:var(--tab);border-left:3px solid var(--gr);padding:10px 14px;margin:8px 0 14px;">
+                <code>To Do &rarr; In Progress &rarr; Code Review &rarr; Testing &rarr; Done</code>
+            </div>
+
+            <h3>JQL (Jira Query Language) Quick Reference</h3>
+            <p>
+                JQL allows engineers to filter and locate specific work items across large enterprise projects. Use the Jira search bar or advanced issue search with these common filters:
+            </p>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Query 1:</strong> Filter all Tasks in project <code>StudentProject</code>:</div>
+                <div class="cmd-box">
+                    <code>project = "StudentProject" AND issuetype = Task</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Query 2:</strong> Filter unstarted items assigned to the logged-in student:</div>
+                <div class="cmd-box">
+                    <code>assignee = currentUser() AND status = "To Do"</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Query 3:</strong> Filter all issues currently active in open sprints:</div>
+                <div class="cmd-box">
+                    <code>Sprint in openSprints()</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <h3>Step-by-Step UI Procedure</h3>
+            <ol>
+                <li>Open your web browser and navigate to your Atlassian Jira site (e.g. <code>https://your-domain.atlassian.net</code>).</li>
+                <li>In the top navigation menu, click <strong>Projects</strong> &gt; <strong>Create project</strong>.</li>
+                <li>Under <em>Software Development</em>, select the <strong>Kanban</strong> (or <strong>Scrum</strong>) template &gt; click <strong>Use template</strong>.</li>
+                <li>Select <strong>Team-managed</strong> (or Company-managed) project type.</li>
+                <li>In the <strong>Name</strong> field, enter <code>StudentProject</code>. Notice that the Project Key automatically populates as <code>SP</code>. Click <strong>Create project</strong>.</li>
+                <li>Click the global blue <strong>+ Create</strong> button in the top navigation bar (or press shortcut key <kbd>C</kbd>).</li>
+                <li>In the Create Issue modal window, enter the following details:
+                    <ul>
+                        <li><strong>Project:</strong> Select <code>StudentProject (SP)</code></li>
+                        <li><strong>Issue Type:</strong> Select <code>Task</code></li>
+                        <li><strong>Summary:</strong> Type <code>Complete Project Documentation</code></li>
+                        <li><strong>Description:</strong> Type <code>Prepare software architecture specifications, lab manual, and deployment guidelines.</code></li>
+                        <li><strong>Assignee:</strong> Click <strong>Assign to me</strong> (your user avatar will be selected).</li>
+                    </ul>
+                </li>
+                <li>Click <strong>Create</strong> to save the task.</li>
+                <li>Navigate to the project <strong>Board</strong> or <strong>Backlog</strong> tab to verify the created issue.</li>
+            </ol>
+
+            <div class="result-box">
+                <strong>Verification &amp; Result</strong>
+                Project <code>StudentProject (SP)</code> was successfully configured in Jira. Task <code>SP-1</code> titled <em>"Complete Project Documentation"</em> is present in the <strong>TO DO</strong> column, assigned to self with verified issue details.
+            </div>
+
+            <div class="pdf-download-wrap">
+                <div class="dl-label">
+                    <strong>Lab Manual PDF (A27 Exp 1)</strong> &mdash; Setting up an Agile Project Lifecycle in Jira: Epics, User Stories, and Sprint Planning with screenshots, Transport Management System case study, and conclusion.
+                </div>
+                <a class="pdf-download" href="A27_Agile_Exp1.pdf" download="A27_Agile_Exp1.pdf">
+                    <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.67v4h4V9h3.67L12 2z" transform="rotate(180 12 12)"/></svg>
+                    Download PDF <span class="dl-meta">(2.5 MB)</span>
+                </a>
+            </div>
+
+            <div class="viva-panel">
+                <div class="viva-header">Viva-Voce Q&amp;A</div>
+                <div class="viva-row">
+                    <div class="viva-q">Q1: What is the hierarchy between Epics, User Stories, and Tasks in Jira?</div>
+                    <div class="viva-a">An Epic is a high-level strategic initiative. It is broken down into User Stories (end-user requirements). User Stories and Tasks are further subdivided into technical Subtasks for individual engineers.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q2: What is the purpose of the Project Key in Jira?</div>
+                    <div class="viva-a">The key forms the unique prefix for all issue identifiers (e.g. SP-1, SP-2) to reference issues across Git commits, pull requests, CI/CD pipelines, and boards.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q3: What is JQL (Jira Query Language) used for?</div>
+                    <div class="viva-a">JQL is a powerful SQL-like syntax used to construct custom filters, search issues by project/status/assignee, and populate automated dashboard widgets and boards.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q4: What is the difference between an Assignee and a Reporter?</div>
+                    <div class="viva-a">The Assignee is the engineer actively responsible for executing the work item; the Reporter is the author or team member who logged the issue.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             EXPERIMENT 2: Track Task Progress & Sprint Monitoring
+        =========================================== -->
+        <section class="exp-section" id="exp2" data-search="jira track progress testing activity to do in progress done board kanban workflow burndown velocity charts report">
+            <div class="exp-heading">
+                <h2><span class="num">Exp 02:</span>Track Task Progress &amp; Sprint Monitoring</h2>
+                <span class="tag-pill">Atlassian Jira Software (Web UI) &bull; Burndown &amp; Velocity Reports</span>
+            </div>
+
+            <div class="aim-box">
+                <div class="aim-label">Aim / Problem Statement</div>
+                <strong>Primary Exam Problem:</strong> In Jira, create a Jira task titled <code>Testing Activity</code>. Change its status from <code>To Do</code> to <code>In Progress</code> and then <code>Done</code>. Display the completed task.<br>
+                <span style="color:var(--bl);font-size:12.5px;display:inline-block;margin-top:4px;">
+                    <strong>Lab Manual Mapping (A27 Exp 2):</strong> Tracking Sprint Progress using Burndown and Velocity Charts in Jira.
+                </span>
+            </div>
+
+            <h3>Theory: Workflow Tracking &amp; Sprint Metrics</h3>
+            <p>
+                A Jira <strong>Workflow</strong> represents the sequence of statuses and transitions that an issue travels through during its lifecycle from backlog creation to final resolution. In Scrum, monitoring progress during a sprint ensures that bottlenecks are identified early and delivery commitments are met.
+            </p>
+
+            <h4 style="color:var(--tx);font-size:13.5px;margin:12px 0 6px;">Workflow Status Lifecycle:</h4>
+            <ul>
+                <li><strong>To Do:</strong> Work item is specified and prioritized, but active development or testing has not yet commenced.</li>
+                <li><strong>In Progress:</strong> Active effort is underway by the assignee.</li>
+                <li><strong>In Review / Testing:</strong> Code or deliverables are being peer-reviewed, tested, and validated against acceptance criteria.</li>
+                <li><strong>Done:</strong> All acceptance criteria and Definition of Done (DoD) requirements are satisfied. The task is closed.</li>
+            </ul>
+
+            <h4 style="color:var(--tx);font-size:13.5px;margin:12px 0 6px;">Sprint Monitoring Reports in Jira:</h4>
+            <ul>
+                <li><strong>Sprint Burndown Chart:</strong> Visualizes the remaining effort over the duration of an active sprint. The horizontal axis represents sprint calendar dates; the vertical axis represents remaining effort (Story Points or issue count). As tasks move to <em>Done</em>, the line burns down toward zero.</li>
+                <li><strong>Velocity Chart:</strong> Displays the amount of work committed vs work completed across consecutive sprints. It measures the team's historical delivery capacity to improve future sprint planning.</li>
+                <li><strong>Story Points:</strong> An abstract estimation unit (often based on the Fibonacci sequence: 1, 2, 3, 5, 8, 13) reflecting relative effort, complexity, and technical risk.</li>
+            </ul>
+
+            <h4 style="color:var(--tx);font-size:13.5px;margin:12px 0 6px;">Scrum Iteration Workflow:</h4>
+            <div class="aim-box" style="background:var(--tab);border-left:3px solid var(--bl);padding:10px 14px;margin:8px 0 14px;">
+                <code>Product Backlog &rarr; Sprint Planning &rarr; Sprint Backlog &rarr; Active Sprint &rarr; Daily Scrum &rarr; Burndown Monitoring &rarr; Velocity Analysis &rarr; Sprint Review &rarr; Sprint Retrospective</code>
+            </div>
+
+            <h3>Step-by-Step UI Procedure</h3>
+            <ol>
+                <li>In project <code>StudentProject</code>, click the <strong>+ Create</strong> button in the top navigation bar.</li>
+                <li>Set <strong>Issue Type</strong> to <code>Task</code>, enter <strong>Summary</strong>: <code>Testing Activity</code>, set <strong>Assignee</strong>: <strong>Assign to me</strong>, and click <strong>Create</strong>. The task appears as <code>SP-2</code> in the <strong>TO DO</strong> column.</li>
+                <li><strong>Transition to In Progress:</strong> Drag the card <code>Testing Activity</code> from the <strong>TO DO</strong> column into the <strong>IN PROGRESS</strong> column (or open the card modal and select <em>In Progress</em> from the status dropdown).</li>
+                <li><strong>Transition to Done:</strong> Drag the card from <strong>IN PROGRESS</strong> into the <strong>DONE</strong> column (or change status dropdown to <em>Done</em>).</li>
+                <li><strong>Display Completed Task Details:</strong> Click on task <code>SP-2</code> to open its details view:
+                    <ul>
+                        <li>Confirm the status displays as <strong>DONE</strong> with a green checkmark badge.</li>
+                        <li>Scroll to the <strong>Activity &gt; History</strong> tab to inspect the timestamped transition audit trail: <code>To Do &rarr; In Progress</code> followed by <code>In Progress &rarr; Done</code>.</li>
+                    </ul>
+                </li>
+                <li><strong>Access Agile Reports (Burndown &amp; Velocity):</strong>
+                    <ul>
+                        <li>In the left sidebar, click <strong>Reports</strong>.</li>
+                        <li>Select <strong>Burndown Chart</strong>: Inspect the guideline vs actual remaining work curve for the sprint.</li>
+                        <li>Select <strong>Velocity Report</strong>: View the comparative bar chart of committed vs completed Story Points across sprints.</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <div class="result-box">
+                <strong>Verification &amp; Result</strong>
+                Task <code>SP-2</code> (<em>Testing Activity</em>) was successfully transitioned through the complete workflow lifecycle to <strong>DONE</strong> status with full historical audit logging. The Sprint Burndown and Velocity reports were accessed and evaluated.
+            </div>
+
+            <div class="pdf-download-wrap">
+                <div class="dl-label">
+                    <strong>Lab Manual PDF (A27 Exp 2)</strong> &mdash; Tracking Sprint Progress using Burndown and Velocity Charts in Jira with Scrum metrics, Story Point estimation, reports analysis, and conclusion.
+                </div>
+                <a class="pdf-download" href="A27_Agile_Exp2.pdf" download="A27_Agile_Exp2.pdf">
+                    <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.67v4h4V9h3.67L12 2z" transform="rotate(180 12 12)"/></svg>
+                    Download PDF <span class="dl-meta">(3.1 MB)</span>
+                </a>
+            </div>
+
+            <div class="viva-panel">
+                <div class="viva-header">Viva-Voce Q&amp;A</div>
+                <div class="viva-row">
+                    <div class="viva-q">Q1: What is a Jira workflow transition?</div>
+                    <div class="viva-a">A transition is a directed link that enables an issue to move from one status to another (e.g. from To Do to In Progress) governed by project permissions and validation rules.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q2: What does a horizontal flat line or an upward spike on a Burndown Chart indicate?</div>
+                    <div class="viva-a">A flat line indicates work has stalled or tasks are blocked. An upward spike indicates scope creep&mdash;new tasks or story points were added to the sprint after it started.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q3: What is Team Velocity and how does it help in Sprint Planning?</div>
+                    <div class="viva-a">Velocity is the average number of Story Points a team completes per sprint. It allows teams to realistically forecast and commit to future sprint workloads based on historical data.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q4: What is Definition of Done (DoD)?</div>
+                    <div class="viva-a">A formalized checklist of quality criteria (such as code reviewed, unit tests passing, documentation updated, and deployed to staging) required before declaring an issue completed.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             EXPERIMENT 3: Git Branch and Merge
+        =========================================== -->
+        <section class="exp-section" id="exp3" data-search="git branch merge student.txt fast forward commit main checkout switch vscode cmd windows">
+            <div class="exp-heading">
+                <h2><span class="num">Exp 03:</span>Perform Git Branch and Merge</h2>
+                <span class="tag-pill">VS Code + Git Terminal &bull; Version Control</span>
+            </div>
+
+            <div class="aim-box">
+                <div class="aim-label">Aim / Problem Statement</div>
+                <strong>Primary Exam Problem:</strong> Create a Git repository. Create a branch named <code>feature</code>, add a file named <code>student.txt</code>, commit the file, and merge the branch into <code>main</code>.<br>
+                <span style="color:var(--bl);font-size:12.5px;display:inline-block;margin-top:4px;">
+                    <strong>Lab Manual Mapping (A27 Exp 3):</strong> Version Control with Git &mdash; Branching, Merging, and Resolving Conflicts.
+                </span>
+            </div>
+
+            <h3>Theory: Git Architecture &amp; Branching</h3>
+            <p>
+                <strong>Git</strong> is an industry-standard distributed version control system (DVCS) that snapshots project states across time. Branching creates lightweight, independent lines of development allowing engineers to build features in isolation without disrupting the stable <code>main</code> codebase.
+            </p>
+
+            <h4 style="color:var(--tx);font-size:13.5px;margin:12px 0 6px;">Fundamental Git Operations:</h4>
+            <ul>
+                <li><strong>Repository (<code>git init</code>):</strong> The <code>.git</code> database storing full commit history, object trees, and branch references.</li>
+                <li><strong>Working Tree &amp; Staging Area (<code>git status</code>, <code>git add</code>):</strong> The three-tier architecture separates uncommitted working files, staged changes ready for snapshotting (index), and committed history.</li>
+                <li><strong>Commit (<code>git commit</code>):</strong> A cryptographically hashed (SHA-1) immutable snapshot of all staged files with author, timestamp, and message.</li>
+                <li><strong>Branch (<code>git branch</code> / <code>git switch</code>):</strong> A movable 41-byte pointer referencing a specific commit. Moving between branches switches the working tree files instantly.</li>
+                <li><strong>Fast-Forward Merge:</strong> When the target branch (<code>main</code>) has no divergent commits compared to the feature branch, Git simply advances the <code>main</code> pointer forward to match the feature tip without generating a separate merge commit.</li>
+                <li><strong>Log &amp; History (<code>git log</code>):</strong> Traverses commit ancestry to audit project evolution.</li>
+            </ul>
+
+            <h3>Step-by-Step Procedure &amp; Individual Commands</h3>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 1:</strong> In VS Code, open an empty project folder (e.g. <code>C:\DevOpsPractical\exp3_git</code> via <em>File &gt; Open Folder...</em>). Open the integrated terminal (<kbd>Ctrl + `</kbd>) and initialize Git with default branch <code>main</code>:</div>
+                <div class="cmd-box">
+                    <code>git init -b main</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 2:</strong> Configure your Git user identity (if not already set globally):</div>
+                <div class="cmd-box">
+                    <code>git config user.name "Student"</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+            <div class="cmd-step" style="margin-top:-8px;">
+                <div class="cmd-box">
+                    <code>git config user.email "student@exam.local"</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 3:</strong> In VS Code, create a file named <code>README.txt</code> with title text, then stage and make the initial commit on <code>main</code>:</div>
+                <div class="cmd-box">
+                    <code>git add README.txt</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+            <div class="cmd-step" style="margin-top:-8px;">
+                <div class="cmd-box">
+                    <code>git commit -m "Initial commit on main"</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 4:</strong> Create and switch to the new branch named <code>feature</code> (using modern <code>git switch -c</code> or classic <code>git checkout -b</code>):</div>
+                <div class="cmd-box">
+                    <code>git checkout -b feature</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+            <div class="cmd-step" style="margin-top:-8px;">
+                <div class="cmd-desc"><em>(Modern Git switch alternative):</em></div>
+                <div class="cmd-box">
+                    <code>git switch -c feature</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 5:</strong> In VS Code Explorer, click <strong>New File</strong>, name it <code>student.txt</code>, and write your details:</div>
+                <div class="file-preview">
+                    <div class="fp-bar">
+                        <span>student.txt (in VS Code Editor)</span>
+                        <button class="btn-copy" onclick="copyCode(this)">Copy File</button>
+                    </div>
+                    <pre><code>Student Name: DevOps Practical Candidate
+Roll Number: 20
+Subject: DevOps Lab Practical</code></pre>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 6:</strong> Check working tree status and stage the newly created <code>student.txt</code> file in terminal:</div>
+                <div class="cmd-box">
+                    <code>git status</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+            <div class="cmd-step" style="margin-top:-8px;">
+                <div class="cmd-box">
+                    <code>git add student.txt</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 7:</strong> Commit the file on the <code>feature</code> branch:</div>
+                <div class="cmd-box">
+                    <code>git commit -m "Add student.txt on feature branch"</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 8:</strong> Switch back to the <code>main</code> branch:</div>
+                <div class="cmd-box">
+                    <code>git checkout main</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 9:</strong> Merge the <code>feature</code> branch into <code>main</code> (executes fast-forward merge):</div>
+                <div class="cmd-box">
+                    <code>git merge feature</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 10:</strong> Verify that <code>student.txt</code> is present and inspect the visual commit graph:</div>
+                <div class="cmd-box">
+                    <code>git log --oneline --graph --all</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="terminal-panel">
+<div class="term-header">VS Code Terminal Output (Verification)</div>
+C:\DevOpsPractical\exp3_git&gt; git checkout main
+Switched to branch 'main'
+
+C:\DevOpsPractical\exp3_git&gt; git merge feature
+Updating 5a2b109..8c4f210
+Fast-forward
+ student.txt | 3 +++
+ 1 file changed, 3 insertions(+)
+ create mode 100644 student.txt
+
+C:\DevOpsPractical\exp3_git&gt; git log --oneline --graph --all
+* 8c4f210 (HEAD -&gt; main, feature) Add student.txt on feature branch
+* 5a2b109 Initial commit on main</div>
+
+            <div class="result-box">
+                <strong>Verification &amp; Result</strong>
+                Git repository was initialized with branch <code>main</code>. Branch <code>feature</code> was created and isolated commits were added. Executing <code>git merge feature</code> performed a seamless Fast-Forward merge into <code>main</code>. The commit history graph confirmed full integration.
+            </div>
+
+            <div class="pdf-download-wrap">
+                <div class="dl-label">
+                    <strong>Lab Manual PDF (A27 Exp 3)</strong> &mdash; Version Control with Git: Branching, Merging, and Resolving Conflicts with CMD &amp; Visual Studio Code screenshots, step-by-step procedures, and clean working tree verification.
+                </div>
+                <a class="pdf-download" href="A27_Agile_Exp3.pdf" download="A27_Agile_Exp3.pdf">
+                    <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.67v4h4V9h3.67L12 2z" transform="rotate(180 12 12)"/></svg>
+                    Download PDF <span class="dl-meta">(438 KB)</span>
+                </a>
+            </div>
+
+            <div class="viva-panel">
+                <div class="viva-header">Viva-Voce Q&amp;A</div>
+                <div class="viva-row">
+                    <div class="viva-q">Q1: What does git checkout -b feature (or git switch -c feature) do?</div>
+                    <div class="viva-a">It creates the new branch named 'feature' from the current HEAD commit and immediately switches your active working tree to that branch.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q2: What is a Fast-Forward merge?</div>
+                    <div class="viva-a">A merge where Git simply advances the target branch pointer directly to the tip of the feature branch because there are no conflicting or divergent commits on the target branch.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q3: What is the difference between git switch and git checkout?</div>
+                    <div class="viva-a"><code>git checkout</code> was overloaded to handle both branch switching and file restoration. Git 2.23+ introduced <code>git switch</code> exclusively for branches and <code>git restore</code> for files.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q4: What is the difference between working directory, staging area, and local repository?</div>
+                    <div class="viva-a">Working directory holds untracked/modified local files; staging area (index) holds files prepped for commit; local repository (.git) stores permanently recorded commit snapshots.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             EXPERIMENT 4: Resolve Git Merge Conflict
+        =========================================== -->
+        <section class="exp-section" id="exp4" data-search="git merge conflict conflict.txt resolve markers head cmd windows vscode abort">
+            <div class="exp-heading">
+                <h2><span class="num">Exp 04:</span>Resolve Git Merge Conflict</h2>
+                <span class="tag-pill">VS Code + Git Terminal &bull; Conflict Resolution</span>
+            </div>
+
+            <div class="aim-box">
+                <div class="aim-label">Aim / Problem Statement</div>
+                <strong>Primary Exam Problem:</strong> Create a Git repository. Modify the same line of a file in two branches. Merge the branches and resolve the conflict.<br>
+                <span style="color:var(--bl);font-size:12.5px;display:inline-block;margin-top:4px;">
+                    <strong>Lab Manual Mapping (A27 Exp 3 - Part 2):</strong> Creating and Resolving Merge Conflicts in Git with Visual Studio Code.
+                </span>
+            </div>
+
+            <h3>Theory: Merge Conflicts &amp; Conflict Markers</h3>
+            <p>
+                A <strong>Merge Conflict</strong> occurs when Git cannot automatically reconcile concurrent changes&mdash;specifically when two branches modify the exact same line in a file with differing text. Git halts the merge, preserves both variants inside the file surrounded by special <strong>Conflict Markers</strong>, and leaves the resolution to the developer.
+            </p>
+
+            <h4 style="color:var(--tx);font-size:13.5px;margin:12px 0 6px;">Understanding Conflict Marker Anatomy:</h4>
+            <ul>
+                <li><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> : Designates the beginning of the conflicting block from the branch you currently have checked out (e.g. <code>main</code>).</li>
+                <li><code>=======</code> : The visual divider separating the two competing sets of changes.</li>
+                <li><code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature-branch</code> : Designates the end of the conflicting block from the incoming branch being merged.</li>
+            </ul>
+
+            <h4 style="color:var(--tx);font-size:13.5px;margin:12px 0 6px;">VS Code Visual Merge Editor:</h4>
+            <p>
+                Visual Studio Code natively parses conflict markers and displays clickable action codelenses directly above each conflict block: <em>Accept Current Change</em>, <em>Accept Incoming Change</em>, <em>Accept Both Changes</em>, or <em>Compare Changes</em>.
+            </p>
+
+            <h3>Step-by-Step Procedure &amp; Individual Commands</h3>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 1:</strong> In VS Code, open an empty folder (e.g. <code>C:\DevOpsPractical\exp4_conflict</code>). In terminal (<kbd>Ctrl + `</kbd>), initialize Git:</div>
+                <div class="cmd-box">
+                    <code>git init -b main</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 2:</strong> In VS Code, create a file named <code>config.txt</code> with content: <code>App Version 1.0 (Original)</code>. Stage and commit on <code>main</code>:</div>
+                <div class="cmd-box">
+                    <code>git add config.txt</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+            <div class="cmd-step" style="margin-top:-8px;">
+                <div class="cmd-box">
+                    <code>git commit -m "Base commit with config.txt"</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 3:</strong> Create and switch to a branch named <code>feature-branch</code>:</div>
+                <div class="cmd-box">
+                    <code>git checkout -b feature-branch</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 4:</strong> In VS Code editor, open <code>config.txt</code>, modify line 1 to <code>App Version 2.0 (Modified by Feature)</code>, save (<kbd>Ctrl + S</kbd>), and commit:</div>
+                <div class="cmd-box">
+                    <code>git commit -am "Update config on feature branch"</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 5:</strong> Switch back to the <code>main</code> branch:</div>
+                <div class="cmd-box">
+                    <code>git checkout main</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 6:</strong> In VS Code editor, open <code>config.txt</code> and modify the exact same line 1 to <code>App Version 2.0 (Modified by Main)</code>, save (<kbd>Ctrl + S</kbd>), and commit:</div>
+                <div class="cmd-box">
+                    <code>git commit -am "Update config on main branch"</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 7:</strong> Attempt to merge <code>feature-branch</code> into <code>main</code> (Git detects competing edits and generates a merge conflict):</div>
+                <div class="cmd-box">
+                    <code>git merge feature-branch</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 8:</strong> In VS Code editor, open <code>config.txt</code>. Notice the conflict markers. Click <strong>Accept Incoming Change</strong> or edit manually to produce the unified resolution:</div>
+                <div class="file-preview">
+                    <div class="fp-bar">
+                        <span>config.txt (Resolved in VS Code Editor)</span>
+                        <button class="btn-copy" onclick="copyCode(this)">Copy File</button>
+                    </div>
+                    <pre><code>App Version 2.0 (Unified Resolution)</code></pre>
+                </div>
+                <p style="font-size:12.5px;color:var(--mut);margin:4px 0 0;">Ensure all conflict marker lines (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>) are deleted, then save (<kbd>Ctrl + S</kbd>).</p>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 9:</strong> Stage the resolved file in terminal:</div>
+                <div class="cmd-box">
+                    <code>git add config.txt</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 10:</strong> Finalize and commit the merge resolution:</div>
+                <div class="cmd-box">
+                    <code>git commit -m "Resolved merge conflict between main and feature-branch"</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 11:</strong> Verify clean working tree status and inspect the merged commit graph:</div>
+                <div class="cmd-box">
+                    <code>git status</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+            <div class="cmd-step" style="margin-top:-8px;">
+                <div class="cmd-box">
+                    <code>git log --oneline --graph</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="terminal-panel">
+<div class="term-header">VS Code Terminal Output (Conflict &amp; Resolution)</div>
+C:\DevOpsPractical\exp4_conflict&gt; git merge feature-branch
+Auto-merging config.txt
+CONFLICT (content): Merge conflict in config.txt
+Automatic merge failed; fix conflicts and then commit the result.
+
+C:\DevOpsPractical\exp4_conflict&gt; git commit -m "Resolved merge conflict between main and feature-branch"
+[main d7381b2] Resolved merge conflict between main and feature-branch
+
+C:\DevOpsPractical\exp4_conflict&gt; git status
+On branch main
+nothing to commit, working tree clean</div>
+
+            <div class="result-box">
+                <strong>Verification &amp; Result</strong>
+                Conflicting changes were intentionally introduced on the same line across <code>main</code> and <code>feature-branch</code>. Git successfully generated conflict markers, which were resolved cleanly in VS Code. Staging and committing produced a resolved merge commit, returning the repository to a clean working state.
+            </div>
+
+            <div class="pdf-download-wrap">
+                <div class="dl-label">
+                    <strong>Lab Manual PDF (A27 Exp 3)</strong> &mdash; Complete Git Conflict Generation &amp; Resolution Guide with hello.txt conflict screenshots, conflict marker removal, and clean git status verification.
+                </div>
+                <a class="pdf-download" href="A27_Agile_Exp3.pdf" download="A27_Agile_Exp3.pdf">
+                    <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.67v4h4V9h3.67L12 2z" transform="rotate(180 12 12)"/></svg>
+                    Download PDF <span class="dl-meta">(438 KB)</span>
+                </a>
+            </div>
+
+            <div class="viva-panel">
+                <div class="viva-header">Viva-Voce Q&amp;A</div>
+                <div class="viva-row">
+                    <div class="viva-q">Q1: How does Git notify you of a merge conflict?</div>
+                    <div class="viva-a">Git outputs <code>CONFLICT (content): Merge conflict in &lt;filename&gt;</code> and halts the merge, leaving the working directory in an unmerged state with conflict markers.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q2: How do you abort an ongoing conflict resolution?</div>
+                    <div class="viva-a">Run <code>git merge --abort</code> to restore your working tree back to before the merge command was executed.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q3: What must you do in Git after manually resolving conflict markers?</div>
+                    <div class="viva-a">You must stage the resolved file with <code>git add &lt;file&gt;</code> and finalize with <code>git commit</code>.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q4: What actions does VS Code provide for merge conflict resolution?</div>
+                    <div class="viva-a">Accept Current Change (keeps HEAD), Accept Incoming Change (keeps feature), Accept Both Changes (keeps both), and Open in Merge Editor (3-way diff comparison).</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             EXPERIMENT 5: Create a GitHub Repository & Git Flow
+        =========================================== -->
+        <section class="exp-section" id="exp5" data-search="github remote repository devopspractical push feature branch upstream cmd windows vscode git flow pull request pr">
+            <div class="exp-heading">
+                <h2><span class="num">Exp 05:</span>Create a GitHub Repository &amp; Push Feature Branch</h2>
+                <span class="tag-pill">VS Code + GitHub &bull; Git Flow &amp; Collaborative Workflows</span>
+            </div>
+
+            <div class="aim-box">
+                <div class="aim-label">Aim / Problem Statement</div>
+                <strong>Primary Exam Problem:</strong> Create a GitHub repository named <code>DevOpsPractical</code>. Add a README file, create a branch named <code>feature</code>, and push it to GitHub.<br>
+                <span style="color:var(--bl);font-size:12.5px;display:inline-block;margin-top:4px;">
+                    <strong>Lab Manual Mapping (A27 Exp 4):</strong> Implementing Git Flow and Collaborative Workflows using GitHub.
+                </span>
+            </div>
+
+            <h3>Theory: Git Flow &amp; GitHub Collaborative Workflows</h3>
+            <p>
+                <strong>GitHub</strong> provides remote cloud hosting for Git repositories, enabling distributed team collaboration, code reviews, and automated CI/CD pipelines.
+            </p>
+
+            <h4 style="color:var(--tx);font-size:13.5px;margin:12px 0 6px;">Git Flow Branching Strategy:</h4>
+            <ul>
+                <li><strong><code>main</code> branch:</strong> Contains strictly stable, production-ready, release-tagged code.</li>
+                <li><strong><code>develop</code> branch:</strong> Central integration branch where all feature deliverables combine before release.</li>
+                <li><strong><code>feature/*</code> branches:</strong> Dedicated branches where individual developers build isolated capabilities (e.g. <code>feature-login</code>, <code>feature-registration</code>, <code>feature-events</code>) without disrupting teammates.</li>
+                <li><strong><code>release/*</code> &amp; <code>hotfix/*</code> branches:</strong> Used to prepare releases or patch urgent production bugs.</li>
+            </ul>
+
+            <h4 style="color:var(--tx);font-size:13.5px;margin:12px 0 6px;">Collaborative Team Workflow Lifecycle:</h4>
+            <div class="aim-box" style="background:var(--tab);border-left:3px solid var(--or);padding:10px 14px;margin:8px 0 14px;">
+                <code>Clone Remote &rarr; Checkout Feature Branch &rarr; Commit Changes &rarr; Push Feature Branch &rarr; Open Pull Request (PR) &rarr; Peer Code Review &rarr; Merge to Main &rarr; Pull Latest Main Locally</code>
+            </div>
+
+            <h3>Step-by-Step Procedure &amp; Individual Commands</h3>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 1:</strong> In your browser, open <a href="https://github.com/new" target="_blank" style="color:var(--bl);">github.com/new</a>, create a repository named <code>DevOpsPractical</code>, leave "Add a README file" unchecked, and click <strong>Create repository</strong>.</div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 2:</strong> In VS Code, open a new folder (e.g. <code>C:\DevOpsPractical\DevOpsPractical</code>). In terminal (<kbd>Ctrl + `</kbd>), initialize Git:</div>
+                <div class="cmd-box">
+                    <code>git init -b main</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 3:</strong> In VS Code Explorer, create a file named <code>README.md</code> with initial contents:</div>
+                <div class="file-preview">
+                    <div class="fp-bar">
+                        <span>README.md (in VS Code Editor)</span>
+                        <button class="btn-copy" onclick="copyCode(this)">Copy File</button>
+                    </div>
+                    <pre><code># DevOpsPractical
+DevOps Practical Lab Examination Repository
+Collaborative Git Flow Demonstration</code></pre>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 4:</strong> Stage <code>README.md</code> in terminal:</div>
+                <div class="cmd-box">
+                    <code>git add README.md</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 5:</strong> Commit the file on the <code>main</code> branch:</div>
+                <div class="cmd-box">
+                    <code>git commit -m "Initial commit with README"</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 6:</strong> Link your local Git repository to your GitHub remote (replace <code>&lt;YOUR_USERNAME&gt;</code> with your GitHub username):</div>
+                <div class="cmd-box">
+                    <code>git remote add origin https://github.com/&lt;YOUR_USERNAME&gt;/DevOpsPractical.git</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 7:</strong> Push the <code>main</code> branch to GitHub and establish upstream tracking:</div>
+                <div class="cmd-box">
+                    <code>git push -u origin main</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 8:</strong> Create and switch to the new local branch named <code>feature</code>:</div>
+                <div class="cmd-box">
+                    <code>git checkout -b feature</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 9:</strong> In VS Code editor, open <code>README.md</code>, append a line (e.g. <code>Feature Branch Implementation: Login Module</code>), and save (<kbd>Ctrl + S</kbd>).</div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 10:</strong> Commit the update on the <code>feature</code> branch:</div>
+                <div class="cmd-box">
+                    <code>git commit -am "Add feature branch updates"</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 11:</strong> Push the <code>feature</code> branch to GitHub and set upstream tracking:</div>
+                <div class="cmd-box">
+                    <code>git push -u origin feature</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 12:</strong> Verify remote tracking branches in terminal:</div>
+                <div class="cmd-box">
+                    <code>git branch -r</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 13 (GitHub Pull Request &amp; Merge):</strong>
+                    <ol style="margin-top:6px;">
+                        <li>In your web browser, navigate to your GitHub repository: <code>https://github.com/&lt;YOUR_USERNAME&gt;/DevOpsPractical</code>.</li>
+                        <li>Click the yellow notification button: <strong>Compare &amp; pull request</strong>.</li>
+                        <li>Set title: <em>"Add feature branch updates"</em>, add description, and click <strong>Create pull request</strong>.</li>
+                        <li>Under the PR discussion page, click <strong>Merge pull request</strong> &gt; click <strong>Confirm merge</strong>. The feature branch is now cleanly integrated into <code>main</code> on GitHub.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 14:</strong> In VS Code terminal, switch back to local <code>main</code> and pull the latest merged code from GitHub:</div>
+                <div class="cmd-box">
+                    <code>git checkout main</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+            <div class="cmd-step" style="margin-top:-8px;">
+                <div class="cmd-box">
+                    <code>git pull origin main</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="terminal-panel">
+<div class="term-header">VS Code Terminal Output (Push &amp; Pull Workflow)</div>
+C:\DevOpsPractical\DevOpsPractical&gt; git push -u origin feature
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Writing objects: 100% (3/3), 320 bytes | 320.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+remote:
+remote: Create a pull request for 'feature' on GitHub:
+remote:      https://github.com/student/DevOpsPractical/pull/new/feature
+remote:
+To https://github.com/student/DevOpsPractical.git
+ * [new branch]      feature -&gt; feature
+Branch 'feature' set up to track remote branch 'feature' from 'origin'.
+
+C:\DevOpsPractical\DevOpsPractical&gt; git checkout main
+Switched to branch 'main'
+
+C:\DevOpsPractical\DevOpsPractical&gt; git pull origin main
+Updating 5a2b109..a1c4e92
+Fast-forward
+ README.md | 2 ++
+ 1 file changed, 2 insertions(+)</div>
+
+            <div class="result-box">
+                <strong>Verification &amp; Result</strong>
+                GitHub remote repository <code>DevOpsPractical</code> was successfully configured. The local <code>feature</code> branch was pushed upstream with <code>git push -u origin feature</code>. A Pull Request was created, reviewed, and merged on GitHub, and the latest changes were synchronized locally using <code>git pull origin main</code>.
+            </div>
+
+            <div class="pdf-download-wrap">
+                <div class="dl-label">
+                    <strong>Lab Manual PDF (A27 Exp 4)</strong> &mdash; Implementing Git Flow and Collaborative Workflows using GitHub: Pull Requests, Code Reviews, Team Roles, and Visual Studio Code integration.
+                </div>
+                <a class="pdf-download" href="A27_Agile_Exp4.pdf" download="A27_Agile_Exp4.pdf">
+                    <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.67v4h4V9h3.67L12 2z" transform="rotate(180 12 12)"/></svg>
+                    Download PDF <span class="dl-meta">(7.7 MB)</span>
+                </a>
+            </div>
+
+            <div class="viva-panel">
+                <div class="viva-header">Viva-Voce Q&amp;A</div>
+                <div class="viva-row">
+                    <div class="viva-q">Q1: What does the -u flag do in git push -u origin feature?</div>
+                    <div class="viva-a">It sets upstream tracking references, associating the local <code>feature</code> branch with <code>origin/feature</code> so subsequent <code>git push</code> or <code>git pull</code> commands do not require specifying remote and branch names.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q2: How do you authenticate Git with GitHub from Windows?</div>
+                    <div class="viva-a">Using Git Credential Manager (GCM) for Windows via browser OAuth login or a GitHub Personal Access Token (PAT).</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q3: What is the purpose of Git Flow in team projects?</div>
+                    <div class="viva-a">Git Flow isolates unstable feature development on separate branches, preventing untested code from polluting the production <code>main</code> branch until peer-reviewed and tested.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q4: Why is a Pull Request (PR) preferred over directly pushing to the main branch?</div>
+                    <div class="viva-a">Pull Requests facilitate peer code review, discussion, automated CI build verification, and quality gates before code is merged into the production trunk.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q5: Why must developers run git pull origin main before starting new feature work?</div>
+                    <div class="viva-a">To synchronize their local <code>main</code> with recent changes merged by teammates, preventing future merge conflicts when branching.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             EXPERIMENT 6: Execute a Jenkins Pipeline & CI/CD
+        =========================================== -->
+        <section class="exp-section" id="exp6" data-search="jenkins pipeline declarative groovy build successful welcome to devops practical console ci cd webhook github">
+            <div class="exp-heading">
+                <h2><span class="num">Exp 06:</span>Execute a Jenkins Pipeline &amp; Automated CI/CD</h2>
+                <span class="tag-pill">Jenkins CI/CD Automation &bull; GitHub Webhooks</span>
+            </div>
+
+            <div class="aim-box">
+                <div class="aim-label">Aim / Problem Statement</div>
+                <strong>Primary Exam Problem:</strong> Create a Jenkins pipeline that prints <code>Welcome to DevOps Practical</code> and <code>Build Successful</code> in the console output.<br>
+                <span style="color:var(--bl);font-size:12.5px;display:inline-block;margin-top:4px;">
+                    <strong>Lab Manual Mapping (A27 Exp 5):</strong> Building an Automated CI/CD Pipeline using Jenkins and GitHub Webhooks.
+                </span>
+            </div>
+
+            <h3>Theory: Continuous Integration &amp; Continuous Deployment (CI/CD)</h3>
+            <p>
+                <strong>CI/CD</strong> automates the traditional manual development cycle (writing code &rarr; manual testing &rarr; manual uploading &rarr; manual deployment).
+            </p>
+            <ul>
+                <li><strong>Continuous Integration (CI):</strong> Automatically fetches code, compiles, and runs automated unit/integration tests on every commit pushed to GitHub, ensuring code quality and catching bugs early.</li>
+                <li><strong>Continuous Delivery (CD):</strong> Automatically packages tested builds into release-ready artifacts (e.g. Docker images, binaries, packages).</li>
+                <li><strong>Continuous Deployment (CD):</strong> Automatically publishes verified packages directly to production servers with zero manual intervention.</li>
+            </ul>
+
+            <h4 style="color:var(--tx);font-size:13.5px;margin:12px 0 6px;">Jenkins Automation Server &amp; GitHub Webhooks:</h4>
+            <ul>
+                <li><strong>Jenkins:</strong> An open-source automation server acting as an automated assistant monitoring code repositories. When triggers occur, Jenkins clones the repo, executes build scripts, runs tests, and generates reports.</li>
+                <li><strong>GitHub Webhook:</strong> An instantaneous event-driven HTTP push notification. Instead of Jenkins polling GitHub continuously (<em>"Any new code?"</em>), GitHub proactively notifies Jenkins (<em>"New commit received!"</em>) via <code>http://&lt;jenkins-ip&gt;:8080/github-webhook/</code>.</li>
+            </ul>
+
+            <h4 style="color:var(--tx);font-size:13.5px;margin:12px 0 6px;">Complete CI/CD Pipeline Lifecycle:</h4>
+            <div class="aim-box" style="background:var(--tab);border-left:3px solid var(--gr);padding:10px 14px;margin:8px 0 14px;">
+                <code>Developer Git Push &rarr; GitHub Webhook &rarr; Jenkins Trigger &rarr; Clone Repository &rarr; Build Stage &rarr; Test Stage &rarr; Green Success</code>
+            </div>
+
+            <h3>Pipeline Code (Jenkinsfile)</h3>
+            <div class="code-panel">
+                <div class="code-bar">
+                    <span class="code-file">Jenkinsfile (Declarative Pipeline)</span>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy Jenkinsfile</button>
+                </div>
+                <pre><code><span class="c-kw">pipeline</span> {
+    <span class="c-kw">agent</span> any
+
+    <span class="c-kw">stages</span> {
+        <span class="c-kw">stage</span>(<span class="c-st">'Welcome Stage'</span>) {
+            <span class="c-kw">steps</span> {
+                <span class="c-fn">echo</span> <span class="c-st">'Welcome to DevOps Practical'</span>
+            }
+        }
+
+        <span class="c-kw">stage</span>(<span class="c-st">'Build Stage'</span>) {
+            <span class="c-kw">steps</span> {
+                <span class="c-fn">echo</span> <span class="c-st">'Compiling application...'</span>
+                <span class="c-fn">echo</span> <span class="c-st">'Build Successful'</span>
+            }
+        }
+    }
+
+    <span class="c-kw">post</span> {
+        <span class="c-kw">success</span> {
+            <span class="c-fn">echo</span> <span class="c-st">'Pipeline Completed With Result: SUCCESS'</span>
+        }
+    }
+}</code></pre>
+            </div>
+
+            <h3>Step-by-Step UI Procedure</h3>
+            <ol>
+                <li>Open your browser at <code>http://localhost:8080</code> and log in to Jenkins.</li>
+                <li>Click <strong>New Item</strong> on the left dashboard menu.</li>
+                <li>Enter item name: <code>DevOps_Exam_Pipeline</code>, select <strong>Pipeline</strong>, and click <strong>OK</strong>.</li>
+                <li>Scroll to the <strong>Pipeline</strong> configuration section &gt; set Definition to <strong>Pipeline script</strong>.</li>
+                <li>Paste the Declarative Pipeline script above into the script editor.</li>
+                <li>Under <strong>Build Triggers</strong>, check <strong>GitHub hook trigger for GITScm polling</strong> (or check <strong>Poll SCM</strong> with schedule <code>* * * * *</code>).</li>
+                <li>Click <strong>Save</strong>.</li>
+                <li>Click <strong>Build Now</strong> from the left sidebar to execute build #1.</li>
+                <li>Click <strong>#1</strong> under Build History &gt; select <strong>Console Output</strong>. Verify both required output strings appear: <code>Welcome to DevOps Practical</code> and <code>Build Successful</code>.</li>
+            </ol>
+
+            <h3>Automated Webhook Trigger using Localtunnel (Zero Signup / Zero Token)</h3>
+            <p>
+                Because GitHub is hosted on the public cloud, it cannot directly reach <code>http://localhost:8080</code> on your local computer. Use <strong>localtunnel</strong> to expose Jenkins publicly with zero configuration:
+            </p>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 1:</strong> In your Command Prompt or PowerShell, start a public tunnel to Jenkins port 8080:</div>
+                <div class="cmd-box">
+                    <code>npx localtunnel --port 8080</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step" style="margin-top:-8px;">
+                <div class="cmd-desc">
+                    Localtunnel will output your unique public URL (e.g. <code>your url is: https://plenty-rules-jog.loca.lt</code>).<br>
+                    Append <code>/github-webhook/</code> to form your GitHub Webhook Payload URL:
+                    <div style="margin-top:6px;padding:8px 12px;background:var(--tab);border-left:3px solid var(--ac);font-family:Consolas,monospace;font-size:12.5px;color:var(--bl);">
+                        https://&lt;your-subdomain&gt;.loca.lt/github-webhook/
+                    </div>
+                </div>
+            </div>
+
+            <div class="cmd-step" style="margin-top:-8px;">
+                <div class="cmd-desc"><strong>Step 2 (Add Webhook in GitHub):</strong>
+                    <ol style="margin-top:6px;">
+                        <li>In your GitHub repository, navigate to <strong>Settings</strong> &gt; <strong>Webhooks</strong> &gt; <strong>Add webhook</strong>.</li>
+                        <li><strong>Payload URL:</strong> Paste <code>https://&lt;your-subdomain&gt;.loca.lt/github-webhook/</code> (keep the trailing slash <code>/</code>).</li>
+                        <li><strong>Content type:</strong> Select <code>application/json</code>.</li>
+                        <li><strong>Which events would you like to trigger this webhook?:</strong> Select <strong>Just the push event</strong>.</li>
+                        <li>Click <strong>Add webhook</strong>. Keep your localtunnel terminal window running during testing.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="terminal-panel">
+<div class="term-header">Jenkins Console Output</div>
+Started by user Student
+Running in Durability level: MAX_SURVIVABILITY
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in C:\ProgramData\Jenkins\.jenkins\workspace\DevOps_Exam_Pipeline
+[Pipeline] {
+[Pipeline] stage (Welcome Stage)
+[Pipeline] echo
+Welcome to DevOps Practical
+[Pipeline] stage (Build Stage)
+[Pipeline] echo
+Compiling application...
+[Pipeline] echo
+Build Successful
+[Pipeline] stage (Declarative: Post Actions)
+[Pipeline] echo
+Pipeline Completed With Result: SUCCESS
+[Pipeline] }
+[Pipeline] End of Pipeline
+Finished: SUCCESS</div>
+
+            <div class="result-box">
+                <strong>Verification &amp; Result</strong>
+                The declarative Jenkins pipeline was successfully scheduled and executed. The console log confirmed execution across all stages, printing <em>"Welcome to DevOps Practical"</em> and <em>"Build Successful"</em> with final status <code>Finished: SUCCESS</code>.
+            </div>
+
+            <div class="pdf-download-wrap">
+                <div class="dl-label">
+                    <strong>Lab Manual PDF (A27 Exp 5)</strong> &mdash; Building an Automated CI/CD Pipeline using Jenkins and GitHub Webhooks: Automated triggers, build history, stages view, and console verification.
+                </div>
+                <a class="pdf-download" href="A27_Agile_Exp5.pdf" download="A27_Agile_Exp5.pdf">
+                    <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.67v4h4V9h3.67L12 2z" transform="rotate(180 12 12)"/></svg>
+                    Download PDF <span class="dl-meta">(2.2 MB)</span>
+                </a>
+            </div>
+
+            <div class="viva-panel">
+                <div class="viva-header">Viva-Voce Q&amp;A</div>
+                <div class="viva-row">
+                    <div class="viva-q">Q1: What is the difference between Continuous Integration (CI) and Continuous Deployment (CD)?</div>
+                    <div class="viva-a">CI focuses on automatically compiling and testing code on every commit to verify quality. CD automates packaging and deploying the validated code directly to production servers.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q2: What is a GitHub Webhook and how does it improve pipeline automation?</div>
+                    <div class="viva-a">A Webhook is an automated HTTP POST notification sent by GitHub immediately upon receiving a push, eliminating the delay and server overhead of Jenkins polling GitHub repeatedly.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q3: What is the purpose of 'agent any' in a Jenkinsfile?</div>
+                    <div class="viva-a">It directs Jenkins to allocate any available node or executor in the Jenkins cluster to run the pipeline stages.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q4: What is the default port for Jenkins and how do you unlock it on first install?</div>
+                    <div class="viva-a">Jenkins runs on port 8080 by default. It is unlocked using the initial administrator password stored in <code>initialAdminPassword</code>.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             EXPERIMENT 7: Build a Docker Image (Docker Desktop)
+        =========================================== -->
+        <section class="exp-section" id="exp7" data-search="docker dockerfile welcome to docker nginx container build run port 8080 windows cmd docker desktop image recipe food">
+            <div class="exp-heading">
+                <h2><span class="num">Exp 07:</span>Build a Docker Image</h2>
+                <span class="tag-pill">Docker Desktop + VS Code (Windows) &bull; Containerization</span>
+            </div>
+
+            <div class="aim-box">
+                <div class="aim-label">Aim / Problem Statement</div>
+                <strong>Primary Exam Problem:</strong> Create a Dockerfile for a simple HTML page displaying <code>Welcome to Docker</code>. Build the image and run it in a container.<br>
+                <span style="color:var(--bl);font-size:12.5px;display:inline-block;margin-top:4px;">
+                    <strong>Lab Manual Mapping (A27 Exp 6):</strong> Containerizing Applications using Docker &mdash; Creating Dockerfiles and Running Containers.
+                </span>
+            </div>
+
+            <h3>Theory: Docker Containerization Architecture</h3>
+            <p>
+                <strong>Docker</strong> solves the classic <em>"It works on my machine!"</em> software deployment failure by packaging application code along with all system runtimes, libraries, and environment dependencies into a portable, lightweight container.
+            </p>
+
+            <h4 style="color:var(--tx);font-size:13.5px;margin:12px 0 6px;">Core Docker Architecture &amp; Analogies:</h4>
+            <ul>
+                <li><strong>Docker Image (Recipe / Blueprint):</strong> An immutable, read-only static template specifying OS layers and application code.</li>
+                <li><strong>Docker Container (Cooked Food / Running Instance):</strong> A live, running process isolated by Linux namespaces and cgroups. Multiple containers can run from a single image.</li>
+                <li><strong>Docker Client &amp; Engine:</strong> The CLI client (<code>docker build</code>, <code>docker run</code>) sends API requests to the Docker Engine daemon executing via WSL2 on Windows.</li>
+                <li><strong>Dockerfile Instructions:</strong>
+                    <ul>
+                        <li><code>FROM</code> : Specifies base operating environment (e.g. <code>nginx:alpine</code>).</li>
+                        <li><code>COPY</code> : Transfers local files into container filesystem.</li>
+                        <li><code>EXPOSE</code> : Declares listening ports.</li>
+                        <li><code>CMD</code> vs <code>RUN</code> : <strong>RUN</strong> executes during image creation to install libraries; <strong>CMD</strong> executes when the container launches.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Prerequisite: Start Docker Desktop</h3>
+            <p>
+                Launch <strong>Docker Desktop</strong> from your Windows Start Menu. Verify the whale icon in the bottom-left status bar is <strong>green</strong> with the status message: <strong>"Engine running"</strong>.
+            </p>
+
+            <h3>Step-by-Step Procedure &amp; Individual Commands</h3>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 1:</strong> In VS Code, open an empty workspace folder (e.g. <code>C:\DevOpsPractical\exp7_docker</code> via <em>File &gt; Open Folder...</em>). Open the integrated terminal (<kbd>Ctrl + `</kbd>) or Command Prompt.</div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 2:</strong> In the VS Code file explorer, click the <strong>New File</strong> icon and name it <code>index.html</code>. Paste the following HTML code and save (<kbd>Ctrl + S</kbd>):</div>
+                <div class="file-preview">
+                    <div class="fp-bar">
+                        <span>index.html</span>
+                        <button class="btn-copy" onclick="copyCode(this)">Copy File</button>
+                    </div>
+                    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Welcome to Docker&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+            margin: 0;
+            text-align: center;
+        }
+        h1 {
+            color: #007acc;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        p {
+            color: #9cdcfe;
+            font-size: 16px;
+        }
+        .badge {
+            background: #0e639c;
+            color: #ffffff;
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 13px;
+            margin-top: 12px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Welcome to Docker&lt;/h1&gt;
+    &lt;p&gt;Nginx Web Server container running via Docker Desktop on Windows&lt;/p&gt;
+    &lt;span class="badge"&gt;Status: Container Active &amp;amp; Healthy&lt;/span&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 3:</strong> In the VS Code file explorer, click the <strong>New File</strong> icon and name it exactly <code>Dockerfile</code> (with no file extension). Paste the instructions and save:</div>
+                <div class="file-preview">
+                    <div class="fp-bar">
+                        <span>Dockerfile</span>
+                        <button class="btn-copy" onclick="copyCode(this)">Copy File</button>
+                    </div>
+                    <pre><code># Base image: lightweight Nginx on Alpine Linux (~23MB)
+FROM nginx:alpine
+
+# Copy custom webpage into Nginx default document root
+COPY index.html /usr/share/nginx/html/index.html
+
+# Expose internal HTTP port 80
+EXPOSE 80
+
+# Run Nginx in foreground to keep container running
+CMD ["nginx", "-g", "daemon off;"]</code></pre>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 4:</strong> In your VS Code terminal, build the Docker image with tag <code>welcome-docker:1.0</code>:</div>
+                <div class="cmd-box">
+                    <code>docker build -t welcome-docker:1.0 .</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 5 (Docker Desktop GUI Verification):</strong> Open <strong>Docker Desktop</strong> &gt; click the <strong>Images</strong> tab in the left sidebar. Verify that image <code>welcome-docker</code> with tag <code>1.0</code> appears in the list (~23 MB).</div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 6:</strong> In your VS Code terminal, launch the container in detached mode (<code>-d</code>) on host port <code>8080</code> with container name <code>my-docker-app</code>:</div>
+                <div class="cmd-box">
+                    <code>docker run -d -p 8080:80 --name my-docker-app welcome-docker:1.0</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 7 (Docker Desktop GUI Verification &amp; 1-Click Access):</strong></div>
+                <ol style="margin-top: 6px;">
+                    <li>Switch to <strong>Docker Desktop</strong> and click the <strong>Containers</strong> tab in the left navigation sidebar.</li>
+                    <li>Verify container <code>my-docker-app</code> appears with a green circle and status <strong>Running</strong>.</li>
+                    <li>Under the <strong>Port(s)</strong> column, click the blue clickable link <strong><code>8080:80</code></strong>.</li>
+                    <li>Docker Desktop automatically launches your default web browser at <code>http://localhost:8080</code> displaying <em>"Welcome to Docker"</em>.</li>
+                    <li>Click on container name <code>my-docker-app</code> in Docker Desktop to inspect live Nginx access logs, explore container filesystem in the <strong>Files</strong> tab, or monitor CPU/memory telemetry under <strong>Stats</strong>.</li>
+                </ol>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 8 (Terminal Status Verification - Optional):</strong> Check running container status via CLI:</div>
+                <div class="cmd-box">
+                    <code>docker ps</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+            <div class="cmd-step" style="margin-top:-8px;">
+                <div class="cmd-desc">Verify HTTP response using Windows curl:</div>
+                <div class="cmd-box">
+                    <code>curl http://localhost:8080</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 9 (Stop &amp; Cleanup):</strong> Stop and delete the container either by clicking the <strong>Stop</strong> (square) and <strong>Delete</strong> (trash) icons in Docker Desktop GUI, or via terminal:</div>
+                <div class="cmd-box">
+                    <code>docker stop my-docker-app</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+            <div class="cmd-step" style="margin-top:-8px;">
+                <div class="cmd-box">
+                    <code>docker rm my-docker-app</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="terminal-panel">
+<div class="term-header">Terminal Output</div>
+C:\DevOpsPractical\exp7_docker&gt; docker build -t welcome-docker:1.0 .
+[+] Building 1.2s (7/7) FINISHED
+ =&gt; [1/2] FROM docker.io/library/nginx:alpine
+ =&gt; [2/2] COPY index.html /usr/share/nginx/html/index.html
+ =&gt; naming to docker.io/library/welcome-docker:1.0
+
+C:\DevOpsPractical\exp7_docker&gt; docker run -d -p 8080:80 --name my-docker-app welcome-docker:1.0
+a7f34c291e0892be1f8a
+
+C:\DevOpsPractical\exp7_docker&gt; docker ps
+CONTAINER ID   IMAGE                COMMAND                  CREATED         STATUS         PORTS                  NAMES
+a7f34c291e08   welcome-docker:1.0   "/docker-entrypoint.…"   5 seconds ago   Up 4 seconds   0.0.0.0:8080-&gt;80/tcp   my-docker-app
+
+C:\DevOpsPractical\exp7_docker&gt; curl http://localhost:8080
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;&lt;title&gt;Welcome to Docker&lt;/title&gt;...&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Welcome to Docker&lt;/h1&gt;
+    &lt;p&gt;Nginx Web Server container running via Docker Desktop on Windows&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+
+            <div class="result-box">
+                <strong>Verification &amp; Result</strong>
+                Docker image <code>welcome-docker:1.0</code> was successfully built. Container <code>my-docker-app</code> was verified active inside <strong>Docker Desktop</strong>. Clicking the <code>8080:80</code> port link successfully opened the web application at <code>http://localhost:8080</code>.
+            </div>
+
+            <div class="pdf-download-wrap">
+                <div class="dl-label">
+                    <strong>Lab Manual PDF (A27 Exp 6)</strong> &mdash; Containerizing Applications using Docker: Creating Dockerfiles, building images, port mapping, and container management.
+                </div>
+                <a class="pdf-download" href="A27_Agile_Exp6.pdf" download="A27_Agile_Exp6.pdf">
+                    <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.67v4h4V9h3.67L12 2z" transform="rotate(180 12 12)"/></svg>
+                    Download PDF <span class="dl-meta">(497 KB)</span>
+                </a>
+            </div>
+
+            <div class="viva-panel">
+                <div class="viva-header">Viva-Voce Q&amp;A</div>
+                <div class="viva-row">
+                    <div class="viva-q">Q1: What is the fundamental difference between RUN and CMD in a Dockerfile?</div>
+                    <div class="viva-a"><code>RUN</code> executes commands during the image build process to install dependencies and commits new image layers. <code>CMD</code> specifies the default command executed when the container starts running.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q2: What is the difference between a Docker Image and a Docker Container?</div>
+                    <div class="viva-a">An Image is a static, read-only template/blueprint (like a recipe). A Container is a dynamic, isolated, running process instantiated from that image (like the cooked food).</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q3: What does -p 8080:80 represent in docker run?</div>
+                    <div class="viva-a">It maps external port 8080 on the Windows host machine to internal container port 80 where Nginx is listening.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q4: What is the benefit of Docker Desktop's WSL2 backend on Windows?</div>
+                    <div class="viva-a">It runs Linux containers natively inside lightweight WSL2 utility VMs with near-bare-metal performance and seamless host file access.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             EXPERIMENT 8: Run a Docker Compose Application (Docker Desktop)
+        =========================================== -->
+        <section class="exp-section" id="exp8" data-search="docker compose docker-compose.yml nginx webserver up down ps port 8085 windows cmd docker desktop stack multi container">
+            <div class="exp-heading">
+                <h2><span class="num">Exp 08:</span>Run a Docker Compose Application</h2>
+                <span class="tag-pill">Docker Compose + Docker Desktop (Windows) &bull; Multi-Container Stacks</span>
+            </div>
+
+            <div class="aim-box">
+                <div class="aim-label">Aim / Problem Statement</div>
+                <strong>Primary Exam Problem:</strong> Create a Docker Compose file to run a web server using the Nginx image. Start the service and verify that the webpage is accessible.<br>
+                <span style="color:var(--bl);font-size:12.5px;display:inline-block;margin-top:4px;">
+                    <strong>Lab Manual Mapping (A27 Exp 6 - Part 2):</strong> Multi-service Deployment with Docker Compose.
+                </span>
+            </div>
+
+            <h3>Theory: Multi-Service Container Orchestration</h3>
+            <p>
+                In modern microservices, applications depend on multiple interconnected containers (e.g. Web App + MySQL Database + Redis Cache). Running separate <code>docker run</code> commands manually is error-prone. <strong>Docker Compose</strong> manages the entire multi-container topology declaratively through a single YAML file (<code>docker-compose.yml</code>).
+            </p>
+
+            <h4 style="color:var(--tx);font-size:13.5px;margin:12px 0 6px;">Docker vs Docker Compose vs Kubernetes Comparison:</h4>
+            <div style="overflow-x:auto;margin:8px 0 14px;">
+                <table style="width:100%;border-collapse:collapse;font-size:12.5px;">
+                    <thead>
+                        <tr style="background:var(--tab);border-bottom:1px solid var(--bd);">
+                            <th style="padding:6px 10px;text-align:left;">Feature</th>
+                            <th style="padding:6px 10px;text-align:left;">Docker (Standalone)</th>
+                            <th style="padding:6px 10px;text-align:left;">Docker Compose</th>
+                            <th style="padding:6px 10px;text-align:left;">Kubernetes (K8s)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom:1px solid var(--bd);">
+                            <td style="padding:6px 10px;"><strong>Purpose</strong></td>
+                            <td style="padding:6px 10px;">Single container lifecycle</td>
+                            <td style="padding:6px 10px;">Multi-container application stacks</td>
+                            <td style="padding:6px 10px;">Large-scale cluster orchestration</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid var(--bd);">
+                            <td style="padding:6px 10px;"><strong>Config File</strong></td>
+                            <td style="padding:6px 10px;"><code>Dockerfile</code></td>
+                            <td style="padding:6px 10px;"><code>docker-compose.yml</code></td>
+                            <td style="padding:6px 10px;"><code>deployment.yaml</code></td>
+                        </tr>
+                        <tr>
+                            <td style="padding:6px 10px;"><strong>Scaling</strong></td>
+                            <td style="padding:6px 10px;">Manual port allocation</td>
+                            <td style="padding:6px 10px;">Single-host scaling</td>
+                            <td style="padding:6px 10px;">Automated horizontal scaling (HPA)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Step-by-Step Procedure &amp; Individual Commands</h3>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 1:</strong> In VS Code, open an empty workspace folder (e.g. <code>C:\DevOpsPractical\exp8_compose</code>). In VS Code file explorer, create a subfolder named <code>html</code>.</div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 2:</strong> Inside the <code>html</code> folder, create a file named <code>index.html</code>. Paste the following HTML code and save (<kbd>Ctrl + S</kbd>):</div>
+                <div class="file-preview">
+                    <div class="fp-bar">
+                        <span>html/index.html</span>
+                        <button class="btn-copy" onclick="copyCode(this)">Copy File</button>
+                    </div>
+                    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Docker Compose Nginx Web Server&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+            margin: 0;
+            text-align: center;
+        }
+        h1 {
+            color: #6a9955;
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+        .card {
+            background: #252526;
+            border: 1px solid #3c3c3c;
+            border-radius: 6px;
+            padding: 20px 32px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+        .param {
+            color: #dcdcaa;
+            font-weight: 600;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="card"&gt;
+        &lt;h1&gt;Nginx Web Server via Docker Compose&lt;/h1&gt;
+        &lt;p&gt;Service Name: &lt;span class="param"&gt;webserver&lt;/span&gt; &amp;bull; Container: &lt;span class="param"&gt;nginx_compose_web&lt;/span&gt;&lt;/p&gt;
+        &lt;p&gt;Published Port: &lt;span class="param"&gt;8085&lt;/span&gt; &amp;bull; Host Path: &lt;span class="param"&gt;./html&lt;/span&gt;&lt;/p&gt;
+        &lt;p style="color:#007acc;margin-top:14px;"&gt;&amp;#x2714; Managed as a Compose Stack in Docker Desktop&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 3:</strong> In the root project folder (<code>exp8_compose</code>), create a file named <code>docker-compose.yml</code>. Paste the configuration and save:</div>
+                <div class="file-preview">
+                    <div class="fp-bar">
+                        <span>docker-compose.yml</span>
+                        <button class="btn-copy" onclick="copyCode(this)">Copy File</button>
+                    </div>
+                    <pre><code>version: '3.8'
+
+services:
+  webserver:
+    image: nginx:alpine
+    container_name: nginx_compose_web
+    ports:
+      - "8085:80"
+    volumes:
+      - ./html:/usr/share/nginx/html:ro
+    restart: always</code></pre>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 4:</strong> In the VS Code terminal (<kbd>Ctrl + `</kbd>), start the Compose application in detached mode (<code>-d</code>):</div>
+                <div class="cmd-box">
+                    <code>docker compose up -d</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 5 (Docker Desktop GUI Verification - Stack View):</strong></div>
+                <ol style="margin-top: 6px;">
+                    <li>Open <strong>Docker Desktop</strong> and go to the <strong>Containers</strong> tab.</li>
+                    <li>Look for the project stack entry named <strong><code>exp8_compose</code></strong> (grouped with a Docker Compose stack icon).</li>
+                    <li>Expand the stack to reveal child container <strong><code>nginx_compose_web</code></strong> running with a green status indicator.</li>
+                    <li>Under the <strong>Port(s)</strong> column, click the clickable link <strong><code>8085:80</code></strong>.</li>
+                    <li>Your web browser opens <code>http://localhost:8085</code> displaying <em>"Nginx Web Server via Docker Compose"</em>.</li>
+                    <li>Click on <code>nginx_compose_web</code> to view live Nginx access and error logs in real-time.</li>
+                </ol>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 6 (CLI Status Verification - Optional):</strong> View running services in the current Compose project:</div>
+                <div class="cmd-box">
+                    <code>docker compose ps</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+            <div class="cmd-step" style="margin-top:-8px;">
+                <div class="cmd-desc">Test endpoint via curl in Command Prompt:</div>
+                <div class="cmd-box">
+                    <code>curl http://localhost:8085</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 7 (Live Bind Mount Test):</strong> Edit <code>html/index.html</code> in VS Code (for example, change the title text). Save the file and refresh your browser at <code>http://localhost:8085</code>. The change appears immediately without rebuilding the image!</div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 8 (Stop &amp; Teardown):</strong> In Docker Desktop GUI, click the <strong>Stop</strong> or <strong>Delete</strong> icon on the <code>exp8_compose</code> stack, or run this command in your VS Code terminal:</div>
+                <div class="cmd-box">
+                    <code>docker compose down</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="terminal-panel">
+<div class="term-header">Terminal Output</div>
+C:\DevOpsPractical\exp8_compose&gt; docker compose up -d
+[+] Running 2/2
+ - Network exp8_compose_default  Created
+ - Container nginx_compose_web   Started
+
+C:\DevOpsPractical\exp8_compose&gt; docker compose ps
+NAME                IMAGE          COMMAND                  SERVICE     STATUS         PORTS
+nginx_compose_web   nginx:alpine   "/docker-entrypoint.…"   webserver   Up 8 seconds   0.0.0.0:8085-&gt;80/tcp
+
+C:\DevOpsPractical\exp8_compose&gt; curl http://localhost:8085
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;&lt;title&gt;Docker Compose Nginx Web Server&lt;/title&gt;...&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="card"&gt;
+        &lt;h1&gt;Nginx Web Server via Docker Compose&lt;/h1&gt;
+        &lt;p&gt;Service Name: webserver &bull; Published Port: 8085&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+C:\DevOpsPractical\exp8_compose&gt; docker compose down
+[+] Running 2/2
+ - Container nginx_compose_web   Removed
+ - Network exp8_compose_default  Removed</div>
+
+            <div class="result-box">
+                <strong>Verification &amp; Result</strong>
+                Docker Compose started the Nginx service in detached mode and registered the <code>exp8_compose</code> stack inside <strong>Docker Desktop</strong>. The web server was successfully verified by clicking port <code>8085:80</code>, and volume mounting was confirmed functional.
+            </div>
+
+            <div class="pdf-download-wrap">
+                <div class="dl-label">
+                    <strong>Lab Manual PDF (A27 Exp 6)</strong> &mdash; Multi-service Deployment with Docker Compose: Multi-container topology, service definitions, YAML syntax, and container teardown.
+                </div>
+                <a class="pdf-download" href="A27_Agile_Exp6.pdf" download="A27_Agile_Exp6.pdf">
+                    <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.67v4h4V9h3.67L12 2z" transform="rotate(180 12 12)"/></svg>
+                    Download PDF <span class="dl-meta">(497 KB)</span>
+                </a>
+            </div>
+
+            <div class="viva-panel">
+                <div class="viva-header">Viva-Voce Q&amp;A</div>
+                <div class="viva-row">
+                    <div class="viva-q">Q1: What is Docker Compose and why is it preferred over running multiple docker run commands?</div>
+                    <div class="viva-a">Docker Compose allows defining and executing multi-container applications with networks, environment variables, and storage volumes in a single declarative YAML file.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q2: What does the -d flag do in docker compose up -d?</div>
+                    <div class="viva-a">It runs containers in detached mode (in the background), freeing up your terminal prompt immediately.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q3: What is the benefit of volume mounting in Docker Compose?</div>
+                    <div class="viva-a">It maps a host directory into the container, enabling live code changes and data persistence without rebuilding the container.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q4: How does Docker Desktop handle Docker Compose projects?</div>
+                    <div class="viva-a">It automatically aggregates all service containers belonging to the project into a single collapsible application stack in the Containers tab.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             EXPERIMENT 9: Deploy an Application in Kubernetes
+        =========================================== -->
+        <section class="exp-section" id="exp9" data-search="kubernetes k8s kubectl deployment nginx replicas 3 pods windows cmd scaling cluster nodeport">
+            <div class="exp-heading">
+                <h2><span class="num">Exp 09:</span>Deploy an Application in Kubernetes</h2>
+                <span class="tag-pill">Kubernetes (kubectl on Windows) &bull; Container Orchestration</span>
+            </div>
+
+            <div class="aim-box">
+                <div class="aim-label">Aim / Problem Statement</div>
+                <strong>Primary Exam Problem:</strong> Deploy an Nginx application using Kubernetes. Create three replicas and verify that all three pods are running.<br>
+                <span style="color:var(--bl);font-size:12.5px;display:inline-block;margin-top:4px;">
+                    <strong>Lab Manual Mapping (A27 Exp 7):</strong> Container Orchestration &mdash; Deploying and Scaling Applications on Kubernetes.
+                </span>
+            </div>
+
+            <h3>Theory: Kubernetes Container Orchestration Architecture</h3>
+            <p>
+                <strong>Kubernetes (K8s)</strong> is an enterprise open-source container orchestration engine that automates the deployment, scaling, load balancing, and self-healing management of containerized applications across host clusters.
+            </p>
+
+            <h4 style="color:var(--tx);font-size:13.5px;margin:12px 0 6px;">Key Kubernetes Architectural Concepts:</h4>
+            <ul>
+                <li><strong>Pod:</strong> The fundamental, smallest deployable compute unit in Kubernetes. A Pod encapsulates one or more shared containers, storage volumes, and network IPs.</li>
+                <li><strong>Node (Master vs Worker):</strong> Worker nodes run container workloads; the Control Plane (Master) schedules pods, maintains cluster state, and monitors node health.</li>
+                <li><strong>Deployment &amp; ReplicaSet:</strong> A declarative controller that manages application rollouts and ensures the desired number of Pod replicas (e.g. <code>replicas: 3</code>) are running continuously. If a pod crashes, Kubernetes automatically spins up a replacement pod (self-healing).</li>
+                <li><strong>Scaling:</strong> Increasing or decreasing the number of Pod replicas horizontally using <code>kubectl scale</code> or declaring <code>replicas: N</code> in YAML.</li>
+            </ul>
+
+            <h3>Prerequisite: Kubernetes in Docker Desktop</h3>
+            <p>
+                In <strong>Docker Desktop</strong>, click the <strong>Settings</strong> gear icon &gt; select <strong>Kubernetes</strong> &gt; check <strong>Enable Kubernetes</strong> &gt; click <strong>Apply &amp; restart</strong>. Ensure the Kubernetes indicator in the bottom-left turns green.
+            </p>
+
+            <h3>Step-by-Step Procedure &amp; Individual Commands</h3>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 1:</strong> In VS Code terminal, verify cluster connectivity and node readiness:</div>
+                <div class="cmd-box">
+                    <code>kubectl get nodes</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 2:</strong> In VS Code file explorer, create <code>nginx-deployment.yaml</code>. Paste the manifest and save (<kbd>Ctrl + S</kbd>):</div>
+                <div class="file-preview">
+                    <div class="fp-bar">
+                        <span>nginx-deployment.yaml</span>
+                        <button class="btn-copy" onclick="copyCode(this)">Copy File</button>
+                    </div>
+                    <pre><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 80</code></pre>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 3:</strong> Apply the deployment manifest to your Kubernetes cluster:</div>
+                <div class="cmd-box">
+                    <code>kubectl apply -f nginx-deployment.yaml</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+            <div class="cmd-step" style="margin-top:-8px;">
+                <div class="cmd-desc"><em>(Alternative Imperative 1-Liner without creating YAML):</em></div>
+                <div class="cmd-box">
+                    <code>kubectl create deployment nginx-deployment --image=nginx:alpine --replicas=3</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 4:</strong> Verify Deployment status (confirm <code>3/3 Ready</code>):</div>
+                <div class="cmd-box">
+                    <code>kubectl get deployments nginx-deployment</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 5:</strong> Verify that all 3 Pod replicas are active and running:</div>
+                <div class="cmd-box">
+                    <code>kubectl get pods -l app=nginx -o wide</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 6 (Dynamic Scaling Demonstration):</strong> Test horizontal scaling to 5 replicas via CLI:</div>
+                <div class="cmd-box">
+                    <code>kubectl scale deployment nginx-deployment --replicas=5</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 7 (Optional Cleanup):</strong> Teardown the deployment when finished:</div>
+                <div class="cmd-box">
+                    <code>kubectl delete -f nginx-deployment.yaml</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="terminal-panel">
+<div class="term-header">Terminal Output</div>
+C:\DevOpsPractical\exp9_k8s&gt; kubectl apply -f nginx-deployment.yaml
+deployment.apps/nginx-deployment created
+
+C:\DevOpsPractical\exp9_k8s&gt; kubectl get deployments nginx-deployment
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+nginx-deployment   3/3     3            3           18s
+
+C:\DevOpsPractical\exp9_k8s&gt; kubectl get pods -l app=nginx -o wide
+NAME                                READY   STATUS    RESTARTS   AGE   IP           NODE
+nginx-deployment-7bb7cd8db5-3k1x2   1/1     Running   0          24s   10.244.0.5   docker-desktop
+nginx-deployment-7bb7cd8db5-9y8w4   1/1     Running   0          24s   10.244.0.6   docker-desktop
+nginx-deployment-7bb7cd8db5-f8m2p   1/1     Running   0          24s   10.244.0.7   docker-desktop</div>
+
+            <div class="result-box">
+                <strong>Verification &amp; Result</strong>
+                Nginx application was deployed to Kubernetes on Docker Desktop. The ReplicaSet controller initialized and maintained 3 active running Pods across the cluster, successfully verifying pod scheduling and replica consistency.
+            </div>
+
+            <div class="pdf-download-wrap">
+                <div class="dl-label">
+                    <strong>Lab Manual PDF (A27 Exp 7)</strong> &mdash; Container Orchestration: Deploying and Scaling Applications on Kubernetes with NodePort services, kubectl commands, and scaling verification.
+                </div>
+                <a class="pdf-download" href="A27_Agile_Exp7.pdf" download="A27_Agile_Exp7.pdf">
+                    <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.67v4h4V9h3.67L12 2z" transform="rotate(180 12 12)"/></svg>
+                    Download PDF <span class="dl-meta">(596 KB)</span>
+                </a>
+            </div>
+
+            <div class="viva-panel">
+                <div class="viva-header">Viva-Voce Q&amp;A</div>
+                <div class="viva-row">
+                    <div class="viva-q">Q1: What is Kubernetes and what is its primary purpose?</div>
+                    <div class="viva-a">Kubernetes (K8s) is an open-source container orchestration engine designed to automate deployment, scaling, load balancing, and self-healing of containerized applications.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q2: What is a Pod in Kubernetes?</div>
+                    <div class="viva-a">A Pod is the smallest deployable compute unit in Kubernetes representing one or more shared containers with a shared network namespace and IP.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q3: What happens if one of the 3 pods fails or crashes?</div>
+                    <div class="viva-a">The Deployment's underlying ReplicaSet detects the shortage from the desired state (3) and immediately schedules a replacement pod on an available node.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q4: What is the difference between Docker and Kubernetes?</div>
+                    <div class="viva-a">Docker packages applications into individual containers; Kubernetes orchestrates, balances, and manages thousands of containers across a cluster of nodes.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q5: What is scaling in Kubernetes?</div>
+                    <div class="viva-a">Scaling is dynamically increasing or decreasing the number of Pod replicas (e.g. using <code>kubectl scale deployment myapp --replicas=5</code>) to handle fluctuating traffic demand.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             EXPERIMENT 10: Perform API Testing using Postman
+        =========================================== -->
+        <section class="exp-section" id="exp10" data-search="postman api testing get request jsonplaceholder 200 ok response body curl windows automated rest manual vs automated">
+            <div class="exp-heading">
+                <h2><span class="num">Exp 10:</span>Perform API Testing using Postman</h2>
+                <span class="tag-pill">Postman &bull; REST API Automated Testing</span>
+            </div>
+
+            <div class="aim-box">
+                <div class="aim-label">Aim / Problem Statement</div>
+                <strong>Primary Exam Problem:</strong> Send a GET request to <code>https://jsonplaceholder.typicode.com/posts/1</code>. Verify that the response status is <code>200</code> and display the response body.<br>
+                <span style="color:var(--bl);font-size:12.5px;display:inline-block;margin-top:4px;">
+                    <strong>Lab Manual Mapping (A27 Exp 8):</strong> Automated Software Testing using Postman for REST API Testing.
+                </span>
+            </div>
+
+            <h3>Theory: Automated API Testing &amp; REST Principles</h3>
+            <p>
+                <strong>Automated Software Testing</strong> executes scripted checks against software interfaces, comparing observed results with expected criteria to catch regressions rapidly. In DevOps microservices, REST APIs provide the communication backbone between services.
+            </p>
+
+            <h4 style="color:var(--tx);font-size:13.5px;margin:12px 0 6px;">Manual Testing vs Automated Testing:</h4>
+            <div style="overflow-x:auto;margin:8px 0 14px;">
+                <table style="width:100%;border-collapse:collapse;font-size:12.5px;">
+                    <thead>
+                        <tr style="background:var(--tab);border-bottom:1px solid var(--bd);">
+                            <th style="padding:6px 10px;text-align:left;">Parameter</th>
+                            <th style="padding:6px 10px;text-align:left;">Manual Testing</th>
+                            <th style="padding:6px 10px;text-align:left;">Automated Testing</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom:1px solid var(--bd);">
+                            <td style="padding:6px 10px;"><strong>Execution</strong></td>
+                            <td style="padding:6px 10px;">Manually entered and clicked by human tester</td>
+                            <td style="padding:6px 10px;">Executed programmatically via scripts &amp; tools</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid var(--bd);">
+                            <td style="padding:6px 10px;"><strong>Speed &amp; Repeatability</strong></td>
+                            <td style="padding:6px 10px;">Slow; repetitive execution takes considerable time</td>
+                            <td style="padding:6px 10px;">Fast; hundreds of assertions execute in seconds</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid var(--bd);">
+                            <td style="padding:6px 10px;"><strong>Consistency</strong></td>
+                            <td style="padding:6px 10px;">Prone to human oversight and fatigue</td>
+                            <td style="padding:6px 10px;">100% deterministic and reproducible results</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:6px 10px;"><strong>Best Suited For</strong></td>
+                            <td style="padding:6px 10px;">Exploratory, ad-hoc, and UI usability testing</td>
+                            <td style="padding:6px 10px;">Regression testing, API contracts, CI/CD gates</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4 style="color:var(--tx);font-size:13.5px;margin:12px 0 6px;">Key HTTP Methods in REST API Testing:</h4>
+            <ul>
+                <li><strong>GET:</strong> Retrieves resources without modifying server state (idempotent and safe).</li>
+                <li><strong>POST:</strong> Submits a new JSON payload to create a new resource on the server.</li>
+                <li><strong>PUT:</strong> Replaces or updates an existing server resource.</li>
+                <li><strong>DELETE:</strong> Removes the specified resource from the server.</li>
+            </ul>
+
+            <h3>Step-by-Step Procedure in Postman</h3>
+            <ol>
+                <li>Open the <strong>Postman</strong> desktop application on Windows.</li>
+                <li>Click the <strong>+</strong> button to create a new HTTP Request tab.</li>
+                <li>Select the HTTP method dropdown as <strong>GET</strong>.</li>
+                <li>Enter the target endpoint URL: <code>https://jsonplaceholder.typicode.com/posts/1</code>.</li>
+                <li>Click on the <strong>Tests</strong> tab located beneath the URL bar.</li>
+                <li>Add the following automated JavaScript assertions:</li>
+            </ol>
+
+            <div class="code-panel">
+                <div class="code-bar">
+                    <span class="code-file">Postman Tests (JavaScript Assertions)</span>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy Test Script</button>
+                </div>
+                <pre><code><span class="c-cm">// Test 1: Verify HTTP Status Code is 200 OK</span>
+<span class="c-fn">pm.test</span>(<span class="c-st">"Status code is 200 OK"</span>, <span class="c-kw">function</span> () {
+    <span class="c-fn">pm.response.to.have.status</span>(200);
+});
+
+<span class="c-cm">// Test 2: Verify JSON Response Body contains Post ID 1</span>
+<span class="c-fn">pm.test</span>(<span class="c-st">"Verify Post ID is 1"</span>, <span class="c-kw">function</span> () {
+    <span class="c-kw">var</span> jsonData = <span class="c-fn">pm.response.json</span>();
+    <span class="c-fn">pm.expect</span>(jsonData.id).to.eql(1);
+    <span class="c-fn">pm.expect</span>(jsonData).to.have.property(<span class="c-st">'title'</span>);
+    <span class="c-fn">pm.expect</span>(jsonData).to.have.property(<span class="c-st">'body'</span>);
+});</code></pre>
+            </div>
+
+            <ol start="7">
+                <li>Click the blue <strong>Send</strong> button.</li>
+                <li>In the lower response pane, verify:
+                    <ul>
+                        <li><strong>Status:</strong> <code>200 OK</code></li>
+                        <li><strong>Body:</strong> Formatted JSON payload containing <code>"userId": 1</code>, <code>"id": 1</code></li>
+                        <li><strong>Test Results Tab:</strong> <code>PASS: Status code is 200 OK (2/2)</code></li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>Command Prompt Alternative (curl)</h3>
+            <div class="cmd-step">
+                <div class="cmd-desc">Execute GET request and inspect response headers and JSON body via Windows curl:</div>
+                <div class="cmd-box">
+                    <code>curl -i -X GET https://jsonplaceholder.typicode.com/posts/1</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="terminal-panel">
+<div class="term-header">Terminal / API Response Output</div>
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{
+  "userId": 1,
+  "id": 1,
+  "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+  "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+}
+
+Test Results:
+[PASS] Status code is 200 OK
+[PASS] Verify Post ID is 1</div>
+
+            <div class="result-box">
+                <strong>Verification &amp; Result</strong>
+                The HTTP GET request was executed against <code>https://jsonplaceholder.typicode.com/posts/1</code>. The server returned HTTP status <code>200 OK</code> with the expected JSON post payload. Both Postman automated test assertions passed successfully.
+            </div>
+
+            <div class="pdf-download-wrap">
+                <div class="dl-label">
+                    <strong>Lab Manual PDF (A27 Exp 8)</strong> &mdash; Automated Software Testing: Postman REST API Testing (GET, POST, PUT, DELETE) and Selenium WebDriver web application automation.
+                </div>
+                <a class="pdf-download" href="A27_Agile_Exp8.pdf" download="A27_Agile_Exp8.pdf">
+                    <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.67v4h4V9h3.67L12 2z" transform="rotate(180 12 12)"/></svg>
+                    Download PDF <span class="dl-meta">(3.1 MB)</span>
+                </a>
+            </div>
+
+            <div class="viva-panel">
+                <div class="viva-header">Viva-Voce Q&amp;A</div>
+                <div class="viva-row">
+                    <div class="viva-q">Q1: What does HTTP Status Code 200 indicate?</div>
+                    <div class="viva-a">HTTP 200 OK indicates that the request was successfully received, understood, and processed by the server, and the requested payload is returned.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q2: What is the difference between GET and POST requests?</div>
+                    <div class="viva-a">GET retrieves data from the server without modifying server state (idempotent); POST sends a request body to create or mutate server resources.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q3: What is the purpose of the Tests tab in Postman?</div>
+                    <div class="viva-a">The Tests tab executes JavaScript assertion scripts (using the <code>pm.*</code> API) immediately after receiving the response to automate status code and payload verification.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q4: What is the difference between PUT and PATCH?</div>
+                    <div class="viva-a">PUT replaces the entire existing resource with the submitted payload; PATCH applies partial modifications to the resource.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             EXPERIMENT 11: Perform Web Testing using Selenium
+        =========================================== -->
+        <section class="exp-section" id="exp11" data-search="selenium python web testing google devops search page title windows cmd webdriver chrome locators">
+            <div class="exp-heading">
+                <h2><span class="num">Exp 11:</span>Perform Web Testing using Selenium</h2>
+                <span class="tag-pill">Selenium WebDriver &bull; Python Browser Automation</span>
+            </div>
+
+            <div class="aim-box">
+                <div class="aim-label">Aim / Problem Statement</div>
+                <strong>Primary Exam Problem:</strong> Write a Selenium script to open <code>https://www.google.com</code>, search for <code>DevOps</code>, and print the page title.<br>
+                <span style="color:var(--bl);font-size:12.5px;display:inline-block;margin-top:4px;">
+                    <strong>Lab Manual Mapping (A27 Exp 8 - Part 2):</strong> Automated Web Application Testing using Selenium WebDriver.
+                </span>
+            </div>
+
+            <h3>Theory: Browser Automation with Selenium WebDriver</h3>
+            <p>
+                <strong>Selenium WebDriver</strong> is the premier open-source automated testing framework for web applications. It communicates directly with real browsers (Chrome, Firefox, Edge) through the W3C WebDriver wire protocol, simulating authentic user interactions.
+            </p>
+
+            <h4 style="color:var(--tx);font-size:13.5px;margin:12px 0 6px;">Postman vs Selenium WebDriver Comparison:</h4>
+            <div style="overflow-x:auto;margin:8px 0 14px;">
+                <table style="width:100%;border-collapse:collapse;font-size:12.5px;">
+                    <thead>
+                        <tr style="background:var(--tab);border-bottom:1px solid var(--bd);">
+                            <th style="padding:6px 10px;text-align:left;">Dimension</th>
+                            <th style="padding:6px 10px;text-align:left;">Postman</th>
+                            <th style="padding:6px 10px;text-align:left;">Selenium WebDriver</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom:1px solid var(--bd);">
+                            <td style="padding:6px 10px;"><strong>Testing Layer</strong></td>
+                            <td style="padding:6px 10px;">Backend REST APIs &amp; Web Services</td>
+                            <td style="padding:6px 10px;">Frontend User Interface &amp; DOM Elements</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid var(--bd);">
+                            <td style="padding:6px 10px;"><strong>Execution Mechanism</strong></td>
+                            <td style="padding:6px 10px;">HTTP/HTTPS network requests</td>
+                            <td style="padding:6px 10px;">Direct browser process driver (e.g. ChromeDriver)</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:6px 10px;"><strong>Verification Scope</strong></td>
+                            <td style="padding:6px 10px;">Status codes, headers, JSON response schemas</td>
+                            <td style="padding:6px 10px;">Page titles, form submissions, clicks, visual states</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4 style="color:var(--tx);font-size:13.5px;margin:12px 0 6px;">Common Element Locator Strategies in Selenium:</h4>
+            <ul>
+                <li><code>By.NAME</code> : Locates inputs by HTML name attribute (e.g. <code>driver.find_element(By.NAME, "q")</code> for Google search).</li>
+                <li><code>By.ID</code> : Locates uniquely identified DOM nodes.</li>
+                <li><code>By.XPATH</code> : Traverses XML/HTML node hierarchies for dynamic elements.</li>
+                <li><code>By.CSS_SELECTOR</code> : Fast, flexible selector matching CSS rules.</li>
+            </ul>
+
+            <h3>Python Test Script</h3>
+            <div class="code-panel">
+                <div class="code-bar">
+                    <span class="code-file">test_devops_search.py</span>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy Python Script</button>
+                </div>
+                <pre><code><span class="c-kw">from</span> selenium <span class="c-kw">import</span> webdriver
+<span class="c-kw">from</span> selenium.webdriver.common.by <span class="c-kw">import</span> By
+<span class="c-kw">from</span> selenium.webdriver.common.keys <span class="c-kw">import</span> Keys
+<span class="c-kw">from</span> selenium.webdriver.chrome.service <span class="c-kw">import</span> Service
+<span class="c-kw">from</span> webdriver_manager.chrome <span class="c-kw">import</span> ChromeDriverManager
+<span class="c-kw">import</span> time
+
+<span class="c-cm"># 1. Initialize Chrome options</span>
+options = webdriver.ChromeOptions()
+
+<span class="c-cm"># 2. Automatically download matching ChromeDriver and start browser</span>
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+
+<span class="c-kw">try</span>:
+    <span class="c-cm"># Step 1: Open Google</span>
+    driver.get(<span class="c-st">"https://www.google.com"</span>)
+    driver.maximize_window()
+    time.sleep(2)
+
+    <span class="c-cm"># Step 2: Locate search input box by name attribute 'q'</span>
+    search_box = driver.find_element(By.NAME, <span class="c-st">"q"</span>)
+
+    <span class="c-cm"># Step 3: Enter 'DevOps' and press ENTER (Keys.RETURN)</span>
+    search_box.send_keys(<span class="c-st">"DevOps"</span> + Keys.RETURN)
+    time.sleep(3)
+
+    <span class="c-cm"># Step 4: Extract and display the page title</span>
+    page_title = driver.title
+    <span class="c-fn">print</span>(<span class="c-st">"========================================"</span>)
+    <span class="c-fn">print</span>(<span class="c-st">"Result Page Title:"</span>, page_title)
+    <span class="c-fn">print</span>(<span class="c-st">"Test Status: Automated Search PASS"</span>)
+    <span class="c-fn">print</span>(<span class="c-st">"========================================"</span>)
+
+<span class="c-kw">finally</span>:
+    <span class="c-cm"># Step 5: Close browser session cleanly</span>
+    driver.quit()</code></pre>
+            </div>
+
+            <h3>Step-by-Step Execution Commands</h3>
+
+            <div class="cmd-step">
+                <div class="cmd-desc"><strong>Step 1:</strong> Install Selenium and WebDriver Manager using pip:</div>
+                <div class="cmd-box">
+                    <code>pip install selenium webdriver-manager</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+            <div class="cmd-step" style="margin-top:-8px;">
+                <div class="cmd-desc"><strong>Step 2:</strong> Run the automated Selenium search test script:</div>
+                <div class="cmd-box">
+                    <code>python test_devops_search.py</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="terminal-panel">
+<div class="term-header">Terminal Output</div>
+C:\DevOpsPractical\exp11_selenium&gt; python test_devops_search.py
+====== WebDriver manager ======
+[WDM] Current google-chrome version is 129.0.6668
+[WDM] Get LATEST chromedriver version for google-chrome
+[WDM] Driver [C:\Users\Student\.wdm\drivers\chromedriver\win64\129.0.6668\chromedriver.exe] found in cache
+========================================
+Result Page Title: DevOps - Google Search
+Test Status: Automated Search PASS
+========================================</div>
+
+            <div class="result-box">
+                <strong>Verification &amp; Result</strong>
+                Selenium WebDriver automated the Chrome browser, navigated to Google, located the search input field, queried <code>DevOps</code>, and printed the resulting page title: <em>"DevOps - Google Search"</em> with test status <code>PASS</code>.
+            </div>
+
+            <div class="pdf-download-wrap">
+                <div class="dl-label">
+                    <strong>Lab Manual PDF (A27 Exp 8)</strong> &mdash; Automated Software Testing: Postman REST API Testing (GET, POST, PUT, DELETE) and Selenium WebDriver web application automation.
+                </div>
+                <a class="pdf-download" href="A27_Agile_Exp8.pdf" download="A27_Agile_Exp8.pdf">
+                    <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.67v4h4V9h3.67L12 2z" transform="rotate(180 12 12)"/></svg>
+                    Download PDF <span class="dl-meta">(3.1 MB)</span>
+                </a>
+            </div>
+
+            <div class="viva-panel">
+                <div class="viva-header">Viva-Voce Q&amp;A</div>
+                <div class="viva-row">
+                    <div class="viva-q">Q1: What is the role of WebDriver in Selenium?</div>
+                    <div class="viva-a">WebDriver acts as an out-of-process client sending wire commands directly to native browser execution engines without browser extension dependencies.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q2: What is the difference between driver.close() and driver.quit()?</div>
+                    <div class="viva-a"><code>driver.close()</code> closes only the currently focused browser window; <code>driver.quit()</code> terminates the entire driver process and all open browser windows.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q3: What are common locator strategies used in Selenium?</div>
+                    <div class="viva-a"><code>By.ID</code>, <code>By.NAME</code>, <code>By.CLASS_NAME</code>, <code>By.TAG_NAME</code>, <code>By.LINK_TEXT</code>, <code>By.CSS_SELECTOR</code>, and <code>By.XPATH</code>.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q4: Why is WebDriver Manager preferred over downloading chromedriver.exe manually?</div>
+                    <div class="viva-a">WebDriver Manager dynamically detects your installed Chrome version, downloads the exact matching driver binary, and caches it automatically.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             EXPERIMENT 12: Create a Grafana Dashboard
+        =========================================== -->
+        <section class="exp-section" id="exp12" data-search="grafana dashboard cpu memory usage metrics panel gauge prometheus windows node exporter promql">
+            <div class="exp-heading">
+                <h2><span class="num">Exp 12:</span>Create a Grafana Dashboard</h2>
+                <span class="tag-pill">Grafana Observability &bull; Prometheus Telemetry</span>
+            </div>
+
+            <div class="aim-box">
+                <div class="aim-label">Aim / Problem Statement</div>
+                <strong>Primary Exam Problem:</strong> Create a Grafana dashboard with one panel displaying CPU or memory usage from an available metrics source.<br>
+                <span style="color:var(--bl);font-size:12.5px;display:inline-block;margin-top:4px;">
+                    <strong>Lab Manual Mapping (A27 Exp 9):</strong> System and Application Monitoring and Alerting using Prometheus and Grafana.
+                </span>
+            </div>
+
+            <h3>Theory: Observability, Prometheus &amp; Grafana Dashboards</h3>
+            <p>
+                <strong>Observability</strong> provides deep real-time visibility into the health and performance of distributed systems across three pillars: <strong>Metrics</strong> (numeric time-series telemetry), <strong>Logs</strong> (discrete timestamped events), and <strong>Traces</strong> (request path journeys).
+            </p>
+
+            <h4 style="color:var(--tx);font-size:13.5px;margin:12px 0 6px;">Monitoring Architecture:</h4>
+            <ul>
+                <li><strong>Prometheus:</strong> A time-series database and monitoring server that pulls (scrapes) numeric metrics over HTTP at scheduled intervals and stores them with timestamped key-value tags.</li>
+                <li><strong>Node Exporter:</strong> An agent that gathers host hardware and OS telemetry (CPU load, memory consumption, disk I/O, network traffic).</li>
+                <li><strong>Grafana:</strong> The industry-standard analytics and visualization web platform that queries time-series engines (Prometheus, InfluxDB, CloudWatch) to render dynamic graphs, gauges, heatmaps, and threshold alerts.</li>
+                <li><strong>PromQL (Prometheus Query Language):</strong> Used to calculate real-time usage percentages:
+                    <ul>
+                        <li>CPU Utilization: <code>100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[1m])) * 100)</code></li>
+                        <li>Memory Consumption: <code>(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100</code></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Quick Docker Desktop Command to Run Grafana</h3>
+            <div class="cmd-step">
+                <div class="cmd-desc">Launch Grafana container on port 3000 via Docker Desktop CLI:</div>
+                <div class="cmd-box">
+                    <code>docker run -d -p 3000:3000 --name=grafana-devops -e "GF_SECURITY_ADMIN_PASSWORD=admin" grafana/grafana:latest</code>
+                    <button class="btn-copy" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <h3>Step-by-Step UI Procedure</h3>
+            <ol>
+                <li>Open your web browser and navigate to <code>http://localhost:3000</code>.</li>
+                <li>Login with username <code>admin</code> and password <code>admin</code>.</li>
+                <li><strong>Configure Data Source:</strong>
+                    <ul>
+                        <li>Go to <strong>Connections</strong> &gt; <strong>Data Sources</strong>.</li>
+                        <li>Select <strong>TestData</strong> (built-in mock telemetry source for instant exam demonstration) or <strong>Prometheus</strong> (server URL: <code>http://localhost:9090</code>).</li>
+                        <li>Click <strong>Save &amp; test</strong> to verify connection.</li>
+                    </ul>
+                </li>
+                <li><strong>Create Dashboard &amp; Panel:</strong>
+                    <ul>
+                        <li>Click <strong>Dashboards</strong> in the left sidebar &gt; <strong>New</strong> &gt; <strong>New Dashboard</strong>.</li>
+                        <li>Click <strong>+ Add visualization</strong>.</li>
+                        <li>Select your configured data source (TestData or Prometheus).</li>
+                        <li>In Query: Select scenario <strong>CPU Usage</strong> (or enter PromQL expression).</li>
+                        <li>In Right Panel Settings:
+                            <ul>
+                                <li><strong>Title:</strong> <code>CPU Utilization (%)</code></li>
+                                <li><strong>Visualization:</strong> Choose <strong>Gauge</strong> or <strong>Time Series</strong></li>
+                                <li><strong>Unit:</strong> <code>Misc &gt; Percent (0-100)</code></li>
+                                <li><strong>Thresholds:</strong> Green (&lt; 70%), Yellow (70-85%), Red (&gt; 85%)</li>
+                            </ul>
+                        </li>
+                        <li>Click <strong>Apply</strong> (top right).</li>
+                    </ul>
+                </li>
+                <li>Click <strong>Save dashboard</strong> &gt; enter name <code>DevOps System Monitoring</code> &gt; click <strong>Save</strong>.</li>
+            </ol>
+
+            <div class="result-box">
+                <strong>Verification &amp; Result</strong>
+                The panel <em>"CPU Utilization (%)"</em> is active on dashboard <code>DevOps System Monitoring</code>, dynamically rendering live metrics with threshold colors (Green/Yellow/Red).
+            </div>
+
+            <div class="pdf-download-wrap">
+                <div class="dl-label">
+                    <strong>Lab Manual PDF (A27 Exp 9)</strong> &mdash; System and Application Monitoring and Alerting using Prometheus and Grafana: Dashboards, PromQL queries, Node Exporter, and alert thresholds.
+                </div>
+                <a class="pdf-download" href="A27_Agile_Exp9.pdf" download="A27_Agile_Exp9.pdf">
+                    <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.67v4h4V9h3.67L12 2z" transform="rotate(180 12 12)"/></svg>
+                    Download PDF <span class="dl-meta">(766 KB)</span>
+                </a>
+            </div>
+
+            <div class="viva-panel">
+                <div class="viva-header">Viva-Voce Q&amp;A</div>
+                <div class="viva-row">
+                    <div class="viva-q">Q1: What are the three pillars of system observability?</div>
+                    <div class="viva-a">Metrics (numeric telemetry over time), Logs (timestamped event records), and Traces (end-to-end request journeys across distributed microservices).</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q2: What is the difference between Prometheus and Grafana?</div>
+                    <div class="viva-a">Prometheus acts as the time-series metric collector and storage engine; Grafana acts as the visualization layer that connects to Prometheus to render interactive dashboards.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q3: What is PromQL and what does the rate() function calculate?</div>
+                    <div class="viva-a">PromQL is Prometheus Query Language. The <code>rate()</code> function calculates the per-second average rate of increase of a time series counter over a specified time window.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q4: How do threshold colors help in Grafana dashboards?</div>
+                    <div class="viva-a">Thresholds visually highlight operational health: Green indicates normal operating levels, Yellow warns of elevated utilization, and Red flags critical bottlenecks requiring intervention.</div>
+                </div>
+                <div class="viva-row">
+                    <div class="viva-q">Q5: What is Node Exporter in Prometheus monitoring?</div>
+                    <div class="viva-a">Node Exporter is a lightweight Prometheus exporter that exposes machine-level hardware and OS metrics (CPU, RAM, disk, network) over an HTTP endpoint for scraping.</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Floating Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Back to top">
+        ▲
+    </button>
+
+    <footer>
+        DevOps Practical Examination Manual • Visual Studio Code Theme • Designed for Windows Execution
+    </footer>
+
+    <script>
+        // Theme toggle with persistence
+        const themeBtn = document.getElementById('themeToggle');
+        function setTheme(isLight) {
+            if (isLight) {
+                document.body.classList.add('light-theme');
+                themeBtn.innerHTML = 'Dark';
+                localStorage.setItem('vsc_theme', 'light');
+            } else {
+                document.body.classList.remove('light-theme');
+                themeBtn.innerHTML = 'Light';
+                localStorage.setItem('vsc_theme', 'dark');
+            }
+        }
+
+        if (localStorage.getItem('vsc_theme') === 'light') {
+            setTheme(true);
+        } else {
+            setTheme(false);
+        }
+
+        themeBtn.onclick = () => {
+            const isLight = document.body.classList.contains('light-theme');
+            setTheme(!isLight);
+        };
+
+        // 1-Click Copy Code (Supports both full code panels and individual step cmd-boxes)
+        function copyCode(btn) {
+            let text = "";
+            const cmdBox = btn.closest(".cmd-box");
+            const filePreview = btn.closest(".file-preview");
+            const codePanel = btn.closest(".code-panel");
+            if (cmdBox) {
+                const codeEl = cmdBox.querySelector("code");
+                text = codeEl ? codeEl.innerText.trim() : "";
+            } else if (filePreview) {
+                const preEl = filePreview.querySelector("pre");
+                text = preEl ? preEl.innerText : "";
+            } else if (codePanel) {
+                const preEl = codePanel.querySelector("pre");
+                text = preEl ? preEl.innerText : "";
+            }
+
+            if (!text) return;
+
+            navigator.clipboard.writeText(text).then(() => {
+                const old = btn.innerText;
+                btn.innerText = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.innerText = old;
+                    btn.classList.remove('copied');
+                }, 1500);
+            }).catch(() => {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                btn.innerText = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.innerText = 'Copy';
+                    btn.classList.remove('copied');
+                }, 1500);
+            });
+        }
+
+        // Live Search / Filter
+        function filterSections() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const sections = document.querySelectorAll('.exp-section');
+            sections.forEach(sec => {
+                const text = sec.innerText.toLowerCase();
+                const keywords = (sec.dataset.search || '').toLowerCase();
+                if (!query || text.includes(query) || keywords.includes(query)) {
+                    sec.style.display = 'block';
+                } else {
+                    sec.style.display = 'none';
+                }
+            });
+        }
+
+        // Keyboard shortcut Ctrl+P to focus search
+        window.addEventListener('keydown', e => {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'p') {
+                e.preventDefault();
+                const s = document.getElementById('searchInput');
+                s.focus();
+                s.select();
+            }
+        });
+
+        // Scroll listener for tabs & back to top
+        const tabs = document.querySelectorAll('.tabs-bar a');
+        const sections = document.querySelectorAll('.exp-section');
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 250) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+
+            let current = '';
+            sections.forEach(sec => {
+                const top = sec.offsetTop - 100;
+                if (window.scrollY >= top) {
+                    current = sec.getAttribute('id');
+                }
+            });
+
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.getAttribute('href') === '#' + current) {
+                    tab.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
